@@ -1,0 +1,4 @@
+# Cloudflare Pages — redirects
+# https://developers.cloudflare.com/pages/configuration/redirects/
+# Force www → root (handled by Cloudflare DNS, but belt-and-suspenders)
+https://www.contrapaul.com/* https://contrapaul.com/:splat 301
