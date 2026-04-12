@@ -1,1 +1,0 @@
-# contrapaul-main-directory
