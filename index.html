@@ -5,86 +5,208 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Paul Kwiatkowski — Design Technology teacher, maker, 3D printing creator, and designer based in Shenzhen.">
 <title>contrapaul</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="WEB/css/jetbrains-mono.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'JetBrains Mono', monospace;
+  background: #143CC7;
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(20,60,199,0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.wordmark {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  opacity: 0.95;
+  transition: opacity 200ms ease;
+}
+.wordmark:hover { opacity: 1; }
+.nav { display: flex; gap: 0.25rem; }
+.nav a {
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.75rem;
+  opacity: 0.7;
+  transition: opacity 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+.nav a:hover { opacity: 1; }
+.nav-tag {
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 3px;
+}
+.nav-tag:hover {
+  border-color: #FFE536;
+  color: #FFE536;
+}
+.hero {
+  padding: 6rem 2rem 3rem;
+  text-align: center;
+}
+.hero h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+.hero p {
+  font-size: 1rem;
+  opacity: 0.7;
+  max-width: 44ch;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+.cards {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem 6rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  flex: 1;
+}
+.card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
+}
+.card:hover { transform: translateY(-6px); }
+.card-1:hover {
+  border-color: #FFE536;
+  box-shadow: 0 0 30px rgba(255,229,54,0.25), 0 8px 32px rgba(255,229,54,0.1);
+}
+.card-2:hover {
+  border-color: #FA16C2;
+  box-shadow: 0 0 30px rgba(250,22,194,0.25), 0 8px 32px rgba(250,22,194,0.1);
+}
+.card-3:hover {
+  border-color: #FF7200;
+  box-shadow: 0 0 30px rgba(255,114,0,0.25), 0 8px 32px rgba(255,114,0,0.1);
+}
+.card-number {
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  opacity: 0.5;
+}
+.card-1 .card-number { color: #FFE536; opacity: 0.9; }
+.card-2 .card-number { color: #FA16C2; opacity: 0.9; }
+.card-3 .card-number { color: #FF7200; opacity: 0.9; }
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+.card-desc {
+  font-size: 0.85rem;
+  line-height: 1.65;
+  opacity: 0.65;
+  flex: 1;
+  margin-bottom: 1.5rem;
+}
+.card-arrow {
+  font-size: 1.25rem;
+  transition: transform 300ms ease;
+}
+.card:hover .card-arrow { transform: translateX(8px); }
+.card-1 .card-arrow { color: #FFE536; }
+.card-2 .card-arrow { color: #FA16C2; }
+.card-3 .card-arrow { color: #FF7200; }
+.site-footer {
+  padding: 1.5rem 2rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  opacity: 0.8;
+}
+.footer-location {
+  font-size: 0.75rem;
+  opacity: 0.4;
+}
+@media (max-width: 768px) {
+  .cards { grid-template-columns: 1fr; gap: 1rem; }
+  .hero { padding: 4rem 1.25rem 2rem; }
+  .cards { padding: 0 1.25rem 4rem; }
+  .header-inner { padding: 0 1.25rem; }
+  .site-footer { padding: 1.5rem 1.25rem; }
+}
+@media (max-width: 480px) {
+  .hero { padding: 3rem 1.25rem 1.5rem; }
+  .card { padding: 2rem 1.5rem; }
+}
+</style>
 </head>
 <body>
 <header class="site-header">
 <div class="header-inner">
 <a href="/" class="wordmark">contrapaul</a>
-<nav class="nav" aria-label="Main navigation">
-<a href="#about">About</a>
+<nav class="nav">
+<a href="about.html">About</a>
 <a href="https://edu.contrapaul.com" class="nav-tag">Edu</a>
 <a href="https://make.contrapaul.com" class="nav-tag">Make</a>
 </nav>
 </div>
 </header>
 <main>
-<!-- HERO -->
 <section class="hero">
-<div class="hero-grid">
-<div class="hero-text">
-<p class="hero-eyebrow">Paul Kwiatkowski</p>
-<h1 class="hero-title">
-           Designer.<br>
-           Educator.<br>
-<span class="accent">Maker.</span>
-</h1>
-<p class="hero-sub">
-           Design Technology teacher, maker,<br>
-           and electronics learner based in Shenzhen, China.
-</p>
-</div>
-<div class="hero-decoration" aria-hidden="true">
-<div class="deco-box deco-1"></div>
-<div class="deco-box deco-2"></div>
-<div class="deco-line"></div>
-</div>
-</div>
+<h1>Paul Kwiatkowski</h1>
+<p>Design Technology educator, maker, and creator based in Shenzhen, China.</p>
 </section>
-<!-- THREE PATHS -->
-<section class="paths" id="work">
-<div class="paths-inner">
-<a class="path-card"href="https://blog.contrapaul.com">
-<div class="path-number">01</div>
-<div class="path-body">
-<h2 class="path-title">Portfolio &amp; Blog</h2>
-<p class="path-desc">Design work, teaching reflections, electronics experiments, and notes from a life spent making things.</p>
-</div>
-<div class="path-arrow">→</div>
+<section class="cards">
+<a href="https://make.contrapaul.com" class="card card-1">
+<span class="card-number">01</span>
+<h2 class="card-title">Make</h2>
+<p class="card-desc">3D models, build logs, electronics experiments, and project documentation.</p>
+<span class="card-arrow">→</span>
 </a>
-<a class="path-card" href="https://edu.contrapaul.com">
-<div class="path-number">02</div>
-<div class="path-body">
-<h2 class="path-title">IB DP Design Resources</h2>
-<p class="path-desc">Free study materials, HTML activities, and curriculum tools for Design Technology students and teachers worldwide.</p>
-</div>
-<div class="path-arrow">→</div>
+<a href="https://edu.contrapaul.com" class="card card-2">
+<span class="card-number">02</span>
+<h2 class="card-title">Edu</h2>
+<p class="card-desc">IB DP Design Technology resources, study materials, and curriculum tools.</p>
+<span class="card-arrow">→</span>
 </a>
-<a class="path-card" href="https://make.contrapaul.com">
-<div class="path-number">03</div>
-<div class="path-body">
-<h2 class="path-title">Maker &amp; Creator</h2>
-<p class="path-desc">3D models, project documentation, build logs, and everything a potential collaborator or sponsor needs to see.</p>
-</div>
-<div class="path-arrow">→</div>
+<a href="https://blog.contrapaul.com" class="card card-3">
+<span class="card-number">03</span>
+<h2 class="card-title">Blog</h2>
+<p class="card-desc">Design work, teaching reflections, and notes from a life spent making things.</p>
+<span class="card-arrow">→</span>
 </a>
-</div>
-</section>
-<!-- ABOUT STRIP -->
-<section class="about" id="about">
-<div class="about-inner">
-<div class="about-label">About</div>
-<div class="about-content">
-<p class="about-text">
-           I teach Design Technology at the IB Diploma level in Shenzhen, where I also spend too much time designing 3D models, soldering microcontrollers, and documenting all of it. My work sits at the intersection of design thinking, making, and technology education.
-</p>
-<div class="about-links">
-<a href="https://github.com/" class="pill-link" target="_blank" rel="noopener">GitHub</a>
-<a href="https://makerworld.com/" class="pill-link" target="_blank" rel="noopener">MakerWorld</a>
-<a href="https://printables.com/" class="pill-link" target="_blank" rel="noopener">Printables</a>
-</div>
-</div>
-</div>
 </section>
 </main>
 <footer class="site-footer">
