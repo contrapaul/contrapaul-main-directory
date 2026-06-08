@@ -10,7 +10,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font-family: 'JetBrains Mono', monospace;
-  background: #143CC7;
+  background: #1a1a1a;
   color: #fff;
   min-height: 100vh;
   display: flex;
@@ -22,7 +22,7 @@ a { color: inherit; text-decoration: none; }
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(20,60,199,0.92);
+  background: rgba(26,26,26,0.92);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -79,66 +79,282 @@ a { color: inherit; text-decoration: none; }
   margin: 0 auto;
   line-height: 1.6;
 }
-.cards {
+/* ========== CARD GRID ========== */
+.grid {
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 2rem 6rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  flex: 1;
+  gap: 2rem;
 }
+/* ========== BASE CARD ========== */
 .card {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 12px;
-  padding: 2.5rem 2rem;
-  display: flex;
-  flex-direction: column;
-  transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
+  border-radius: 24px;
+  padding: 6px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  height: 100%;
+  position: relative;
 }
-.card:hover { transform: translateY(-6px); }
-.card-1:hover {
-  border-color: #FFE536;
-  box-shadow: 0 0 30px rgba(255,229,54,0.25), 0 8px 32px rgba(255,229,54,0.1);
+.card-interior {
+  border-radius: 18px;
+  padding: 2rem;
+  height: 100%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.card-2:hover {
-  border-color: #FA16C2;
-  box-shadow: 0 0 30px rgba(250,22,194,0.25), 0 8px 32px rgba(250,22,194,0.1);
+/* ========== CARD 1: GAMER RGB SPINNING GLOW (MAKE) ========== */
+@property --rgb-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
 }
-.card-3:hover {
-  border-color: #FF7200;
-  box-shadow: 0 0 30px rgba(255,114,0,0.25), 0 8px 32px rgba(255,114,0,0.1);
+@keyframes rgb-spin {
+  to { --rgb-angle: 360deg; }
 }
-.card-number {
-  font-size: 0.75rem;
-  font-weight: 500;
-  margin-bottom: 0.75rem;
-  opacity: 0.5;
+@keyframes rgb-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
 }
-.card-1 .card-number { color: #FFE536; opacity: 0.9; }
-.card-2 .card-number { color: #FA16C2; opacity: 0.9; }
-.card-3 .card-number { color: #FF7200; opacity: 0.9; }
-.card-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 0.75rem;
+.card-gamer {
+  background: conic-gradient(from var(--rgb-angle),
+    #FF0000, #FF00FF, #0000FF, #00FFFF, #00FF00, #FFFF00, #FF0000);
+  animation: rgb-spin 3s linear infinite;
+  position: relative;
 }
-.card-desc {
-  font-size: 0.85rem;
-  line-height: 1.65;
-  opacity: 0.65;
-  flex: 1;
+.card-gamer::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: conic-gradient(from var(--rgb-angle),
+    #FF0000, #FF00FF, #0000FF, #00FFFF, #00FF00, #FFFF00, #FF0000);
+  animation: rgb-spin 3s linear infinite;
+  border-radius: 26px;
+  filter: blur(15px);
+  opacity: 0.7;
+  z-index: -1;
+}
+.card-gamer .card-interior {
+  background: linear-gradient(135deg, #0a0a0a, #1a0a2a);
+  position: relative;
+  overflow: hidden;
+}
+.card-gamer .card-interior::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,0,0,0.1), rgba(0,255,0,0.1), rgba(0,0,255,0.1));
+  animation: rgb-pulse 2s ease-in-out infinite;
+}
+.card-gamer:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+.card-gamer:hover::before {
+  filter: blur(25px);
+  opacity: 1;
+}
+.gamer-badge {
+  display: inline-block;
+  background: rgba(0,0,0,0.7);
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
   margin-bottom: 1.5rem;
+  color: #00FF00;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  border: 1px solid #FF00FF;
+  box-shadow: 0 0 10px rgba(255,0,255,0.3);
 }
-.card-arrow {
-  font-size: 1.25rem;
-  transition: transform 300ms ease;
+.card-gamer h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #FF0000, #FF00FF, #00FFFF, #00FF00);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rgb-pulse 2s ease-in-out infinite;
 }
-.card:hover .card-arrow { transform: translateX(8px); }
-.card-1 .card-arrow { color: #FFE536; }
-.card-2 .card-arrow { color: #FA16C2; }
-.card-3 .card-arrow { color: #FF7200; }
+/* ========== CARD 2: ARCTIC ICE (EDU) ========== */
+@property --ice-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes ice-spin {
+  to { --ice-angle: 360deg; }
+}
+@keyframes ice-glow {
+  0% { box-shadow: 0 0 5px rgba(255,255,255,0.3), inset 0 0 5px rgba(255,255,255,0.1); }
+  100% { box-shadow: 0 0 25px rgba(100,200,255,0.6), inset 0 0 15px rgba(100,200,255,0.3); }
+}
+.card-arctic {
+  background: conic-gradient(from var(--ice-angle),
+    #E0E7FF, #9FC5F8, #6FA8DC, #3C78D8, #6FA8DC, #9FC5F8, #E0E7FF);
+  animation: ice-spin 6s linear infinite;
+}
+.card-arctic .card-interior {
+  background: linear-gradient(135deg, #0a1a2a, #0a1220);
+  backdrop-filter: blur(5px);
+}
+.card-arctic:hover {
+  transform: translateY(-8px);
+  animation: ice-glow 0.5s ease-in-out infinite alternate;
+}
+.arctic-badge {
+  display: inline-block;
+  background: rgba(100,200,255,0.2);
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  margin-bottom: 1.5rem;
+  color: #9FC5F8;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  border: 1px solid #6FA8DC;
+}
+.card-arctic h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #E0E7FF, #9FC5F8, #6FA8DC);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.card-arctic .card-interior {
+  position: relative;
+  overflow: hidden;
+}
+.card-arctic .card-interior::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+  pointer-events: none;
+}
+.card-arctic:hover .card-interior::after {
+  left: 100%;
+}
+/* ========== CARD 3: GLASS THEME (BLOG) ========== */
+@property --glass-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes glass-spin {
+  to { --glass-angle: 360deg; }
+}
+.card-glass {
+  background: conic-gradient(from var(--glass-angle),
+    rgba(255,255,255,0.3), rgba(255,255,255,0.1), rgba(255,255,255,0.3));
+  animation: glass-spin 8s linear infinite;
+}
+.card-glass .card-interior {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.card-glass:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 35px -15px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.3);
+}
+.glass-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  margin-bottom: 1.5rem;
+  color: rgba(255,255,255,0.9);
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(4px);
+}
+.card-glass h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: rgba(255,255,255,0.95);
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+/* ========== COMMON CARD CONTENT ========== */
+.card-description {
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.85);
+}
+.nested-section {
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+  transition: all 0.2s;
+}
+.card-gamer .nested-section {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,0,255,0.2);
+}
+.card-gamer .nested-section:hover {
+  background: rgba(255,0,255,0.1);
+  transform: translateX(5px);
+}
+.card-arctic .nested-section {
+  background: rgba(100,200,255,0.05);
+  border: 1px solid rgba(100,200,255,0.2);
+}
+.card-arctic .nested-section:hover {
+  background: rgba(100,200,255,0.1);
+  transform: translateX(5px);
+}
+.card-glass .nested-section {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(4px);
+}
+.card-glass .nested-section:hover {
+  background: rgba(255,255,255,0.1);
+  transform: translateX(5px);
+}
+.nested-section h3 {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+.card-gamer .nested-section h3 { color: #FF00FF; }
+.card-arctic .nested-section h3 { color: #9FC5F8; }
+.card-glass .nested-section h3 { color: #FFE536; }
+.nested-section p {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.7);
+  margin: 0;
+}
+.feature-list {
+  list-style: none;
+  margin-top: 1rem;
+}
+.feature-list li {
+  padding: 0.5rem 0;
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255,255,255,0.8);
+}
+.feature-list li::before {
+  content: "→";
+}
+.card-gamer .feature-list li::before { color: #00FF00; }
+.card-arctic .feature-list li::before { color: #9FC5F8; }
+.card-glass .feature-list li::before { color: #FFE536; }
 .site-footer {
   padding: 1.5rem 2rem;
   border-top: 1px solid rgba(255,255,255,0.1);
@@ -159,16 +375,19 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.75rem;
   opacity: 0.4;
 }
+@media (max-width: 1024px) {
+  .grid { gap: 1.5rem; }
+  h2 { font-size: 2rem !important; }
+}
 @media (max-width: 768px) {
-  .cards { grid-template-columns: 1fr; gap: 1rem; }
+  .grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .card-interior { padding: 1.5rem; }
   .hero { padding: 4rem 1.25rem 2rem; }
-  .cards { padding: 0 1.25rem 4rem; }
   .header-inner { padding: 0 1.25rem; }
   .site-footer { padding: 1.5rem 1.25rem; }
 }
 @media (max-width: 480px) {
   .hero { padding: 3rem 1.25rem 1.5rem; }
-  .card { padding: 2rem 1.5rem; }
 }
 </style>
 </head>
@@ -180,6 +399,7 @@ a { color: inherit; text-decoration: none; }
 <a href="about.html">About</a>
 <a href="https://edu.contrapaul.com" class="nav-tag">Edu</a>
 <a href="https://make.contrapaul.com" class="nav-tag">Make</a>
+<a href="https://blog.contrapaul.com" class="nav-tag">Blog</a>
 </nav>
 </div>
 </header>
@@ -188,26 +408,74 @@ a { color: inherit; text-decoration: none; }
 <h1>Paul Kwiatkowski</h1>
 <p>Design Technology educator, maker, and creator based in Shenzhen, China.</p>
 </section>
-<section class="cards">
-<a href="https://make.contrapaul.com" class="card card-1">
-<span class="card-number">01</span>
-<h2 class="card-title">Make</h2>
-<p class="card-desc">3D models, build logs, electronics experiments, and project documentation.</p>
-<span class="card-arrow">→</span>
-</a>
-<a href="https://edu.contrapaul.com" class="card card-2">
-<span class="card-number">02</span>
-<h2 class="card-title">Edu</h2>
-<p class="card-desc">IB DP Design Technology resources, study materials, and curriculum tools.</p>
-<span class="card-arrow">→</span>
-</a>
-<a href="https://blog.contrapaul.com" class="card card-3">
-<span class="card-number">03</span>
-<h2 class="card-title">Blog</h2>
-<p class="card-desc">Design work, teaching reflections, and notes from a life spent making things.</p>
-<span class="card-arrow">→</span>
-</a>
-</section>
+    <div class="grid">
+<div class="card card-gamer">
+<div class="card-interior">
+<div class="gamer-badge">make.contrapaul.com</div>
+<h2>make</h2>
+<p class="card-description">
+A collection of projects mostly falling outside the realm of school.
+</p>
+<div class="nested-section">
+<h3>Showcase</h3>
+<p>Behold, a selection of things I've made!</p>
+</div>
+<div class="nested-section">
+<h3>"Fantasy Football Chess"</h3>
+<p>A project that seriously speeds up and streamlines the tabletop game "Blood Bowl"</p>
+</div>
+<ul class="feature-list">
+<li>My models on Makerworld</li>
+<li>Repos on Github</li>
+<li>Videos on Youtube</li>
+</ul>
+</div>
+</div>
+<div class="card card-arctic">
+<div class="card-interior">
+<div class="arctic-badge">❄edu.contrapaul.com</div>
+<h2>edu</h2>
+<p class="card-description">
+IB Design Technology resources, units, and some pretty cool web tools.
+</p>
+<div class="nested-section">
+<h3>DP Design Curriculum</h3>
+<p>A robust companion to the textbook, complete with interactive tools and a growing amount of audio content.</p>
+</div>
+<div class="nested-section">
+<h3>Macropad Builder</h3>
+<p>A web tool for creating wiring diagrams, setting functions, and producing working code for ESP32 projects.</p>
+</div>
+<ul class="feature-list">
+<li>DP Design Technology IA guide</li>
+<li>Museum of Mr. K's Technology</li>
+<li>Material Selection Text Adventure</li>
+</ul>
+</div>
+</div>
+<div class="card card-glass">
+<div class="card-interior">
+<div class="glass-badge">blog.contrapaul.com</div>
+<h2>blog</h2>
+<p class="card-description">
+Yearly school portfolio updates, as well as articles and reflections about whatever I'm up to.
+</p>
+<div class="nested-section">
+<h3>ISTE Standards for 2026</h3>
+<p>A breakdown of how I met technology standards.</p>
+</div>
+<div class="nested-section">
+<h3>Reflections on things that didn't work</h3>
+<p>Looking back at units and activities I dropped or heavily revised.</p>
+</div>
+<ul class="feature-list">
+<li>IB Standards</li>
+<li>Backwards Mapping for DP</li>
+<li>SMART Goals for 2025-2026</li>
+</ul>
+</div>
+</div>
+</div>
 </main>
 <footer class="site-footer">
 <div class="footer-inner">
