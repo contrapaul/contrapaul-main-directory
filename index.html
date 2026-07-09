@@ -393,26 +393,27 @@ a { color: inherit; text-decoration: none; }
   h2 { font-size: 2rem !important; }
 }
 @media (max-width: 768px) {
-  .grid { grid-template-columns: 1fr; gap: 1.5rem; }
-  .card-interior { padding: 1.5rem; }
-  .hero { padding: 4rem 1.25rem 2rem; }
+  .grid { grid-template-columns: 1fr; gap: 1rem; padding: 0 1rem 3rem; }
+  .card-interior { padding: 1rem; }
+  .hero { padding: 2.5rem 1.25rem 1.5rem; }
+  .hero h1 { font-size: 2rem; margin-bottom: 0.75rem; }
+  .hero p { font-size: 0.85rem; }
   .header-inner { padding: 0 1.25rem; height: 48px; }
   .site-footer { padding: 1.5rem 1.25rem; }
   /* Compact header */
   .wordmark { font-size: 0.9rem; }
   .wordmark-tail { display: none; }
   .nav a { font-size: 0.7rem; padding: 0.3rem 0.5rem; }
-  /* Smaller card titles */
-  .card h2 { font-size: 1.5rem !important; margin-bottom: 0.75rem; }
+  /* Compact cards: smaller titles and subtitles, tighter spacing */
+  .gamer-badge, .arctic-badge, .glass-badge { margin-bottom: 0.75rem; }
+  .card h2 { font-size: 1.5rem !important; margin-bottom: 0.5rem; }
+  .card-description { font-size: 0.65rem; line-height: 1.5; margin-bottom: 0; }
   /* Cards collapsed by default; tap toggles .expanded (see script below) */
   .card .nested-section,
   .card .feature-list { display: none; }
   .card.expanded .nested-section,
   .card.expanded .feature-list { display: block; }
-  .card-toggle { display: block; }
-}
-@media (max-width: 480px) {
-  .hero { padding: 3rem 1.25rem 1.5rem; }
+  .card-toggle { display: block; margin-top: 0.75rem; }
 }
 </style>
 </head>
