@@ -393,8 +393,11 @@ a { color: inherit; text-decoration: none; }
   h2 { font-size: 2rem !important; }
 }
 @media (max-width: 768px) {
-  .grid { grid-template-columns: 1fr; gap: 1rem; padding: 0 1rem 3rem; }
+  .grid { grid-template-columns: 1fr; gap: 1.5rem; padding: 0 1rem 3rem; }
   .card-interior { padding: 1rem; }
+  /* The blurred glow layer renders as a hard-edged sheet on some
+     mobile browsers; the animated border is enough at this size */
+  .card-gamer::before { display: none; }
   .hero { padding: 2.5rem 1.25rem 1.5rem; }
   .hero h1 { font-size: 2rem; margin-bottom: 0.75rem; }
   .hero p { font-size: 0.85rem; }
@@ -404,9 +407,17 @@ a { color: inherit; text-decoration: none; }
   .wordmark { font-size: 0.9rem; }
   .wordmark-tail { display: none; }
   .nav a { font-size: 0.7rem; padding: 0.3rem 0.5rem; }
-  /* Compact cards: smaller titles and subtitles, tighter spacing */
-  .gamer-badge, .arctic-badge, .glass-badge { margin-bottom: 0.75rem; }
-  .card h2 { font-size: 1.5rem !important; margin-bottom: 0.5rem; }
+  /* Compact cards: title left, url bubble right on one line */
+  .card-head {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .gamer-badge, .arctic-badge, .glass-badge { margin-bottom: 0; }
+  .card h2 { font-size: 1.5rem !important; margin-bottom: 0; }
   .card-description { font-size: 0.65rem; line-height: 1.5; margin-bottom: 0; }
   /* Cards collapsed by default; tap toggles .expanded (see script below) */
   .card .nested-section,
@@ -437,9 +448,11 @@ a { color: inherit; text-decoration: none; }
     <div class="grid">
 <div class="card card-gamer">
 <div class="card-interior">
+<div class="card-head">
 <a href="https://make.contrapaul.com" class="no-underline">
 <div class="gamer-badge">make.contrapaul.com</div></a>
 <a href="https://make.contrapaul.com" class="no-underline"><h2>/make</h2></a>
+</div>
 <p class="card-description">
 A collection of projects mostly falling outside the realm of school.
 </p>
@@ -463,9 +476,11 @@ A collection of projects mostly falling outside the realm of school.
 </div>
 <div class="card card-arctic">
 <div class="card-interior">
+<div class="card-head">
 <a href="https://edu.contrapaul.com" class="no-underline">
 <div class="arctic-badge">edu.contrapaul.com</div></a>
 <a href="https://edu.contrapaul.com" class="no-underline"><h2>/edu</h2></a>
+</div>
 <p class="card-description">
 IB Design Technology resources, units, and some pretty cool web tools.
 </p>
@@ -491,9 +506,11 @@ IB Design Technology resources, units, and some pretty cool web tools.
 </div>
 <div class="card card-glass">
 <div class="card-interior">
+<div class="card-head">
 <a href="https://blog.contrapaul.com" class="no-underline">
 <div class="glass-badge">blog.contrapaul.com</div></a>
 <a href="https://blog.contrapaul.com" class="no-underline"><h2>/blog</h2></a>
+</div>
 <p class="card-description">
 Yearly school portfolio updates, as well as articles and reflections about whatever I'm up to.
 </p>
