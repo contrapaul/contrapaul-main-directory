@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=1100">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="paul kwiatkowski // designer / educator / maker">
 <title>contrapaul</title>
 <link rel="stylesheet" href="WEB/css/jetbrains-mono.css">
@@ -356,6 +356,18 @@ a { color: inherit; text-decoration: none; }
 .card-gamer .feature-list li::before { color: #00FF00; }
 .card-arctic .feature-list li::before { color: #9FC5F8; }
 .card-glass .feature-list li::before { color: #FFE536; }
+/* Mobile-only expand/shrink indicator (hidden on desktop) */
+.card-toggle {
+  display: none;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  opacity: 0.6;
+  margin-top: 1rem;
+}
+.card-toggle::after { content: '▾ more'; }
+.card.expanded .card-toggle::after { content: '▴ less'; }
 .site-footer {
   padding: 1.5rem 2rem;
   border-top: 1px solid rgba(255,255,255,0.1);
@@ -384,8 +396,20 @@ a { color: inherit; text-decoration: none; }
   .grid { grid-template-columns: 1fr; gap: 1.5rem; }
   .card-interior { padding: 1.5rem; }
   .hero { padding: 4rem 1.25rem 2rem; }
-  .header-inner { padding: 0 1.25rem; }
+  .header-inner { padding: 0 1.25rem; height: 48px; }
   .site-footer { padding: 1.5rem 1.25rem; }
+  /* Compact header */
+  .wordmark { font-size: 0.9rem; }
+  .wordmark-tail { display: none; }
+  .nav a { font-size: 0.7rem; padding: 0.3rem 0.5rem; }
+  /* Smaller card titles */
+  .card h2 { font-size: 1.5rem !important; margin-bottom: 0.75rem; }
+  /* Cards collapsed by default; tap toggles .expanded (see script below) */
+  .card .nested-section,
+  .card .feature-list { display: none; }
+  .card.expanded .nested-section,
+  .card.expanded .feature-list { display: block; }
+  .card-toggle { display: block; }
 }
 @media (max-width: 480px) {
   .hero { padding: 3rem 1.25rem 1.5rem; }
@@ -395,7 +419,7 @@ a { color: inherit; text-decoration: none; }
 <body>
 <header class="site-header">
 <div class="header-inner">
-<a href="/" class="wordmark">contrapaul | paul kwiatkowski</a>
+<a href="/" class="wordmark">contrapaul<span class="wordmark-tail"> | paul kwiatkowski</span></a>
 <nav class="nav">
 <a href="about.html">About</a>
 <a href="https://edu.contrapaul.com" class="nav-tag">Edu</a>
@@ -433,6 +457,7 @@ A collection of projects mostly falling outside the realm of school.
 <li><a href="https://www.instagram.com/contrapaul" class="no-underline">Instagram (students say I'm famous)</a></li>
 <li><a href="https://www.youtube.com/@PaulKwiatkowski" class="no-underline">Videos on Youtube</a></li>
 </ul>
+<div class="card-toggle"></div>
 </div>
 </div>
 <div class="card card-arctic">
@@ -460,6 +485,7 @@ IB Design Technology resources, units, and some pretty cool web tools.
 <li><a href="https://edu.contrapaul.com/tools/Auditorium" class="no-underline">Auditorium Seating Plan Builder</a></li>
 <li><a href="https://edu.contrapaul.com/tools/central-middlezhong-adventure" class="no-underline">Material Selection Text Adventure</a></li>
 </ul>
+<div class="card-toggle"></div>
 </div>
 </div>
 <div class="card card-glass">
@@ -485,6 +511,7 @@ Yearly school portfolio updates, as well as articles and reflections about whate
 <li>Backwards Mapping for DP</li>
 <li><a href="https://blog.contrapaul.com/posts/2025-2026-goals" class="no-underline">SMART Goals for 2025-2026</a></li>
 </ul>
+<div class="card-toggle"></div>
 </div>
 </div>
 </div>
@@ -495,5 +522,14 @@ Yearly school portfolio updates, as well as articles and reflections about whate
 <span class="footer-location">Shenzhen, China</span>
 </div>
 </footer>
+<script>
+document.querySelectorAll('.card').forEach(function (card) {
+  card.addEventListener('click', function (e) {
+    if (!window.matchMedia('(max-width: 768px)').matches) return;
+    if (e.target.closest('a')) return;
+    card.classList.toggle('expanded');
+  });
+});
+</script>
 </body>
 </html>
