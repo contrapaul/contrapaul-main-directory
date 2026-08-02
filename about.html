@@ -23,16 +23,11 @@
 <section class="hero">
 <div class="hero-grid">
 <div class="hero-text">
-<p class="hero-eyebrow">Paul Kwiatkowski</p>
 <h1 class="hero-title">
             Designer.<br>
             Educator.<br>
-<span class="accent">Maker.</span>
+<span class="accent" id="rotating-title">Maker.</span>
 </h1>
-<p class="hero-sub">
-            Design Technology teacher, maker,<br>
-            and electronics learner based in Shenzhen, China.
-</p>
 </div>
 <div class="hero-decoration" aria-hidden="true">
 <div class="deco-box deco-1"></div>
@@ -43,7 +38,6 @@
 </section>
 <section class="about" id="about">
 <div class="about-inner">
-<div class="about-label">About</div>
 <div class="about-content">
 <p class="about-text">
             I teach Design Technology at the IB Diploma level in Shenzhen, where I also spend too much time designing 3D models, soldering microcontrollers, and documenting all of it. My work sits at the intersection of design thinking, making, and technology education.
@@ -53,6 +47,30 @@
 <a href="https://makerworld.com/" class="pill-link" target="_blank" rel="noopener">MakerWorld</a>
 <a href="https://printables.com/" class="pill-link" target="_blank" rel="noopener">Printables</a>
 </div>
+
+<div class="contact-block">
+<h2 class="contact-title">Get in touch</h2>
+<p class="contact-lede">Suggestions, corrections, collaboration — always happy to hear from teachers and students.</p>
+<form class="contact-form" id="contact-form" novalidate>
+<label class="contact-field">
+<span class="contact-label">Name</span>
+<input type="text" name="name" required autocomplete="name" maxlength="100">
+</label>
+<label class="contact-field">
+<span class="contact-label">Email</span>
+<input type="email" name="email" required autocomplete="email" maxlength="200">
+</label>
+<label class="contact-field">
+<span class="contact-label">Message</span>
+<textarea name="message" rows="4" required maxlength="5000"></textarea>
+</label>
+<input type="text" name="company" class="contact-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+<button type="submit" class="contact-submit" id="contact-submit">Send message</button>
+<div class="contact-status" id="contact-status" role="status" aria-live="polite"></div>
+</form>
+<div class="contact-fallback">Or email <a href="mailto:hello@contrapaul.com">hello@contrapaul.com</a></div>
+</div>
+
 </div>
 </div>
 </section>
@@ -63,5 +81,70 @@
 <span class="footer-location">Shenzhen, China</span>
 </div>
 </footer>
+<script>
+var titles = ["Maker", "Home Chef", "Occasional Voice Actor", "Learner", "Cat Person", "Tech Person"];
+document.getElementById('rotating-title').textContent = titles[Math.floor(Math.random() * titles.length)] + '.';
+</script>
+<script>
+(function () {
+  'use strict';
+  var form = document.getElementById('contact-form');
+  if (!form) return;
+  var btn = document.getElementById('contact-submit');
+  var statusEl = document.getElementById('contact-status');
+
+  function setStatus(msg, kind) {
+    statusEl.textContent = msg;
+    statusEl.className = 'contact-status' + (kind ? ' is-' + kind : '');
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    setStatus('', '');
+    var fd = new FormData(form);
+
+    /* Honeypot: real users never fill this hidden field */
+    if ((fd.get('company') || '').trim()) {
+      setStatus('Thanks — your message has been sent.', 'success');
+      form.reset();
+      return;
+    }
+
+    var payload = {
+      name: (fd.get('name') || '').trim(),
+      email: (fd.get('email') || '').trim(),
+      message: (fd.get('message') || '').trim()
+    };
+    if (!payload.name || !payload.email || !payload.message) {
+      setStatus('Please fill in all fields.', 'error');
+      return;
+    }
+
+    var original = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (body) {
+        if (res.ok) {
+          setStatus('Thanks — your message has been sent.', 'success');
+          form.reset();
+        } else {
+          setStatus(body.error || 'Something went wrong. Please use the email link below.', 'error');
+        }
+      });
+    }).catch(function () {
+      setStatus('Network error. Please use the email link below.', 'error');
+    }).finally(function () {
+      btn.disabled = false;
+      btn.textContent = original;
+    });
+  });
+})();
+</script>
 </body>
 </html>
