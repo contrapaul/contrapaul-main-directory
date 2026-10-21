@@ -11,7 +11,7 @@
 
    No-JS behaviour: the pyp panel carries .is-active in the
    markup, so the page reads without scripts (with its noscript
-   note, since the scenario screens are rendered by script).
+   note, since the scenarios are rendered by script).
    ============================================================ */
 (function () {
   'use strict';
@@ -41,7 +41,7 @@
     });
 
     // Return to the top of the document on tab change, unless a
-    // deep link carries a target id (then step 2 scrolls there).
+    // deep link carries a target id (then scroll to it).
     var target = null;
     if (location.hash.indexOf('#') !== -1) {
       var id = location.hash.slice(location.hash.lastIndexOf('#') + 1);

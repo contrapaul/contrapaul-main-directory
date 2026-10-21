@@ -1,13 +1,12 @@
 /* ============================================================
    DEI training page: base layout
    ------------------------------------------------------------
-   Structure, header, tabs, screens, footer, buttons, rail
-   shell. All colours come from tokens.css.
+   Header, tabs, reading column, footer, buttons, placeholders.
+   All colours come from tokens.css.
 
-   Platform rule (brief extras 3): every scenario tab is worked
-   on phones (44px targets, no hover only reveals) and presented
-   in a staff room. Everything here must hold at 390x844 and at
-   1920x1080.
+   Phone first: every rule here is written for 360 to 430px wide
+   and checked at 390x844 and 360x740. Wider screens get the same
+   column, centred.
    ============================================================ */
 
 /* ---------- Reset-lite --------------------------------------- */
@@ -28,10 +27,10 @@ body {
   min-height: 100svh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
-/* Chinese sets are denser; give CJK a touch more air.
-   (tokens note: nudge only, nothing structural.) */
+/* Chinese sets are denser; give CJK a touch more air. */
 :root[data-lang="zh"] body { line-height: 1.7; }
 
 img, svg { display: block; max-width: 100%; }
@@ -44,6 +43,8 @@ a {
   text-decoration-thickness: 1px;
 }
 
+button { font: inherit; color: inherit; }
+
 /* Focus: 2px accent ring, offset, both themes. */
 :focus-visible {
   outline: var(--focus-ring) solid var(--accent);
@@ -51,22 +52,27 @@ a {
   border-radius: var(--radius-s);
 }
 
-/* ---------- Header -------------------------------------------- */
+/* ---------- Header --------------------------------------------
+   One compact row that stays on screen: tabs on the left, the
+   rewards and the two toggles on the right. The brand shows only
+   when there is room for it. */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 20;
   display: flex;
   align-items: center;
-  gap: var(--sp-4);
-  padding: var(--sp-3) var(--sp-5);
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-4);
+  padding-top: max(var(--sp-2), env(safe-area-inset-top));
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
   backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
   border-bottom: 1px solid var(--line);
-  flex-wrap: wrap;
 }
 
 .brand {
+  display: none;
   font-weight: 700;
   font-size: var(--fs-3);
   letter-spacing: -0.01em;
@@ -77,37 +83,38 @@ a {
 
 .brand .brand-sep { color: var(--text-faint); font-weight: 400; }
 
-/* Tab strip: six scenario tabs. Hash routes #/s1 to #/s6.
-   Six tabs do not fit a phone header, so the strip scrolls
-   horizontally on narrow screens; the active tab is always
-   reachable by scrolling, and its surface + shadow state makes
-   the position unmistakable. */
+@media (min-width: 640px) {
+  .brand { display: block; }
+}
+
+/* Two tabs as a segmented control. Active state is carried by
+   surface + shadow + weight, not colour alone. */
 .tabs {
   display: flex;
-  gap: var(--sp-1);
+  flex: none;
+  gap: 2px;
   padding: 3px;
   background: var(--bg-soft);
   border: 1px solid var(--line);
   border-radius: 999px;
-  margin-inline: auto;
-  max-width: calc(100vw - 24px);
-  overflow-x: auto;
-  scrollbar-width: none;
 }
 
-.tabs::-webkit-scrollbar { display: none; }
+@media (min-width: 640px) {
+  .tabs { margin-inline: auto; }
+}
 
 .tab-link {
-  display: inline-block;
-  flex: none;             /* six tabs: no shrinking, scroll instead */
-  white-space: nowrap;
-  padding: 7px 18px;
-  min-height: 44px;           /* touch target rule */
-  line-height: 1.3;
-  font-size: var(--fs-2);
-  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  min-width: 56px;
+  padding: 0 12px;
+  font-size: var(--fs-1);
+  font-weight: 600;
   color: var(--text-secondary);
   text-decoration: none;
+  white-space: nowrap;
   border-radius: 999px;
   transition: color var(--dur-micro) var(--ease-out),
               background-color var(--dur-micro) var(--ease-out);
@@ -118,18 +125,14 @@ a {
 .tab-link.is-active {
   background: var(--surface);
   color: var(--text);
+  font-weight: 700;
   box-shadow: var(--shadow-1);
 }
 
-.tab-link.is-active::before {
-  content: none; /* active state is carried by surface + shadow, not colour alone */
-}
-
-/* Header tools: language + theme toggles, right aligned. */
 .header-tools {
   display: flex;
   align-items: center;
-  gap: var(--sp-2);
+  gap: 6px;
   margin-left: auto;
 }
 
@@ -140,10 +143,10 @@ a {
   gap: var(--sp-2);
   min-width: 44px;
   min-height: 44px;
-  padding: 6px 12px;
-  font: inherit;
+  padding: 6px 8px;
   font-size: var(--fs-1);
   font-weight: 600;
+  white-space: nowrap;
   color: var(--text-secondary);
   background: var(--surface);
   border: 1px solid var(--line);
@@ -157,61 +160,32 @@ a {
 
 .tool-btn svg { width: 18px; height: 18px; }
 
-/* Theme icons: show the theme you would switch TO.
-   Sun is visible in dark mode, moon in light mode. */
+/* The theme button is icon only on phones. */
+.tool-label { display: none; }
+
+@media (min-width: 640px) {
+  .tool-label { display: inline; }
+}
+
+/* Theme icons: show the theme you would switch TO. */
 :root[data-theme="light"] .icon-sun  { display: none; }
 :root[data-theme="dark"]  .icon-moon { display: none; }
 
-/* ---------- Screens -------------------------------------------
-   A screen is one viewport. data-screen is the grid the arrow
-   key engine (step 2) steps between. min-height, not height:
-   content may push a screen taller, but the authoring rule is
-   that it fits one viewport at 1280x720 (plans.md section 1). */
-main { flex: 1; }
-
-.screen {
-  min-height: 100svh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--sp-7) var(--sp-5);
-  scroll-snap-align: start;
-  scroll-snap-stop: normal;
-}
-
+/* ---------- Reading column ------------------------------------ */
 main {
-  /* proximity, never mandatory: the page is a scrolling document
-     first (brief hard requirement 1). */
-  scroll-snap-type: y proximity;
-}
-
-.screen-inner {
+  flex: 1;
   width: 100%;
-  max-width: 860px;
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-4);
+  max-width: 680px;
+  margin-inline: auto;
+  padding: 0 var(--sp-4) var(--sp-7);
 }
 
-.screen-kicker {
-  font-size: var(--fs-1);
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-}
+.tab-panel { display: none; }
+.tab-panel.is-active { display: block; }
 
-.screen-title {
-  font-size: var(--fs-7);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-}
-
-.screen-lede {
-  font-size: var(--fs-3);
-  line-height: 1.6;
+.noscript-note {
+  padding: var(--sp-6) 0;
   color: var(--text-secondary);
-  max-width: 65ch;
 }
 
 /* ---------- Placeholder discipline ----------------------------
@@ -219,10 +193,10 @@ main {
    editor) can locate replaceable content in one sweep. */
 .ph-tag {
   display: inline-block;
-  align-self: flex-start;
-  padding: 2px 10px;
-  font-size: var(--fs-1);
+  padding: 1px 8px;
+  font-size: 12px;
   font-weight: 600;
+  line-height: 1.6;
   color: var(--warn);
   background: color-mix(in srgb, var(--warn) 12%, transparent);
   border: 1px dashed color-mix(in srgb, var(--warn) 45%, transparent);
@@ -230,158 +204,11 @@ main {
   white-space: nowrap;
 }
 
-.ph-box {
-  padding: var(--sp-5);
-  background: var(--surface);
-  border: 1px dashed var(--line-strong);
-  border-radius: var(--radius-m);
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-3);
-}
-
-/* ---------- Rail ---------------------------------------------
-   js/screens.js fills [data-rail] with one dot per data-screen
-   of the active tab. Dots are anchors (deep linkable) with a
-   44px hit area from the ::before pad. */
-.rail {
-  position: fixed;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 15;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 8px;
-  min-height: 120px;
-}
-
-.rail-dot {
-  position: relative;
-  display: block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--line-strong);
-  transition: background-color var(--dur-micro) var(--ease-out),
-              transform var(--dur-micro) var(--ease-out);
-}
-
-.rail-dot::before {
-  content: "";
-  position: absolute;
-  inset: -17px;   /* 44px hit area */
-}
-
-.rail-dot:hover { background: var(--text-secondary); }
-
-.rail-dot.is-passed { background: var(--text-faint); }
-
-.rail-dot.is-current {
-  background: var(--accent);
-  transform: scale(1.4);
-}
-
-/* Hide the rail on narrow screens; phones scroll and tap.
-   Presenter mode hides it too: the strip and arrows drive the
-   room, the rail is a browser convenience. */
-@media (max-width: 720px) {
-  .rail { display: none; }
-}
-
-:root[data-mode="presenter"] .rail { display: none; }
-
-/* ---------- Reveal choreography --------------------------------
-   Hidden only when JS is present (the .js class is added by the
-   pre-paint snippet; <noscript> forces visibility as backup).
-   Entrance: fade + 12px rise. Stagger is applied by
-   js/screens.js via transition-delay-free setTimeout order. */
-.js [data-reveal] {
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity var(--dur-reveal) var(--ease-out),
-              transform var(--dur-reveal) var(--ease-out);
-}
-
-.js [data-reveal].is-in {
-  opacity: 1;
-  transform: none;
-}
-
-/* ---------- Presenter strip ------------------------------------
-   Fixed corner controls: prev / next and the current screen
-   title. js/screens.js updates the title on every change. */
-.strip {
-  position: fixed;
-  right: 16px;
-  bottom: 16px;
-  z-index: 30;
-  display: flex;
-  align-items: center;
-  gap: var(--sp-2);
-  padding: 6px 10px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  box-shadow: var(--shadow-1);
-  max-width: min(70vw, 440px);
-}
-
-.strip-btn {
-  flex: none;
-  min-width: 44px;
-  min-height: 44px;
-  padding: 8px 16px;
-  font: inherit;
-  font-size: var(--fs-1);
-  font-weight: 600;
-  color: var(--text-secondary);
-  background: transparent;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  cursor: pointer;
-  transition: color var(--dur-micro) var(--ease-out),
-              border-color var(--dur-micro) var(--ease-out);
-}
-
-.strip-btn:hover { color: var(--text); border-color: var(--line-strong); }
-
-.strip-title {
-  font-size: var(--fs-1);
-  color: var(--text-secondary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 46vw;
-}
-
-/* On phones the strip becomes a full-width dock and the title
-   drops: the buttons are the point. */
-@media (max-width: 720px) {
-  .strip {
-    left: 16px;
-    right: 16px;
-    justify-content: center;
-    max-width: none;
-  }
-  .strip-title { display: none; }
-}
-
-/* ---------- Tabs (panels) --------------------------------------
-   .tab-panel is hidden unless it is the active hash route.
-   js/tabs.js toggles .is-active; no-JS fallback shows the first tab. */
-.tab-panel { display: none; }
-.tab-panel.is-active { display: block; }
-
-/* No-JS: the s1 panel is marked is-active in the markup, so
-   the page still reads without scripts. */
-
 /* ---------- Footer ---------------------------------------------
    Exact copy from the brief, both languages, no capitalization. */
 .site-footer {
-  padding: var(--sp-4) var(--sp-5);
+  padding: var(--sp-4);
+  padding-bottom: max(var(--sp-4), env(safe-area-inset-bottom));
   border-top: 1px solid var(--line);
   text-align: center;
   font-size: var(--fs-1);
@@ -393,9 +220,7 @@ main {
   font-weight: 500;
 }
 
-/* ---------- Motion preferences ---------------------------------
-   Still versions are the default here; step 2 reveals opt in
-   only when motion is allowed. */
+/* ---------- Motion preferences --------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
@@ -403,13 +228,4 @@ main {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-:root[data-mode="presenter"] {
-  /* Presenter mode: effects off. js/screens.js also skips the
-     reveal stagger when this attribute is set. */
-  --dur-micro: 0ms;
-  --dur-base: 0ms;
-  --dur-reveal: 0ms;
-  --dur-data: 0ms;
 }

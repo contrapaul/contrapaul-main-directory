@@ -3,87 +3,86 @@ import assert from 'node:assert/strict';
 import { makeEnv, run, runIn } from './shim.mjs';
 
 const KEY = 'dei-progress';
+const PYP = ['sc1', 'sc2', 'sc3', 'sc4'];
+const MSHS = ['sc5', 'sc6', 'sc7', 'sc8', 'sc9'];
 
 function setup(opts = {}) {
-  const made = makeEnv({ panels: ['pyp', 'mshs'], tabLinks: ['pyp', 'mshs'], ...opts });
+  const made = makeEnv(opts);
   const ctx = run('data/scenarios.js', made.env);
-  /* Load order matches index.html: scenarios renders first,
-     progress syncs over the rendered chips. */
   runIn(ctx, 'js/i18n.js');
-  runIn(ctx, 'js/scenarios.js');
   runIn(ctx, 'js/progress.js');
-  const { env, ...rest } = made;
-  return { ctx, env: Object.assign({}, env, rest) };
+  return { ctx, ...made };
 }
 
-/* Build the full store (every element of every scenario done)
-   from the scenario data. */
-function fullStore(ctx) {
-  const store = {};
-  ctx.dei.scenarios.forEach((sc) => {
-    store[sc.id] = {};
-    sc.elements.forEach((el) => { store[sc.id][el] = 1; });
-  });
-  return JSON.stringify(store);
-}
+// Copy out of the sandbox so deepEqual sees a plain array.
+const earned = (ctx) => Array.from(ctx.dei.progress.earned());
+/* The header slot holds the trophy button and the awards list. */
+const trophy = (env) => env.rewardsEl.children[0];
+const count = (env) => trophy(env).children[1].textContent;
+const status = (env) => env.rewardsEl.children[1].children[0].children.map((li) => li.children[2].textContent);
 
-test('markDone persists to localStorage as JSON', () => {
-  const { ctx, env } = setup();
-  ctx.dei.progress.markDone('sc1', 'debrief');
-  const parsed = JSON.parse(env.stored[KEY]);
-  assert.deepEqual(parsed, { sc1: { debrief: 1 } });
-  assert.ok(ctx.dei.progress.isDone('sc1', 'debrief'));
+test('the trophy opens and closes the awards list', () => {
+  const env = setup();
+  const pop = env.rewardsEl.children[1];
+  assert.ok(pop.hasAttribute('hidden'));
+  trophy(env).fire('click');
+  assert.ok(!pop.hasAttribute('hidden'));
+  assert.equal(trophy(env).attrs['aria-expanded'], 'true');
+  trophy(env).fire('click');
+  assert.ok(pop.hasAttribute('hidden'));
 });
 
-test('scenarioDone requires every element of the scenario', () => {
-  const { ctx } = setup();
-  ctx.dei.progress.markDone('sc1', 'debrief');
-  assert.ok(!ctx.dei.progress.scenarioDone('sc1'));
-  ctx.dei.progress.markDone('sc1', 'rb0');
-  assert.ok(!ctx.dei.progress.scenarioDone('sc1'));
-  ctx.dei.progress.markDone('sc1', 'player');
-  assert.ok(ctx.dei.progress.scenarioDone('sc1'));
-  assert.ok(!ctx.dei.progress.allDone());
+test('nothing is earned on load', () => {
+  const { ctx, rewardsEl } = setup();
+  assert.deepEqual(earned(ctx), []);
+  const env = { rewardsEl };
+  assert.equal(count(env), '');
+  assert.deepEqual(status(env), ['0 of 4 played', '0 of 5 played', '0 of 9 played']);
 });
 
-test('progress survives a reload', () => {
-  const { ctx } = setup();
-  const store = {};
-  ctx.dei.progress.markDone('sc1', 'player');
-  store.sc1 = { player: 1 };
-  const second = setup({ stored: { [KEY]: JSON.stringify(store) } });
-  assert.ok(second.ctx.dei.progress.isDone('sc1', 'player'));
-  assert.equal(second.ctx.dei.progress.scenarioDone('sc1'), false);
+test('PYP reward needs all four PYP scenarios, and only those', () => {
+  const env = setup();
+  PYP.slice(0, 3).forEach((id) => env.ctx.dei.progress.complete(id));
+  assert.deepEqual(earned(env.ctx), []);
+  env.ctx.dei.progress.complete('sc4');
+  assert.deepEqual(earned(env.ctx), ['pyp']);
+  assert.equal(count(env), '1');
+  assert.deepEqual(status(env), ['\u2713 Earned', '0 of 5 played', '4 of 9 played']);
+  assert.ok(trophy(env).classes.has('is-new'));
 });
 
-test('work finished in an earlier visit shows the badge without celebrating', () => {
-  const { ctx } = setup();
-  const pre = fullStore(ctx);
-  const second = setup({ stored: { [KEY]: pre } });
-  assert.ok(second.ctx.dei.progress.allDone());
-  assert.equal(second.env.badgeEl.attrs['hidden'], 'false');
-  const bursts = second.env.document.body.children.filter((c) => c.classes.has('celebrate'));
-  assert.equal(bursts.length, 0);
-  // The jump chips and tab links carry their marks on load.
-  assert.ok(second.ctx.dei.ui.chips.sc9.el.classes.has('is-done'));
-  second.env.linkEls.forEach((l) => assert.ok(l.classes.has('is-done')));
+test('all nine earn MS/HS and Conflict Resolution too', () => {
+  const env = setup();
+  MSHS.forEach((id) => env.ctx.dei.progress.complete(id));
+  assert.deepEqual(earned(env.ctx), ['mshs']);
+  PYP.forEach((id) => env.ctx.dei.progress.complete(id));
+  assert.deepEqual(earned(env.ctx), ['pyp', 'mshs', 'all']);
+  assert.equal(count(env), '3');
+  assert.equal(trophy(env).attrs['aria-label'], 'Awards: 3 / 3');
 });
 
-test('the presenter strip reset button clears everything', () => {
-  const { ctx, env } = setup();
-  ctx.dei.scenarios.forEach((sc) => {
-    sc.elements.forEach((el) => ctx.dei.progress.markDone(sc.id, el));
-  });
-  assert.ok(ctx.dei.progress.allDone());
-  env.resetBtn.fire('click');
-  assert.equal(env.stored[KEY], '{}');
-  assert.ok(!ctx.dei.progress.allDone());
-  assert.equal(env.badgeEl.attrs['hidden'], 'true');
+test('progress survives a reload; earlier rewards show without the pop', () => {
+  const first = setup();
+  PYP.forEach((id) => first.ctx.dei.progress.complete(id));
+  const second = setup({ stored: { [KEY]: first.stored[KEY] } });
+  assert.deepEqual(earned(second.ctx), ['pyp']);
+  assert.ok(!trophy(second).classes.has('is-new'));
+  assert.equal(count(second), '1');
 });
 
-test('corrupt stored progress loads as empty, not as a crash', () => {
-  const { ctx } = setup({ stored: { [KEY]: '{not json' } });
-  assert.ok(!ctx.dei.progress.allDone());
-  ctx.dei.progress.markDone('sc1', 'debrief');
-  assert.ok(ctx.dei.progress.isDone('sc1', 'debrief'));
+test('completing twice changes nothing', () => {
+  const env = setup();
+  env.ctx.dei.progress.complete('sc1');
+  const before = env.stored[KEY];
+  env.ctx.dei.progress.complete('sc1');
+  assert.equal(env.stored[KEY], before);
+});
+
+test('corrupt or old-format progress loads as empty, not as a crash', () => {
+  for (const bad of ['{not json', JSON.stringify({ sc1: { player: 1 } })]) {
+    const { ctx } = setup({ stored: { [KEY]: bad } });
+    assert.ok(!ctx.dei.progress.isComplete('sc1'));
+    ctx.dei.progress.complete('sc1');
+    assert.ok(ctx.dei.progress.isComplete('sc1'));
+  }
 });

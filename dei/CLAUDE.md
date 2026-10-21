@@ -1,47 +1,59 @@
 # dei: house rules
 
-Rules for working in this repo. Each rule says why. If a rule and a request conflict, surface the conflict; do not silently break the rule.
+Rules for working in this folder. Each rule says why. If a rule and a request conflict, surface the conflict; do not silently break the rule. Rewritten 2026-10-21. Earlier versions described a presenter driven slide tool; that is out.
 
 ## The page
 
-- **This is a presentation surface, not a course, and it is a mobile surface first.** The page is two tabs (PYP, MS/HS) holding nine scenarios. A presenter drives the tabs from the front of a staff room; staff work the same tabs, most of them on phones. Write for the phone first; the staff room is the second seat.
-- **Legible from the back of the room.** Check every screen at 1280x720 and at presenter-mode scale. If a line needs squinting, it is too small.
-- **Normal scrolling always works.** Arrow keys are an addition that steps by screen. Nothing may capture the wheel, hijack the scrollbar, or make free scrolling feel wrong.
-- **Arrow keys must never land mid-screen.** Screens are `data-screen` sections of at least one viewport. If content cannot fit one viewport at 1280x720, split it into two screens with a "continued" kicker. Never shrink it, never let it straddle.
-
-## Zero network
-
-- **Nothing is fetched from another host, ever.** No CDN fonts, no external scripts, no analytics. The page runs from `file://` and from any static host. A school network, a blocked CDN, a dead DNS: none of these may be able to stop the page in front of a room.
-- **Consequence: no ES modules and no `fetch()` in this repo.** They break on `file://`. Plain scripts, and data lives in the HTML or in plain `.js` data files, not in fetched JSON.
-
-## Language
-
-- **Every user facing string carries both languages, always.** Elements use `data-en` and `data-zh` attributes; content data objects use `{"en": ..., "zh": ...}` pairs. No string is added to any file without its pair, English or Chinese. The page must never go blank on a missing pair: `js/i18n.js` leaves the visible text as-is rather than clearing it.
-- Chinese is Simplified only.
-- **Write plain, grade 8 to 10 English.** Short common words, one idea per sentence where possible, no idioms that do not survive translation. The 中文 column is a real translation, not a decoration.
-
-## Writing
-
-- **No em dashes anywhere**, in any file: HTML, JS, comments, markdown. Full stop, colon, comma or brackets instead.
-- **No double titling.** A screen gets one title. A small uppercase kicker is for metadata (a code, a count, a status tag), never a second saying of the title.
-- **No AI tells.** No "not just X but Y", no short punchy fragment used as a reveal, no closing clause that restates the point, no triads, no colon splitting a catchy half from an explanatory half. Prefer the longer complete sentence that says the mechanism.
-- **Not preachy, not cute.** This is a case file the room works through, not a lecture and not a reward show.
+- **A discussion page for teachers, built for phones first.** Two tabs, PYP and MS/HS. Each tab holds its group's scenarios with jump links at the top. Teachers play each conversation, work its interactive pieces, and discuss.
+- **Mobile is the top priority.** Every change is checked at 390x844 and 360x740 before anything else. No horizontal scrolling, body text at least 17px, touch targets at least 44px. Desktop only needs to look tidy.
+- **One title per scenario, and nothing extra.** The scenario's real title only ("Unkind Nickname"). No kicker or number above it ("PYP SCENARIO 3"), no subtitle, no method tag, no section headings inside a scenario, no label that repeats what the tab or the layout already says. Extra text pushes the conversation down the screen. If text is neither committee content nor a control the reader needs, cut it.
+- **No presentation features.** No presenter mode, no presenter strip, no arrow key screen stepping, no `data-screen` grid, no progress rail, no scroll snap. Ask Paul before adding anything like them.
+- **Normal scrolling, normal links.** Tabs are `#/pyp` and `#/mshs`; jump links go to each scenario (`#/pyp#sc3`).
 
 ## Interaction
 
-- **No hover-only reveals.** Every hover state has a tap equivalent. Touch targets at least 44px.
-- **Arrow keys must not hijack typing.** Any handler that reads arrow keys early-returns when focus is in an input, textarea, select, contenteditable, or an element marked `data-keys-live`.
-- **Every interactive element has a keyboard path, an aria story, a reset, and a still version** for `prefers-reduced-motion` and presenter mode.
-- **No content that depends on colour alone.** Every state change also changes an icon, a shape or a word.
-- **The explorer reward is earned, never given.** It requires engaging every interactive element of all nine scenarios (plans.md, "The explorer reward"). Scrolling a tab or opening it earns nothing. If a change would let the reward be collected without full engagement, the change is wrong.
+- **Every conversation is a phone chat** (plans.md section 3). Pure text, no images. Play starts it; messages arrive at the bottom of a chat window and push older ones up. Teacher and student 2 send from the left; student 1, "STUDENT" and the group from the right, each in their own colour. Stage directions are small centred notes. Each message stays alone for as long as it takes to read (short replies quick, long ones longer), with typing dots just before the next one. Once played, the whole chat stays to scroll. Never make the reader tap for each message.
+- **Placeholder layouts A to E are for Paul to choose from** (plans.md section 4). Do not add new kinds or move them between scenarios unless Paul asks. Their suggestions are committee lines; their questions and feedback are labelled placeholder wording until Paul replaces them.
+- **Rewards are earned, never given.** A scenario counts when its conversation has played to the last message. One trophy button in the header opens the three awards (PYP, MS/HS, Conflict Resolution). No reset (plans.md section 5).
+- **No hover-only states.** Every interaction works by tap and by keyboard, has an aria story, and has a still version for `prefers-reduced-motion`.
+- **Never colour alone.** Bubble colour is backed by side and a speaker label.
+
+## The scenarios
+
+- **`scenarios.md` is the source of truth, and its text is shown as written.** Same words, order, punctuation and speaker labels. Do not rewrite, shorten, merge or correct it, and do not "clean up" its dashes or quote marks.
+- **Display exceptions are Paul's only**, listed at the top of `scenarios.md` (for example, the title drops its "Scenario N: PYP - " prefix). Do not add more on your own.
+- **Never add copy to a scenario.** No made up rules, notes, prompts, examples, answers or summaries.
+- **Wording changes come only from Paul or the committee.** Change `scenarios.md` first, then `data/scenarios.js`. A test checks that the page data matches `scenarios.md`.
+
+## Zero network
+
+- **Nothing is fetched from another host.** No CDN fonts, no external scripts, no analytics. The page runs from `file://` and from any static host.
+- **So: no ES modules and no `fetch()`.** They break on `file://`. Plain scripts; data lives in plain `.js` data files.
+
+## Language
+
+- **The EN/中文 toggle stays.** Page chrome carries `data-en` / `data-zh` pairs; scenario data carries `{en, zh}` pairs. A missing pair never blanks the page.
+- Chinese is Simplified only. A preliminary translation comes after tonight's staff review, the final one after the English locks. The zh text translates the committee text as written, nothing added. Until then scenario text falls back to English in 中文 mode; page chrome is already translated.
+
+## Writing (our own words only)
+
+These apply to text we write: page chrome, code comments, docs. They never apply to the committee's scenario text.
+
+- Plain grade 8 to 10 English. No em dashes. No AI tells. Not preachy, not cute.
+- Keep chrome to the minimum: tab names, jump links, the player buttons, the footer.
 
 ## Placeholders
 
-- **Every placeholder is labelled.** It carries a `.ph-tag` ("placeholder" / "占位内容") and its copy says what will replace it. Paul fills content later; the labels are his find-in-editor markers.
-- **Replaceable content lives apart from the machinery.** Copy in `data-en`/`data-zh` and data objects; behaviour in `js/`. Swapping content must never require touching a handler.
+- Every placeholder is labelled ("placeholder" / "占位内容") so Paul can find it: the layouts, the scenario 3 debrief.
+
+## Look and access
+
+- Light and dark themes, chosen before first paint, stored in `localStorage` (`dei-theme`).
+- WCAG AA contrast in both themes, including every bubble colour. Focus visible.
 
 ## Process
 
-- **After every change that works, add a dated entry to the top of HANDOFF.md**: what was asked, what was built, what was decided and why, and what is still unverified. Update the status section if it changed. Do this before saying the work is finished.
-- **Brief and plan are the contract.** `brief.md` says what the page is; `plans.md` says how it is built and what was settled and why. If a request conflicts with them, say so and update the documents, do not drift.
-- **Verify before claiming.** A change is done when its checkpoint in `plans.md` passes, not when the file saves.
+- **Work on `main`. Do not create branches.** (Paul, 2026-10-21.) Cloudflare Pages deploys `main` to `contrapaul.com/dei/`.
+- **After every change that works, add a dated entry to the top of HANDOFF.md**: what was asked, what changed, what is still unverified. Use today's real date. Update the status section. Do this before saying the work is finished.
+- **`brief.md` says what the page is; `plans.md` says how it is built.** If a request conflicts with them, say so and update them. Do not fill gaps with your own ideas: ask.
+- **Verify before claiming.** Tests pass (`npm test`), and the phone check is done in a real browser at 390x844 and 360x740 (Playwright with the preinstalled Chromium works), before saying a change is done.

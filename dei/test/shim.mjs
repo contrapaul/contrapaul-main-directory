@@ -32,6 +32,7 @@ export function makeEl(attrs = {}) {
     getAttribute(k) { return Object.prototype.hasOwnProperty.call(this.attrs, k) ? this.attrs[k] : null; },
     setAttribute(k, v) { this.attrs[k] = String(v); },
     removeAttribute(k) { delete this.attrs[k]; },
+    hasAttribute(k) { return Object.prototype.hasOwnProperty.call(this.attrs, k); },
     addEventListener(type, fn) { (this.listeners[type] ||= []).push(fn); },
     fire(type, ev) { (this.listeners[type] || []).forEach((fn) => fn(ev || {})); },
     classList: {
@@ -45,11 +46,7 @@ export function makeEl(attrs = {}) {
     getBoundingClientRect() { return { top: this.rect.top, height: this.rect.height, bottom: this.rect.top + this.rect.height }; },
     scrollIntoView(opts) { this.scrollCalls.push(opts || true); },
     querySelector(sel) { return el.children.find((c) => c.sel === sel) || null; },
-    querySelectorAll(sel) {
-      if (sel === '[data-screen]') return el.screenEls || [];
-      if (sel === '[data-reveal]') return el.revealEls || [];
-      return [];
-    },
+    querySelectorAll() { return []; },
     appendChild(c) { el.children.push(c); },
     get innerHTML() { return el._innerHTML; },
     set innerHTML(v) { el._innerHTML = v; if (v === '') el.children.length = 0; },
@@ -99,39 +96,8 @@ export function makeEnv(opts = {}) {
   themeLabel.textContent = 'Dark';
   themeBtn.children.push(themeLabel);
 
-  const modeBtn = makeEl();
-  const modeLabel = makeEl();
-  modeLabel.sel = '[data-mode-label]';
-  modeLabel.textContent = 'Presenter';
-  modeBtn.children.push(modeLabel);
-  // Once js/mode.js has synced the pair onto the label span, i18n's
-  // apply() must pick it up like any other translatable element.
-  pairEls.push(modeLabel);
-
-  /* Screen elements for the engine. opts.screens: array of
-     { id, title, top, height, reveals: n } */
-  const screenEls = (opts.screens || []).map((s) => {
-    const el = makeEl();
-    el.id = s.id || '';
-    el.rect = { top: s.top ?? 0, height: s.height ?? 100 };
-    const title = makeEl();
-    title.sel = 'h1, h2, .screen-title';
-    title.textContent = s.title || (s.id || 'screen');
-    el.children.push(title);
-    el.revealEls = Array.from({ length: s.reveals ?? 0 }, () => makeEl());
-    return el;
-  });
-  panelEls.forEach((p) => { p.screenEls = screenEls; });
-
-  const rail = makeEl();
-  const stripTitle = makeEl();
-  const stripPrev = makeEl();
-  const stripNext = makeEl();
-
-  /* Explorer progress (js/progress.js). */
-  const badgeEl = makeEl({ hidden: 'true' });
-  badgeEl.attrs['data-badge'] = '';
-  const resetBtn = makeEl();
+  /* Rewards slot in the header (js/progress.js). */
+  const rewardsEl = makeEl();
 
   const darkMq = { matches: Boolean(opts.systemDark), listeners: {}, addEventListener(t, fn) { (this.listeners[t] ||= []).push(fn); } };
 
@@ -145,20 +111,14 @@ export function makeEnv(opts = {}) {
       if (sel === '[data-tab-panel]') return panelEls;
       if (sel === '[data-tab]') return linkEls;
       if (sel === '[data-theme-toggle]') return [themeBtn];
-      if (sel === '[data-strip-prev]') return [stripPrev];
-      if (sel === '[data-strip-next]') return [stripNext];
       return [];
     },
     querySelector(sel) {
       if (sel === '[data-lang-toggle]') return langBtn;
       if (sel === '[data-theme-toggle]') return themeBtn;
-      if (sel === '[data-mode-toggle]') return modeBtn;
       if (sel === '.tab-panel.is-active') return panelEls.find((p) => p.classes.has('is-active')) || null;
       if (sel === '.tab-panel') return panelEls[0] || null;
-      if (sel === '[data-rail]') return rail;
-      if (sel === '[data-strip-title]') return stripTitle;
-      if (sel === '[data-badge]') return badgeEl;
-      if (sel === '[data-reset-progress]') return resetBtn;
+      if (sel === '[data-rewards]') return rewardsEl;
       return null;
     },
     getElementById() { return null; },
@@ -184,7 +144,7 @@ export function makeEnv(opts = {}) {
     console,
   };
   env.window.localStorage = env.localStorage;
-  return { env, pairEls, panelEls, linkEls, langBtn, langLabel, themeBtn, themeLabel, modeBtn, modeLabel, screenEls, rail, stripTitle, stripPrev, stripNext, badgeEl, resetBtn, stored, darkMq };
+  return { env, pairEls, panelEls, linkEls, langBtn, langLabel, themeBtn, themeLabel, rewardsEl, stored, darkMq };
 }
 
 export function run(scriptName, env) {

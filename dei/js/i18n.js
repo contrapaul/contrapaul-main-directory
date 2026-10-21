@@ -5,7 +5,7 @@
    This module swaps textContent from the active language and
    persists the choice. Content data (scenarios) uses
    the same {"en": ..., "zh": ...} pair shape, so this module
-   also exposes dei.t(key, pair) for later steps.
+   also exposes dei.i18n.t(pair).
 
    Plain script, not a module: the page must run from file://.
 
@@ -60,6 +60,11 @@
         ? 'Switch to Simplified Chinese'
         : 'Switch to English');
     }
+
+    // Scripts that render text from data pairs re-render on this.
+    if (typeof document.dispatchEvent === 'function' && typeof CustomEvent === 'function') {
+      document.dispatchEvent(new CustomEvent('dei:lang', { detail: { lang: lang } }));
+    }
   }
 
   function toggle() {
@@ -72,9 +77,8 @@
   if (btn) btn.addEventListener('click', toggle);
   apply();
 
-  // Later steps (scenarios, reward) resolve content pairs through
-  // this helper so the rule "no string without a pair" has one
-  // enforcement point.
+  // Scenario and reward text resolves its pairs through this
+  // helper. A pair without zh yet falls back to English.
   window.dei = window.dei || {};
   window.dei.i18n = {
     get current() { return lang; },
@@ -82,7 +86,7 @@
     t: function (pair) {
       if (!pair) return '';
       if (typeof pair === 'string') return pair;   // plain string, not a pair
-      return pair[lang] !== undefined ? pair[lang] : pair.en;
+      return pair[lang] ? pair[lang] : pair.en;
     }
   };
 })();
