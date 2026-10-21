@@ -1,101 +1,114 @@
 # DEI training page: build plan
 
-Rewritten 2026-10-21. Implements `brief.md`. The earlier plan (presenter mode, arrow key screens, nine interactive components, the explorer reward) is withdrawn; this file replaces it in full.
+Rewritten 2026-10-21. Implements `brief.md`. The earlier plan (presenter mode, arrow key screens, four screens per scenario, nine invented components, a single explorer reward) is withdrawn; this file replaces it in full.
 
 ## 1. Where the code stands
 
-The code in this folder was built to the withdrawn plan. It works (55/55 node tests pass) but it is the wrong page. It keeps the parts Paul asked for and adds a lot he did not.
+The code in this folder was built today to the withdrawn plan. It runs (55/55 node tests pass) but it is the wrong page: cluttered with kickers, tags and headings, built around presentation, and its scenario text was rewritten during transcription.
 
 | Part | Files | Verdict |
 |------|-------|---------|
 | Theme (light/dark, no flash) | `js/theme.js`, pre-paint script in `index.html`, `css/tokens.css` | Keep |
 | EN/中文 toggle | `js/i18n.js` | Keep |
-| Two tab routing, deep links | `js/tabs.js` | Keep (routes `#/pyp`, `#/mshs` are right) |
+| Two tab routing, deep links | `js/tabs.js` | Keep (`#/pyp`, `#/mshs`) |
 | Header, tabs, footer, base layout | `index.html`, `css/base.css` | Keep, strip the presentation parts |
 | Presenter mode | `js/mode.js`, header toggle, `data-mode` in pre-paint script | Remove |
 | Screen engine (arrow keys, `data-screen`, rail, reveals, presenter strip, scroll snap) | `js/screens.js`, rail and strip markup, related CSS | Remove |
-| Explorer reward (badge, celebration, reset) | `js/progress.js`, header badge, reset button | Remove |
-| Scenario renderer with players, flips, scales, branches, stamps, board, choice, fact card, dare filter | `js/scenarios.js`, `css/scenarios.css` | Replace with a plain reader (section 3) |
-| Scenario data | `data/scenarios.js` | Re-transcribe verbatim (section 4) |
-| Tests for removed parts | `test/screens.test.mjs`, `test/mode.test.mjs`, `test/progress.test.mjs`, most of `test/scenarios.test.mjs` | Remove or rewrite with the code |
+| Four screens per scenario with kickers, method tags, banners, image frames | `js/scenarios.js` (`makeScreen`, `headerScreen`, `screenB` to `screenD`, `banner`, `noteCard`, `imageFrame`) | Remove |
+| Invented pieces: rule stamps, readiness scale and branch, qualities board, three way choice, fact card, dare filter (made up dares) | `js/scenarios.js`, `css/scenarios.css`, `data/scenarios.js` | Remove (their text is not the committee's) |
+| Dialogue player (line list with speaker chips) | `js/scenarios.js` `buildPlayer` | Rebuild to the design in section 3 |
+| Flip card | `js/scenarios.js` `buildFlip` | Park; reuse if Paul picks flip pieces (section 4) |
+| Explorer reward (one badge, celebration) | `js/progress.js` | Adapt to three rewards (section 5) |
+| Jump strip | `js/scenarios.js` `buildJumpStrip` | Keep the idea, simplify |
+| Scenario data | `data/scenarios.js` | Re-transcribe verbatim (section 6) |
+| Tests | `test/*.test.mjs` | Remove tests for removed parts; rewrite the rest with the code |
 
-Why the data must be redone: the current `data/scenarios.js` changed the committee text. Titles were rewritten ("Unkind Nickname" became "The unkind nickname"), "1–10" became "1 to 10", every dash was replaced, stage directions were reworded and moved, a full stop was added in scenario 9, and invented copy was added (rule stamps, a pause note, reveal text, a set of made up dares for scenario 8).
+Why the data must be redone: titles were rewritten ("Unkind Nickname" became "The unkind nickname"), "1–10" became "1 to 10", every dash was replaced, stage directions were reworded and moved, a full stop was added in scenario 9, and invented copy was added (rule stamps, a pause note, reveal text, dares for scenario 8).
 
-## 2. Files after the rebuild
+## 2. A scenario on the page
 
-```
-dei/
-  index.html          header (brand, two tabs, 中文, theme), two tab panels, footer
-  css/tokens.css      colours, type, spacing, both themes
-  css/base.css        header, tabs, reading column, footer
-  css/scenarios.css   jump links and scenario layout
-  js/theme.js         theme resolve + toggle
-  js/i18n.js          EN/中文 apply + toggle
-  js/tabs.js          #/pyp and #/mshs routes, deep links
-  js/scenarios.js     renders each tab: jump links + scenario sections
-  data/scenarios.js   the nine scenarios, committee text verbatim, en/zh pairs
-  scenarios.md        source of truth for the scenario text
-  test/               node --test suite
-```
+Top to bottom, with nothing else:
 
-## 3. The page on a phone
+1. **Title**: the real title only, for example `Unkind Nickname`. One line.
+2. **Context**: the committee's context sentence, as written. The "Context :" label is not shown; position makes its role clear. *(Proposed; Paul to confirm.)*
+3. **Harm note** where the committee wrote one (scenarios 5, 6, 9), as written.
+4. **Play button**, which opens the conversation player (section 3).
+5. **Interactive pieces**, only where Paul has chosen them (section 4).
+6. **Debrief space**: the committee's debrief note as written. Scenario 3 shows the labelled placeholder "to be added by the team". Whether it shows openly or on tap is open.
 
-Top to bottom:
+Above the scenarios, each tab has one row of jump links (the scenario titles). Below the last scenario, the footer.
 
-1. **Header**: brand, the two tabs (PYP, MS/HS), the 中文 toggle, the theme toggle. Compact so it does not eat the screen. Whether it stays fixed while scrolling is decided in the phone pass.
-2. **Jump links**: one link per scenario in the tab, using the committee titles. They wrap or scroll sideways at narrow widths, never overflow the page.
-3. **Scenarios**, one after another, each a plain section with an id (`sc1` to `sc9`):
-   - the title as written (for example "Scenario 1: PYP - Unkind Nickname"),
-   - the context line as written,
-   - any "*Name the harm first ..." note as written,
-   - the script, one line per speaker turn: the speaker label as written ("TEACHER:", "STUDENT #1:", "G:"), the stage direction in brackets in a muted style, then the spoken words,
-   - the debrief note as written, set off from the script so it is easy to find for discussion.
-4. **Footer**: `a project by mr. k, more at contrapaul.com`.
+## 3. The conversation player
 
-Reading comfort: a single column, body text 17 to 18px, line height about 1.6, side padding about 16 to 20px, clear space between scenarios. On desktop the same column, centred, capped near 70 characters wide.
+Paul's design (2026-10-21):
 
-Every scenario is fully visible on load. Nothing is hidden behind a tap.
+- **Play** starts the conversation from its first line.
+- **One line at a time.** Each line is a card: the speaker's image, with the line in a speech bubble across the bottom of the image.
+- **Sides.** TEACHER and STUDENT #2 enter from the left. STUDENT #1 enters from the right. The card slides in from its side; when the next line comes, it exits back the way it came (or the next card replaces it), and the responder's card enters from their side.
+- **Colour coded bubbles**, one colour per speaker, consistent across all nine scenarios. Every colour meets AA contrast in both themes. A small speaker label from the script ("TEACHER", "STUDENT #1") stays in the bubble so colour is never the only cue.
+- **Stage directions** ("(to student #1, individually)") show as written, in a muted style inside the bubble of the line they belong to.
+- **An image per line.** Each line in `data/scenarios.js` has its own image slot. Until the art exists, a labelled placeholder image stands in. Images are local files.
+- **Advancing**: tap Next, or tap the card. Replay starts again from line one.
+- **Reduced motion**: cards swap in place, no sliding.
+- **Keyboard and screen readers**: Next is a real button; each new line is announced (`aria-live`).
+- **Phone fit**: the card fills the column width at 360px with the bubble text at least 17px, and Next sits within thumb reach.
 
-## 4. Data and the verbatim check
+## 4. Flip, match and other pieces
 
-- `data/scenarios.js` is a plain script (no modules, no fetch) that sets `window.dei.scenarios`. Each scenario holds `id`, `tab`, and its parts (title, context, harm note, lines, debrief) as `{en, zh}` pairs. Each line keeps the speaker label and the stage direction exactly as written.
-- **A test enforces "as written"**: it reads `scenarios.md`, pulls out each scenario's text, and checks that the English in `data/scenarios.js` matches it word for word (whitespace aside). If anyone rewords a line, the test fails.
-- zh halves are labelled placeholders until the translation of the locked English arrives.
+Wanted, but not yet chosen. For each one Paul decides: which scenario, what kind (flip, match, other), and what text goes in it. The text comes from the committee or from Paul, never from the agent. Nothing is built until Paul picks. The parked flip card code can be reused.
 
-## 5. Build order
+## 5. Rewards
+
+- A scenario counts as **complete** when its conversation has been played to the last line and every interactive piece in it is done. Opening or scrolling earns nothing.
+- **PYP**: scenarios 1 to 4 complete. **MS/HS**: scenarios 5 to 9 complete. **Conflict Resolution**: all nine complete.
+- Progress lives on the device (`localStorage`, key `dei-progress`). No accounts.
+- How a reward looks, where it appears, and whether there is a reset: open. It must not clutter the page.
+
+## 6. Data and the verbatim check
+
+- `data/scenarios.js` is a plain script (no modules, no fetch) that sets `window.dei.scenarios`. Each scenario has `id`, `tab`, title, context, harm note, debrief, and `lines`. Each line has the speaker label as written, the stage direction as written, the words as written, its side, and its image slot. Text fields are `{en, zh}` pairs.
+- **A test enforces "as written"**: it reads `scenarios.md` and checks that the English in `data/scenarios.js` matches it word for word (whitespace aside, and the title prefix that Paul removed). If anyone rewords a line, the test fails.
+
+## 7. Build order
 
 Each step ends with tests passing and a HANDOFF entry. All work goes straight to `main`.
 
-1. **Strip the presentation layer.** Remove presenter mode, the screen engine, the rail, the strip, the explorer reward, and their tests and CSS. Check: tests pass, the page loads with no console errors.
-2. **Re-transcribe the data verbatim** and add the verbatim test. Check: the test passes against `scenarios.md`.
-3. **Replace the renderer** with the plain reader from section 3, and rewrite the scenario tests for it. Check: all nine scenarios render in the right tabs, jump links reach each scenario, deep links work.
-4. **Phone pass** in a real browser at 390x844 and 360x740, both themes, both languages. Check: the list in section 6. Screenshots go to Paul.
-5. **Desktop pass** at 1280x800: tidy centred column, nothing stretched.
-6. **Chinese**: drop in the translation when the English is locked.
-7. **Deploy**: push to `main`; Cloudflare Pages serves `contrapaul.com/dei/`.
+1. **Strip** presenter mode, the screen engine, the four screen layout, kickers, tags, banners and the invented pieces, with their tests and CSS. Check: tests pass, no console errors.
+2. **Re-transcribe the data verbatim**, with sides and image slots, and add the verbatim test. Check: the test passes.
+3. **Scenario layout** from section 2, plus jump links. Check: nine scenarios in the right tabs, one title each, deep links work.
+4. **Conversation player** from section 3, with placeholder images. Check: in a browser at 390x844, lines enter from the correct sides, colours pass AA, reduced motion works.
+5. **Rewards** from section 5. Check: tests prove that opening and scrolling earn nothing and that each reward fires once at the right moment.
+6. **Flip and match pieces** as Paul picks them.
+7. **Phone pass** (390x844, 360x740, both themes, both languages) and a desktop pass (1280x800). Screenshots go to Paul.
+8. **Chinese**: preliminary after tonight's review, final after the English locks.
+9. **Deploy**: push to `main`; Cloudflare Pages serves `contrapaul.com/dei/`.
 
-## 6. Phone checklist
+## 8. Phone checklist
 
 - [ ] No horizontal scroll at 360px wide
-- [ ] Body text at least 17px; nothing needs zooming
-- [ ] Tabs and jump links at least 44px tall and easy to hit with a thumb
-- [ ] Speaker labels, stage directions and spoken words are easy to tell apart at a glance
-- [ ] Debrief note is easy to find
-- [ ] A jump link lands with the scenario title in view, not under the header
-- [ ] Both themes pass AA contrast
+- [ ] One title per scenario; no kickers, tags or extra headings anywhere
+- [ ] The Play button is visible without scrolling past extra text
+- [ ] Bubble text at least 17px; speakers are easy to tell apart by side, colour and label
+- [ ] Next button and jump links at least 44px and easy to hit with a thumb
+- [ ] A jump link lands with the scenario title in view
+- [ ] Both themes pass AA contrast, bubbles included
 - [ ] 中文 toggle swaps all chrome; layout holds in Chinese
 - [ ] No network requests after load
 - [ ] Scenario text matches `scenarios.md` (verbatim test passes)
 
-## 7. Settled
+## 9. Settled (all 2026-10-21 unless marked)
 
-- Two tabs, PYP and MS/HS (2026-10-15). PYP holds scenarios 1 to 4, MS/HS holds 5 to 9.
-- Scenario text is shown as written; Paul's three notes in `scenarios.md` are the only changes (2026-10-21, 2026-10-15).
-- No presenter mode, no presentation features, no invented interactivity (2026-10-21).
-- Mobile is the top priority (2026-10-21).
-- Work on `main`, no branches (2026-10-21).
-- Domain `contrapaul.com/dei/` (2026-10-15). Accent colour deep teal (2026-10-14).
+- Two tabs, PYP (scenarios 1 to 4) and MS/HS (5 to 9), with jump links at the top of each.
+- Mobile is the top priority.
+- Scenario text as written; Paul's edits and display exceptions are listed at the top of `scenarios.md`.
+- One title per scenario, the real title only; no extra titles or text.
+- No presenter mode or presentation features.
+- Conversation player as in section 3. No per-scenario image; an image per dialogue line instead.
+- Rewards: PYP, MS/HS, Conflict Resolution.
+- Scenario 3 gets a debrief space with a placeholder until the team writes it.
+- Committee text is unedited AI output; staff review it tonight. Chinese: preliminary after the review, final after the English locks.
+- Work on `main`, no branches. Domain `contrapaul.com/dei/`. Accent colour deep teal (2026-10-14).
 
-## 8. Open questions for Paul
+## 10. Open questions
 
-See the latest HANDOFF entry. They are repeated there so the next session sees them first.
+Listed in the latest HANDOFF entry so the next session sees them first.

@@ -1,16 +1,21 @@
 # Committee scenarios (source of truth)
 
-This file is the committee's text. The page shows it **as written**: same words, same order, same punctuation, same speaker labels. Do not rewrite, shorten, retitle, or "improve" it, and do not add copy of your own to a scenario (no invented rules, notes, prompts, answers, or examples). Layout may change for mobile; wording may not.
+This file is the committee's text. The page shows it **as written**: same words, same order, same punctuation, same speaker labels. Do not rewrite, shorten, or "improve" it, and do not add copy of your own to a scenario (no invented rules, notes, prompts, answers, or examples). Layout may change; wording may not.
 
-The only edits from the committee's original, all made by Paul (2026-10-15):
+Provenance: the committee drafted these with unedited AI output. Staff review them tonight (2026-10-21) before the text locks. Review edits come from Paul or the committee only: change them here first, then in `data/scenarios.js`.
+
+Paul's edits to the committee's original (2026-10-21):
 
 - Scenario 6: the unclear line is marked with asterisks and "(Fix text)". It shows on the page exactly like that until the committee sends the fixed wording.
 - Scenario 9: one line's speaker corrected from STUDENT #1 to STUDENT #2 ("That he got embarrassed.").
 - Scenario 5: "I just stopped being hungry." is kept as written.
+- Scenario 3: the committee wrote no debrief. A placeholder debrief marks the space until the team writes one.
 
-Wording changes come from Paul or the committee only. When one arrives, change it here first, then in `data/scenarios.js`.
+How the page displays this file (Paul, 2026-10-21; details in `plans.md`):
 
-PYP tab: scenarios 1 to 4. MS/HS tab: scenarios 5 to 9.
+- **One title per scenario: the real title only.** The page shows "Unkind Nickname", not "Scenario 1: PYP - Unkind Nickname". No scenario numbers, group names or extra headings above or below it.
+- The context, any harm note, every script line and the debrief appear word for word.
+- PYP tab: scenarios 1 to 4. MS/HS tab: scenarios 5 to 9.
 
 ---
 
@@ -91,6 +96,8 @@ TEACHER: (to student #1, individually) "I saw your face. What did you hear? And 
  STUDENT #2: "If I'm mad at her, I deal with her, I don't turn people against her." 
  TEACHER: "Anything to close it?" 
  STUDENT #2: "I shouldn't have said that to everyone. Sorry." 
+
+(Debrief: PLACEHOLDER, to be added by the team.)
 
 ## Scenario 4: PYP  - "A Boy Should Lead"  
 
