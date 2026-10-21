@@ -1,28 +1,29 @@
 /* ============================================================
    DEI training page: tab router
    ------------------------------------------------------------
-   Six tabs, one per scenario, hash routes #/s1 to #/s6.
+   Two tabs, one per group, hash routes #/pyp and #/mshs.
    The hash survives refresh and deep links, which is what the
    "navigation links to specific locations" requirement rests
-   on. A deep link is #/s3 or #/s3#screen-id (tab switch plus
-   scroll to the target).
+   on. A deep link is #/mshs#sc7 (tab switch plus scroll to
+   the scenario section).
 
    Plain script, not a module: the page must run from file://.
 
-   No-JS behaviour: the s1 panel carries .is-active in the
-   markup, so the page reads without scripts.
+   No-JS behaviour: the pyp panel carries .is-active in the
+   markup, so the page reads without scripts (with its noscript
+   note, since the scenario screens are rendered by script).
    ============================================================ */
 (function () {
   'use strict';
 
-  var TABS = ['s1', 's2', 's3', 's4', 's5', 's6'];
+  var TABS = ['pyp', 'mshs'];
 
   function tabFromHash() {
     // The route is #/sN, optionally followed by a deep link target:
     // #/s4#step-2. The tab is the first segment after #/; a target
     // arrives after a further #, so # is part of the split too.
     var h = location.hash.replace(/^#\//, '').split(/[?#]/)[0];
-    return TABS.indexOf(h) !== -1 ? h : 's1';
+    return TABS.indexOf(h) !== -1 ? h : 'pyp';
   }
 
   function activate(tab, pushHash) {

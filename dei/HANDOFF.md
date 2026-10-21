@@ -4,13 +4,61 @@ Working notes for the next session. Newest entry first. Paul's standing requests
 
 ## Status at a glance
 
-- **Pivot carried (2026-10-14):** the survey element is out of scope (covered elsewhere) and the introduction tab goes with it. The page is now six tabs, one scenario each. All docs and code updated to match.
-- **Steps 1 and 2 of 6 done.** Scaffold (now six scenario tabs, theme, EN/中文, footer) and the screen engine (arrow key stepping, rail, reveals, presenter strip, presenter mode, height audit). 35/35 tests passing, all colour pairs AA-verified.
-- Steps 3 to 6 not started: scenarios one at a time, explorer reward, polish, deploy.
-- Decisions settled 2026-10-14 (plans.md section 7): accent is deep teal; methods 2 and 3 are tap/click only (no drag, for phones).
-- Still open: whether scenarios carry a revealed "recommended move" or stay open facilitation. Paul revisits once the finalized content is in place.
+- **The page is two tabs (PYP, MS/HS) holding nine scenarios** (2026-10-15, from the committee content). Routes are `#/pyp` and `#/mshs`; deep links like `#/pyp#sc3` work. Mobile is the primary platform.
+- **Steps 1 and 2 of 6 done** (scaffold, screen engine). **Steps 3 and 4 written and unit tested 2026-10-15:** all nine scenarios render with their components (dialogue player, readiness chip/scale/branch, repeat back cards, harm banners, rule stamps, debrief cards, the s4 board, s5 branch, s6 three way choice, s7 fact card, s8 dare filter), plus the explorer reward (`js/progress.js`, badge, one-time celebration, reset in the presenter strip). 55/55 node tests passing. **The browser verification pass for the new screens is not yet run** (checklist in `plans.md` section 6, list in the entry below).
+- The committee text is unedited AI output; staff review it 2026-10-15. All copy lives in `data/scenarios.js`, so review edits are data swaps. Every zh pair is a `示例` placeholder: preliminary translation before the meeting, final after the text locks.
+- Decisions settled 2026-10-14 and 2026-10-15 (plans.md section 7): accent is deep teal; two tabs PYP and MS/HS; the six proposed methods are retired in favour of the content-driven components; the "recommended move" question is answered by the data (marked options in s5, s6, s7).
+- Still open: steps 5 and 6 (polish pass, deploy) and the browser verification of steps 3 and 4. Note for the next session: if the session's working directory is the pre-move path (`GitHub/dei`), the bash tool dies and tests must run via a delegate or a new session from `GitHub/contrapaul-main-directory/dei`.
 
 ## Entries
+
+### 2026-10-15 (build: two tabs, nine scenarios, components, explorer reward)
+
+**Asked:** Paul answered the five open questions (tab label is MS/HS; scenario 9's speaker fixed to student 2; scenario 6's garbled line keeps its words with asterisks and a "(Fix text)" note; scenario 5's "I just stopped being hungry." stays; the committee used unedited AI output, staff review tonight, Chinese goes preliminary before the meeting and final after the text locks) and said: update `plans.md` and `CLAUDE.md`, then proceed to the build revisions.
+
+**Changed** (all paths under `contrapaul-main-directory/dei/`):
+
+- `scenarios.md`: decisions section recorded, scenario 9 speaker fixed, scenario 6 line marked, translation sequence noted, tab label MS/HS.
+- `CLAUDE.md`: the presentation surface rule now says two tabs, nine scenarios, mobile first; the explorer reward rule now says all nine scenarios.
+- `plans.md`: retargeted end to end (two tab architecture with jump strips and `#/pyp` / `#/mshs` routes, the component list replacing the retired six method table, the reward table retabulated for nine, build order steps 3 and 4 marked written, section 7 settled items for 2026-10-15, the open "recommended move" question answered by the data).
+- **New `data/scenarios.js`:** all nine scenarios as data objects, en/zh pairs (zh is a `示例` placeholder until the translation lands). Committee transcription rules applied: em dashes become commas and full stops, the scenario 6 garbled line is kept verbatim with asterisks and the "(Fix text)" note, scenario 5's line stays as written.
+- **New `js/scenarios.js`:** renders each tab as a sticky jump strip plus four `data-screen` screens per scenario, and builds the components: dialogue player (line by line, speaker chips, tap or space, reset, aria-live, reduced motion shows the full script with an "I have read the script" tap so the reward is still earned), readiness chip (1, 2, 9), interactive readiness scale with banded guidance (3), readiness branch (5), repeat back cards (1, 2 twice, 3, 5, 9), harm banners (5 to 7, 9) and tone tag (8), rule stamps, debrief cards (scenario 3's is a labelled placeholder, the committee wrote no note), the qualities board plus flips plus boundary card (4), the three way choice (6), the fact or stereotype card plus forward move card (7), the dare filter (8). Exposes `window.dei.ui` for the tests.
+- **New `js/progress.js`:** the explorer reward. `dei-progress` in localStorage, per element marks, jump chip marks, tab marks, the header badge "All nine scenarios", a one-time 12 spark celebration (skipped under reduced motion, skipped for work done in earlier visits), reset from the presenter strip button and from the console.
+- **New `css/scenarios.css`:** jump strips, player, flip cards with reduced motion and presenter stills, readiness scale, board, choice, fact, dares, rule stamp, banners, celebration, 44px touch targets, single column under 720px.
+- `index.html`: two tab panels (pyp, mshs) with noscript notes, two tab links, the badge slot in the header, the reset button in the presenter strip, the new stylesheet, and the new scripts in order (`data/scenarios.js`, `js/scenarios.js`, `js/progress.js` before `js/tabs.js`).
+- `js/tabs.js`: routes are `pyp` and `mshs`, default `pyp`.
+- Tests: `test/tabs.test.mjs` rewritten for the two tabs; new `test/scenarios.test.mjs` and `test/progress.test.mjs`; `test/shim.mjs` gained the badge and reset button elements.
+
+**Verified:** `node --test test/*.test.mjs` passes 55/55 (run via a delegate subagent; this session's bash tool is dead because its working directory is the pre-move path).
+
+**Unverified (needs a browser, checklist in `plans.md` section 6):** every new screen at 1280x720 and 1920x1080 (the four screens per scenario have not had the height audit re run since the real content renders), the 390x844 phone pass (jump strip scroll, player thumb button, sticky offsets against the real header height), the zh layout pass with the placeholder text, the reduced motion and presenter stills as they look, the celebration burst, and a `file://` load with the network tab empty.
+
+**Next:** staff review 2026-10-15 edits the text; those are data swaps in `data/scenarios.js`. The preliminary Chinese translation lands before the meeting and replaces the `示例` placeholders. Then the browser verification pass above, then polish and deploy (steps 5 and 6).
+
+### 2026-10-15 (committee scenarios arrived, presentation plan proposed)
+
+**Asked:** review the committee's scenarios in `scenarios.md` (now nine: four PYP, five MS/HS; was six) and expand/annotate to propose how they will be presented. The page drops to two tabs, one per group, each with jump links at the top to a specific scenario. Mobile is the primary device and must load beautifully.
+
+**Changed:**
+
+- `dei/scenarios.md`: a presentation plan section added at the top (two tab structure, sticky jump chips, mobile first rules, seven shared components, the explorer reward retabulated for nine scenarios, four questions for Paul, build notes) plus one annotation block per scenario (four screens each, the interactive elements, the completion elements, facilitation notes).
+
+**Key proposals (awaiting Paul's sign-off):**
+
+- The **dialogue player** is the core component: line by line reveal, speaker chips, tap or space to advance, keeps place per scenario, reset, aria-live readout, reduced motion still shows the full script. It carries all nine scenarios.
+- The method's signature move gets its own component: the **repeat back card** (flat to full, tap to flip) in scenarios 1 to 3, 5, and 9.
+- **Harm banners** (static, not behind a tap) for the four that name the harm first: 5, 6, 7, 9.
+- One bespoke interactive where the content earns it: the tappable **readiness scale** (3), the **qualities board** plus flips (4), the **three way choice** (6, the only scenario with a right answer), **fact or stereotype** (7), the **dare filter** (8).
+- The original six method menu in `plans.md` section 2 was designed for placeholder content. The real content keeps the flip idea (4) and the branching idea (6), and retires matching, sequencing, perspectives, and the poll.
+- **Mobile first:** single column below 720px, 44px targets, the dialogue player's next line button is a large fixed thumb button, jump strip scrolls horizontally, checkpoints at 390x844 (primary) and 1920x1080.
+
+**Content issues flagged for Paul or the committee:** scenario 9 mislabeled line (student 1 where student 2 should be), scenario 6 garbled line ("Not knowing why we teach it."), scenario 5 "I just stopped being hungry" kept as written pending confirm, scenario 8 "G:" reads as the group, em dashes throughout the committee text (converted at transcription), and the tab label MS/HS vs MYP/DP.
+
+**Not yet changed (wait for sign-off):** `plans.md` (methods table, build order, reward table), `CLAUDE.md` (the six scenario lines), the tab strip in `index.html`, and `js/progress.js` reward mechanics.
+
+**Verified:** docs only; tests unaffected (34/34, unchanged).
+
+**Next:** Paul signs off or amends the presentation plan and answers the four questions in `scenarios.md`, then `plans.md` and `CLAUDE.md` update and the build order restarts: two tab shell plus jump chips, the dialogue player, then the scenarios one at a time.
 
 ### 2026-10-15 (move: dei becomes a path on the main site)
 

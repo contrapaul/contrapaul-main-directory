@@ -128,6 +128,11 @@ export function makeEnv(opts = {}) {
   const stripPrev = makeEl();
   const stripNext = makeEl();
 
+  /* Explorer progress (js/progress.js). */
+  const badgeEl = makeEl({ hidden: 'true' });
+  badgeEl.attrs['data-badge'] = '';
+  const resetBtn = makeEl();
+
   const darkMq = { matches: Boolean(opts.systemDark), listeners: {}, addEventListener(t, fn) { (this.listeners[t] ||= []).push(fn); } };
 
   const document = {
@@ -152,6 +157,8 @@ export function makeEnv(opts = {}) {
       if (sel === '.tab-panel') return panelEls[0] || null;
       if (sel === '[data-rail]') return rail;
       if (sel === '[data-strip-title]') return stripTitle;
+      if (sel === '[data-badge]') return badgeEl;
+      if (sel === '[data-reset-progress]') return resetBtn;
       return null;
     },
     getElementById() { return null; },
@@ -177,7 +184,7 @@ export function makeEnv(opts = {}) {
     console,
   };
   env.window.localStorage = env.localStorage;
-  return { env, pairEls, panelEls, linkEls, langBtn, langLabel, themeBtn, themeLabel, modeBtn, modeLabel, screenEls, rail, stripTitle, stripPrev, stripNext, stored, darkMq };
+  return { env, pairEls, panelEls, linkEls, langBtn, langLabel, themeBtn, themeLabel, modeBtn, modeLabel, screenEls, rail, stripTitle, stripPrev, stripNext, badgeEl, resetBtn, stored, darkMq };
 }
 
 export function run(scriptName, env) {

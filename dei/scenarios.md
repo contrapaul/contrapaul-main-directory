@@ -1,3 +1,70 @@
+# Presentation plan (added 2026-10-15, confirmed by Paul)
+
+The nine scenarios split into two tabs: **PYP** (scenarios 1 to 4) and **MS/HS** (scenarios 5 to 9). Tab label settled as MS/HS, 2026-10-15.
+
+## Page structure
+
+- Two tabs, one per group. Each tab is one long page that stacks the group's scenarios top to bottom.
+- A sticky jump strip at the top of the page lists the scenarios in the tab as chips ("1. Unkind Nickname" and so on). Tap to scroll to that scenario's first screen. It stays reachable while scrolling, so nobody loses their place.
+- Normal scrolling always works. The arrow key engine steps screen to screen down the page. The progress rail shows the screens of the active tab, grouped by scenario.
+- Every scenario starts with a header screen: kicker ("Scenario 1 of 4"), title, method tag, context, placeholder image in a 16:9 frame.
+- Each scenario runs about four screens, so the PYP tab is about 16 screens and the MYP/DP tab about 20. Long pages are the point here; the rail and the jump chips are how you navigate them.
+
+## Mobile first
+
+Most viewers will be on phones. The page is designed for one hand:
+
+- Single column below 720px, no layouts that depend on width.
+- Touch targets at least 44px. The dialogue player's "next line" button is a large fixed button at the bottom of the screen, thumb reachable.
+- The jump strip scrolls horizontally on narrow screens. No hover only states anywhere.
+- Checkpoints at 390x844 (primary) and 1920x1080 (staff room), plus presenter mode at 1.25x.
+
+## Shared components
+
+The committee's content is one method told nine ways, not nine different games. The components:
+
+1. **Dialogue player.** The script plays line by line. Tap "next line" (or space) to reveal the next line with its speaker chip (teacher, student 1, student 2, group). Stage directions render small and muted. Per scenario: keeps its place, has a reset, reads each line to screen readers, and the reduced motion version shows the full script at once.
+2. **Readiness check (1-10).** A tap scale. Scenarios 1, 2, 5, and 9 show the score the student gives, as a chip in the script. Scenario 3 makes it interactive: tap any number and the page answers in the teacher's voice (wait, check back, or talk now), because the wait is the point of that scenario.
+3. **Repeat back card.** The signature move of the method, its own component. Front: the flat repeat back ("she doesn't like the name"). Back, tap to flip: the full one ("you feel disrespected because you asked me to stop and I didn't"). Scenarios 1 to 3, 5, and 9 carry one or two each.
+4. **Harm banner.** Scenarios 5, 6, 7, and 9 name the harm before mediating. The banner states it plainly at the top of the scenario. It is static, not hidden behind a tap.
+5. **Rule stamp.** The going forward rule from the script, as a stamped card at the end of each scenario.
+6. **Debrief card.** The committee's debrief note becomes the required discussion element: a facilitator prompt that reveals on tap.
+7. **Method specific pieces**, one per scenario where the content asks: the qualities board (4), the three way choice (6), fact or stereotype (7), the dare filter (8).
+
+The original six method menu in plans.md (flip, matching, sequencing, perspectives, branching, poll) was designed for placeholder content. The real content keeps the flip idea in scenario 4 and the branching idea in scenario 6, and retires matching, sequencing, perspectives, and the poll. plans.md, CLAUDE.md, and the tab strip update to two tabs (done 2026-10-15).
+
+## Explorer reward, retabulated for nine scenarios
+
+Still earned, never given. Scrolling or opening a tab earns nothing.
+
+| Scenario | Done when |
+|---|---|
+| 1 | dialogue played to the end, repeat back flipped, debrief opened |
+| 2 | dialogue played to the end including the pause note, both repeat backs flipped, debrief opened |
+| 3 | readiness check tapped at any number, dialogue played to the end, repeat back flipped, debrief opened |
+| 4 | all four quality chips added, all quality cards flipped, boundary card revealed, debrief opened |
+| 5 | readiness choice made, dialogue played to the end, repeat back flipped, debrief opened |
+| 6 | the moment script read, the three way choice made, debrief opened |
+| 7 | dialogue played to the end, fact or stereotype answered, debrief opened |
+| 8 | dialogue played to the end, all four dares judged keep or cut, debrief opened |
+| 9 | the class line read, dialogue played to the end, repeat back flipped, debrief opened |
+
+The jump chips show a small completion mark per scenario. Each tab earns its mark when all its scenarios are done. The celebration and the badge fire once, when the last element of the ninth scenario is engaged, and stay until reset.
+
+## Decisions (answered by Paul, 2026-10-15)
+
+1. **Second tab label:** MS/HS.
+2. **Scenario 9, mislabeled line:** fixed to student 2 in the text above.
+3. **Scenario 6, garbled line:** kept as written, with asterisks and a (Fix text) note in the text above. Paul does not know what the staff meant.
+4. **Scenario 5.** "I just stopped being hungry." kept as written; staff review tonight.
+5. **Provenance (Paul):** the committee used unedited AI output. Staff review the text in their meeting tonight, before it is locked.
+
+## Notes for the build
+
+- The committee text uses em dashes. The house rule is none in any file, so they become commas or full stops when the copy moves into the page. Nothing is lost.
+- Simplified Chinese: a preliminary translation is made before tonight's meeting, the final one after the text locks. Until then the page ships 示例 placeholders in the zh pairs, per the i18n rule.
+- Scenario 8's "[name]" stays a labelled placeholder (`.ph-tag`).
+
 ## Scenario 1: PYP - Unkind Nickname  
 
 Context: Peers keep calling a student a nickname they've asked them to stop using. 
@@ -29,6 +96,8 @@ STUDENT #2: “I’m sorry”
 
 (Debrief note: the "when they ask you to stop, you stop" line is the whole lesson here.)  
 
+> **Presentation (proposal):** 4 screens. (1) Header: kicker, title, method tag "mediation script", context, placeholder image. (2) Dialogue player with the full script; the readiness 6 shows as a chip. (3) Repeat back card: front "that she doesn't like the name", back "you feel disrespected because you asked me to stop and I didn't". (4) Rule stamp "when someone asks you to stop calling you a name, that's the moment you stop, joke or not", plus the debrief card. Interactive elements: the player, the flip, the debrief. The debrief is the whole lesson; the rule stamp exists so the room can keep the line.
+
 ## Scenario 2: PYP - Excluded at Recess  
 
 Context : A student comes in upset—a group of friends wouldn't let them play. The group says it's "not their fault." 
@@ -54,6 +123,8 @@ TEACHER: (to student #1, individually) "You seem really upset. What happened? An
 
 (Debrief note: watch how the mediator refuses to chase "whose fault" and keeps pulling back to impact.) 
 
+> **Presentation (proposal):** 4 screens. (1) Header with context. (2) Dialogue player. At the "it wasn't just me, everyone" beat, a tap to reveal pause note: "the teacher doesn't ask whose fault it is. Pull back to impact." (3) Two repeat back cards, student 2's first, then student 1's. (4) Rule stamp "we can say 'next round' instead of 'go away'" plus the debrief. Interactive elements: the player, the pause note, two flips, the debrief. The stage direction "one or two of the group, not a crowd" stays visible as a method note. It is a facilitation decision the staff should copy.
+
 ## Scenario 3: PYP - "Don't Go Play With [Name]" 
 
 Context : A student overheard a peer telling others not to play with them. 
@@ -76,6 +147,8 @@ TEACHER: (to student #1, individually) "I saw your face. What did you hear? And 
  TEACHER: "Anything to close it?" 
  STUDENT #2: "I shouldn't have said that to everyone. Sorry." 
 
+> **Presentation (proposal):** 4 screens. (1) Header with context. (2) Readiness check, interactive: tap any number 1 to 10. 1 to 3: "give it time. Check back later." 4 to 5: "a little time. Come back when it's higher." 6 and up: "let's talk now." The script's path (a 4, later a 6) shows as the example. (3) Dialogue player. (4) Repeat back card plus rule stamp "if you're mad at her, deal with her, don't turn people against her", plus the debrief. Interactive elements: the scale, the player, the flip, the debrief. This is the scenario where the readiness mechanic is the lesson. The others show it as a chip.
+
 ## Scenario 4: PYP  - "A Boy Should Lead"  
 
 Context : While picking a team leader, some students argue a boy should lead because "boys are better leaders."  
@@ -94,6 +167,8 @@ TEACHER: "Let's pause the vote for a second. I want to pick up on something. A f
 
 (Debrief: This scenario is a discussion to guide, not necessarily a conflict to mediate. Notice the mediator holds a firm boundary 'gender isn't a qualification' while letting students do the reasoning.) 
  
+
+> **Presentation (proposal):** 4 screens. (1) Header with context; method tag "guided discussion, not mediation". (2) Qualities board: the prompt "what makes a good team leader?" and tap chips that add to the board: organized, listens, fair, keeps people on track. (3) The turn: "which of those is something only a boy can do?" Tap each quality card to flip. The back of every card is "anyone can do this". Then the boundary card reveals: "leadership is about skills and qualities, not gender. That part's not up for debate." (4) The student solutions (nominate with a reason; name the job and who organizes it) plus the debrief. Interactive elements: the chips, four card flips, the boundary reveal, the debrief. The only PYP scenario with no second student. The contrast with the other three is worth calling out on screen.
 
 ## Scenario 5: MS/HS - "You're Such a Glutton, You're So Fat" 
 
@@ -123,6 +198,8 @@ TEACHER: (to the group in the moment) "Hang on. Commenting on someone's body or 
 (Debrief note: the student stopped eating. The mediator honors the low readiness score and names why this kind of comment carries weight.) 
 
 
+> **Presentation (proposal):** 4 screens. (1) Header with context and the harm banner: "name the harm first. A body shaming comment. The student stopped eating." (2) Readiness at 3 with the teacher's response as a small branch: mediate now / go slow together / wait. "Go slow together" matches the script ("we can talk. Slow."). (3) Dialogue player with the repeat back card: front "that she got upset over a joke", back "you felt ashamed and you stopped eating because of what I said". (4) Rule stamp "I keep comments about people's bodies to myself", the weight note ("stick for a really long time, longer than you'd guess"), and the debrief. Interactive elements: the branch, the player, the flip, the debrief. The lowest readiness score in the set (3). The page shows the teacher honoring it, not pushing.
+
 ## Scenario 6: MS/HS - Hitler Salute ("I don't know what it means") 
 
 Context: Student does the hitler salute in class. 
@@ -131,7 +208,7 @@ Context: Student does the hitler salute in class.
 
 TEACHER: (calm, firm, to the students) "Stop. Put your hands down. What you just did is called a Nazi salute. It stands for the murder of millions of people. Jewish people, and many others. That's not something we do here, even as a joke, and that's not up for debate." 
 STUDENT #1: "I swear I didn't know what it meant." 
- TEACHER: "I believe that you might not have. That's exactly why we're going to talk about it. So now you do know. Not knowing why we teach it. It's not a reason to laugh it off." 
+ TEACHER: "I believe that you might not have. That's exactly why we're going to talk about it. So now you do know. *Not knowing why we teach it.* (Fix text) It's not a reason to laugh it off." 
 TEACHER: (to the group) "Here's what I need you to understand. Some symbols carry real weight because real people were hurt by them. When you do that and laugh, anyone watching who lost family to that history feels it like a punch. You may not have meant that, but that's the impact." 
 STUDENT #1: "We were just messing around." 
 TEACHER: "I hear that there was no hateful intent. And the salute still causes harm no matter the intent, which is why it stops now and doesn't come back. Going forward, what do you do if you see a symbol or gesture and you don't know what it means?" 
@@ -140,6 +217,8 @@ TEACHER: "I hear that there was no hateful intent. And the salute still causes h
 
 (Debrief: This scenario is about education + boundary, not reconciliation. Notice the mediator accepts "I didn't know" without letting it excuse the harm, and carries the teaching themselves.)  
  
+
+> **Presentation (proposal):** 4 screens. (1) Header with context and the harm banner: "not a two sided conflict. Name the harm first, then teach. There is no student 2. The target is a whole community." (2) The moment: the short script as a dialogue player (stop, name it, "that's not up for debate", the "I believe that you might not have" exchange). (3) The teaching: "a student does a symbol or gesture they don't know the meaning of", three choices: copy it, it's funny / laugh it off / ask an adult first. Tap to reveal the outcome. The first two land on anyone who lost family to that history. The third leads to learning where it comes from. (4) Debrief: "education + boundary, not reconciliation". Interactive elements: the player, the choice, the debrief. The only scenario in the set with a real right answer. The rest stay open.
 
 ## Scenario 7: MS/HS - RACIST REMARKS 
 
@@ -155,6 +234,8 @@ STUDENT: "I mean, there's no Japanese kids here, so who cares?"
 
 (Debrief: How do you address harm when there's no victim in the room to advocate for? Notice the mediator makes the absent group the point, and folds it into the academic task rather than turning it into pure discipline.) 
 
+
+> **Presentation (proposal):** 4 screens. (1) Header with context and the harm banner: "no Japanese students in the room. That's the point." (2) Dialogue player. The key line is "who we are is what we say when the person it's about isn't in the room." (3) Fact or stereotype: a card shows "a sweeping negative claim about a whole nation and its people". Tap "a fact I could source" or "a stereotype". Reveal: "that's a stereotype. Telling the difference is part of your job in this class." (4) Forward move card: the task (find out what's actually true about Japan; bring three real things) plus the debrief. Interactive elements: the player, the tap, the debrief. The forward move folds into the academic task, not discipline. The card should say so.
 
 ## Scenario 8: MS/HS - Truth or Dare — "Would You Kiss [Student Name]?" 
 
@@ -172,6 +253,8 @@ TEACHER: "I believe you weren't trying to. But think about it impacting them. If
 (Debrief: This one "looks like fun," so the instinct is to walk past it, but that can still do harm. Notice the mediator preserves the game and gives a clean, usable rule: "keep it about the people playing.") 
 
 
+> **Presentation (proposal):** 4 screens. (1) Header with context and a tone tag: "light, not alarmed. You're redirecting, not punishing." (2) Dialogue player. The key line: the dare put someone in it who didn't sign up. (3) Dare filter (proposed set, committee can adjust): four cards, tap each to keep or cut. "Would you do a backflip?" keep. "What's the worst thing you've ever done?" keep. "Would you kiss [name]?" cut. "Would you text [name]?" cut. Each judgment reveals a one line reason: keep is about the people playing, cut pulls someone in who isn't in the game. (4) Rule stamp "keep it about the people playing" plus the debrief. Interactive elements: the player, four judgments, the debrief. The "[name]" stays a labelled placeholder.
+
 ## Scenario 9: MS/HS - "You're So Gay" (as an insult) 
 
 Context: One student calls another student “gay” meant as an insult in front of the class. 
@@ -183,7 +266,7 @@ TEACHER: (to the class, in the moment) "Let's pause. Using 'gay' as an insult is
  TEACHER: (both, to student #1) "Go ahead." 
  STUDENT #1:"I felt humiliated. Everyone laughed, and it was like being 'gay' is the worst thing you could call someone. I don’t think it is" 
  TEACHER: (to student #2) "What did you hear?" 
- STUDENT #1: "That he got embarrassed." 
+ STUDENT #2: "That he got embarrassed." 
  TEACHER: "More than just embarrassed. I heard him say it made him feel like who a person is could be used as an insult. Say that back." 
  STUDENT #2: "You felt like I was making being gay a bad thing to be." 
  TEACHER: (to student #1) "Is that accurate?" 
@@ -195,6 +278,8 @@ TEACHER: (to the class, in the moment) "Let's pause. Using 'gay' as an insult is
  TEACHER: "Anything to close it out?" 
  STUDENT #2: "That wasn't fair to you. I'll cut it out." 
 
-(Debrief : the harm reaches beyond the two students. The mediator addresses the room and repairs with the target.) 
+(Debrief : the harm reaches beyond the two students. The mediator addresses the room and repairs with the target.)
+
+> **Presentation (proposal):** 4 screens. (1) Header with context and the harm banner: "uses an identity as an insult. It harms the target and every LGBTQ+ student in earshot." (2) The in the moment class line as a static callout, plus readiness at 5 and the note "you don't owe anyone an explanation around the insult". (3) Dialogue player with the repeat back card: front "that he got embarrassed", back "you felt like I was making being gay a bad thing to be". (4) Rule stamp "I stop using it like that", the note about a word "tossed around a lot", and the debrief. Interactive elements: the player, the flip, the debrief. Fix the mislabeled line (question 2 above) before transcribing. 
 
  

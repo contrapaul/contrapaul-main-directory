@@ -4,7 +4,7 @@ Rules for working in this repo. Each rule says why. If a rule and a request conf
 
 ## The page
 
-- **This is a presentation surface, not a course.** A presenter drives the six scenario tabs from the front of a staff room; staff work the same tabs, many of them on phones. Write for those two seats, in that order of importance.
+- **This is a presentation surface, not a course, and it is a mobile surface first.** The page is two tabs (PYP, MS/HS) holding nine scenarios. A presenter drives the tabs from the front of a staff room; staff work the same tabs, most of them on phones. Write for the phone first; the staff room is the second seat.
 - **Legible from the back of the room.** Check every screen at 1280x720 and at presenter-mode scale. If a line needs squinting, it is too small.
 - **Normal scrolling always works.** Arrow keys are an addition that steps by screen. Nothing may capture the wheel, hijack the scrollbar, or make free scrolling feel wrong.
 - **Arrow keys must never land mid-screen.** Screens are `data-screen` sections of at least one viewport. If content cannot fit one viewport at 1280x720, split it into two screens with a "continued" kicker. Never shrink it, never let it straddle.
@@ -33,7 +33,7 @@ Rules for working in this repo. Each rule says why. If a rule and a request conf
 - **Arrow keys must not hijack typing.** Any handler that reads arrow keys early-returns when focus is in an input, textarea, select, contenteditable, or an element marked `data-keys-live`.
 - **Every interactive element has a keyboard path, an aria story, a reset, and a still version** for `prefers-reduced-motion` and presenter mode.
 - **No content that depends on colour alone.** Every state change also changes an icon, a shape or a word.
-- **The explorer reward is earned, never given.** It requires engaging every interactive element of all six scenarios (plans.md, "The explorer reward"). Scrolling a tab or opening it earns nothing. If a change would let the reward be collected without full engagement, the change is wrong.
+- **The explorer reward is earned, never given.** It requires engaging every interactive element of all nine scenarios (plans.md, "The explorer reward"). Scrolling a tab or opening it earns nothing. If a change would let the reward be collected without full engagement, the change is wrong.
 
 ## Placeholders
 

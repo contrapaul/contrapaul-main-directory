@@ -2,62 +2,54 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { makeEnv, run } from './shim.mjs';
 
-const six = ['s1', 's2', 's3', 's4', 's5', 's6'];
+const tabs = ['pyp', 'mshs'];
 
-function activePanel(env) {
-  return env.document.querySelector('.tab-panel.is-active');
+function setup(opts = {}) {
+  const made = makeEnv({ panels: tabs, tabLinks: tabs, ...opts });
+  const ctx = run('js/tabs.js', made.env);
+  const { env, ...rest } = made;
+  return { ctx, env: Object.assign({}, env, rest) };
 }
 
-test('default route shows the s1 panel and marks its link active', () => {
-  const { env, linkEls } = makeEnv({ panels: six, tabLinks: six });
-  const ctx = run('js/tabs.js', env);
+test('no hash: the pyp panel is active (the no-JS default)', () => {
+  const { ctx, env } = setup();
+  const active = env.panelEls.find((p) => p.classes.has('is-active'));
+  assert.equal(active.attrs['data-tab-panel'], 'pyp');
+});
 
-  assert.equal(activePanel(env).attrs['data-tab-panel'], 's1');
-  const link = linkEls.find((l) => l.attrs['data-tab'] === 's1');
-  assert.equal(link.classes.has('is-active'), true);
+test('#/mshs activates the MS/HS panel and its tab link', () => {
+  const { ctx, env } = setup({ hash: '#/mshs' });
+  const active = env.panelEls.find((p) => p.classes.has('is-active'));
+  assert.equal(active.attrs['data-tab-panel'], 'mshs');
+  const link = env.linkEls.find((l) => l.classes.has('is-active'));
+  assert.equal(link.attrs['data-tab'], 'mshs');
   assert.equal(link.attrs['aria-current'], 'page');
-  assert.equal(ctx.dei.tabs.current, 's1');
 });
 
-test('a #/s3 hash activates the s3 panel', () => {
-  const { env } = makeEnv({ panels: six, tabLinks: six, hash: '#/s3' });
-  const ctx = run('js/tabs.js', env);
-
-  assert.equal(activePanel(env).attrs['data-tab-panel'], 's3');
-  assert.equal(ctx.dei.tabs.current, 's3');
-  const s1 = env.document.querySelectorAll('[data-tab-panel]').find((p) => p.attrs['data-tab-panel'] === 's1');
-  assert.equal(s1.classes.has('is-active'), false);
+test('an unknown tab (#/s1 from the old six tab routes) falls back to pyp', () => {
+  const { env } = setup({ hash: '#/s1' });
+  const active = env.panelEls.find((p) => p.classes.has('is-active'));
+  assert.equal(active.attrs['data-tab-panel'], 'pyp');
 });
 
-test('an unknown hash falls back to s1', () => {
-  const { env } = makeEnv({ panels: six, tabLinks: six, hash: '#/nope' });
-  run('js/tabs.js', env);
-
-  assert.equal(activePanel(env).attrs['data-tab-panel'], 's1');
-});
-
-test('go() switches tab and deep links to a target screen', () => {
-  const { env } = makeEnv({ panels: six, tabLinks: six });
-  const target = { scrollCalls: [] };
-  target.scrollIntoView = (o) => target.scrollCalls.push(o || true);
-  env.document.getElementById = (id) => (id === 'step-2' ? target : null);
-
-  const ctx = run('js/tabs.js', env);
-  ctx.dei.tabs.go('s4', 'step-2');
-  assert.equal(env.location.hash, '#/s4#step-2');
-  // In the browser the hashchange event does the switch + scroll;
-  // the shim fires it by hand.
+test('go() deep links to a scenario section inside the target tab', () => {
+  const { ctx, env } = setup();
+  const target = { scrollCalls: [], scrollIntoView(o) { this.scrollCalls.push(o); } };
+  env.document.getElementById = (id) => (id === 'sc7' ? target : null);
+  ctx.dei.tabs.go('mshs', 'sc7');
   ctx.fire('hashchange');
-  assert.equal(activePanel(env).attrs['data-tab-panel'], 's4');
-  // go() scrolls itself and the hashchange handler does too;
-  // both are idempotent, so require at least one, not exactly one.
+  const active = env.panelEls.find((p) => p.classes.has('is-active'));
+  assert.equal(active.attrs['data-tab-panel'], 'mshs');
   assert.ok(target.scrollCalls.length >= 1);
 });
 
 test('go() to an unknown tab is a no-op', () => {
-  const { env } = makeEnv({ panels: six, tabLinks: six });
-  const ctx = run('js/tabs.js', env);
-  const before = env.location.hash;
-  ctx.dei.tabs.go('intro', null);
-  assert.equal(env.location.hash, before);
+  const { ctx, env } = setup();
+  env.window.scrollToCalls = [];
+  const before = env.panelEls.find((p) => p.classes.has('is-active'));
+  ctx.dei.tabs.go('s9');
+  ctx.fire('hashchange');
+  const after = env.panelEls.find((p) => p.classes.has('is-active'));
+  assert.equal(before, after);
+  assert.equal(after.attrs['data-tab-panel'], 'pyp');
 });

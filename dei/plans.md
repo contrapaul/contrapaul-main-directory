@@ -6,23 +6,23 @@ Written 2026-10-14. Implements `brief.md`. Proposes options where Paul should de
 
 ```
 dei/
-  index.html            the whole page, six scenario tabs
+  index.html            the whole page: two tabs holding nine scenarios
   css/tokens.css        design tokens, both themes            (pattern: make/localai/css/tokens.css)
   css/base.css          layout, screens, tab strip, effects   (pattern: make/localai/css/base.css + tabs.css)
   css/scenarios.css     scenario interaction components
   js/theme.js           theme resolve + toggle                (clone: make/localai/js/theme.js, adapted)
   js/i18n.js            EN/中文 apply + toggle
-  js/tabs.js            #/s1 ... #/s6 hash routes
+  js/tabs.js            #/pyp and #/mshs hash routes
   js/screens.js         screen grid, arrow key nav, reveals
   js/mode.js            presenter mode
-  js/scenarios.js       the six scenario components (flip, match, ...)
+  js/scenarios.js       renders the nine scenarios and their components
   js/progress.js        explorer reward completion tracking
-  data/scenarios.js     placeholder scenario content, one object per scenario, method tagged
+  data/scenarios.js     committee scenario content, one object per scenario, en/zh pairs
   CLAUDE.md             house rules for this repo
   HANDOFF.md            kept current per the site-wide rule
 ```
 
-One page, six tabs, two languages. One tab per scenario (pivot 2026-10-14: the survey element and the introduction tab are out; the survey is covered elsewhere). Tabs are a hash route (`#/s1` to `#/s6`), the same mechanism as `make/localai` (its `css/tabs.css` plus the `data-tab-link` markup in `index.html` is the reference). The hash survives refresh and deep links, which is what the "navigation links that take visitors to specific locations" need: a link is `#/s3#step-2` or a JS call that switches tab then scrolls to the target id.
+One page, two tabs, two languages, nine scenarios (changed 2026-10-15 from six tabs, one per scenario: the committee delivered nine scenarios in two groups). Tab one is PYP (scenarios 1 to 4), tab two is MS/HS (scenarios 5 to 9). Each tab is a long page; a sticky jump strip of scenario chips sits under the header and scrolls to any scenario. Tabs are a hash route (`#/pyp`, `#/mshs`), the same mechanism as `make/localai` (its `css/tabs.css` plus the `data-tab-link` markup in `index.html` is the reference). The hash survives refresh and deep links, which is what the "navigation links that take visitors to specific locations" need: a link is `#/pyp#sc3` or a JS call that switches tab then scrolls to the target id. Mobile is the primary platform (most staff open it on phones): single column under 720px, 44px touch targets, the dialogue player's next line button is a large fixed thumb control.
 
 ### English / 中文 (`js/i18n.js`)
 
@@ -56,44 +56,46 @@ This is the highest risk requirement, so it is designed first.
 
 ## 2. Scenarios
 
-Pivot 2026-10-14: the survey element and the introduction tab are out of scope; the survey is covered elsewhere. The page is the six scenarios, one tab each.
+The committee content arrived 2026-10-15 as nine scenarios in two groups (PYP, MS/HS). Provenance, per Paul: the committee used unedited AI output; staff review it in their meeting that same night. The Chinese translation follows the same order: a preliminary translation before the meeting, the final one after the text is locked. Until then every zh pair in `data/scenarios.js` is a `示例` placeholder, so the 中文 switch is exercised end to end with stand-in text.
 
-Six scenarios ship as placeholders, one per method, so the range is demonstrable (brief open question 3: 6 scenarios, each with an image and a discussion element).
+Each scenario is a section of its tab page (deep link `#/pyp#sc3`), built as four `data-screen` screens: a header screen (kicker "scenario N of 9", method tag, harm banner or tone tag, context, **placeholder image** in a fixed 16:9 frame labelled "placeholder image"), a second screen with the dialogue player or the method piece, a third with the method pieces that need room, and a closing screen with the rule stamp and the debrief. A sticky jump strip of scenario chips tops each tab, with a completion mark per scenario. `data/scenarios.js` holds all copy as en/zh pairs (plain script, per the i18n note); the HTML shells are thin, so the staff review edits are data swaps, not code changes.
 
-Each scenario is a tab (`[data-tab-panel="s1"]`, hash route `#/s1`) containing one or more `data-screen` sections. Every screen has a consistent header (kicker "Scenario 1 of 6", title, a method tag like "flip cards" so the range is visible), a **placeholder image** in a fixed 16:9 frame (labelled "placeholder image", a neutral SVG scene so it is obvious it will be swapped; the frame keeps the layout stable when the real photo arrives), and a body that uses one of the methods below. `data/scenarios.js` holds all copy as en/zh pairs (plain script, per the i18n note); the HTML shells are thin.
+### Scenario components (settled 2026-10-15 from the committee content)
 
-### Proposed scenario methods (the range Paul chooses from)
+The six proposed methods from the scaffold (flip, match, sequence, perspectives, branching, poll) are retired; the content decided the shape. What the nine scenarios use:
 
-| Method | How it works in the room | Pattern cloned from |
-|--------|--------------------------|---------------------|
-| **1. Flip cards** | 3 to 5 cards, face down showing a staff response option ("You call both to the office."). Click (or arrow key, when the scenario has focus) flips the card to reveal what that move does to the relationship, with a one line note. Presenter walks the room through which to pick first. | Card styles from `edu/tools/cards.html` (the card style catalogue: copy the CSS block for the chosen style, it is written to be lifted). Flip mechanics are new but simple: 3D rotateY, 200ms, `aria-pressed`, keyboard accessible, still version shows both faces stacked. |
-| **2. Match the move to the outcome** | Left column: 4 staff moves. Right column (shuffled): 4 outcomes. Tap or click a pair; correct pairs lock in green with a soft stamp-slam (the stamp effect from the `edu/ai` scorecard, see `edu/ai/js/compare.js` and `showcase-plan.md` screen 3), wrong pairs shake and release. | Pairing logic is new (tap/click only, settled 2026-10-14 for phones); the stamp-slam and shake are adapted from `edu/ai`. |
-| **3. Sequence the incident** | The incident is given as 6 out-of-order fragments (chat bubbles / timeline chips). The room orders them by tapping "move up/down". When ordered, a "why this order matters" panel reveals under each boundary. | Mechanics are new, tap/click only (settled 2026-10-14). The dp pages' sorting activities (`edu/curriculum/drag-sort.js`, used on 10 pages incl. DP A3.3) are the reference for what a good ordering interaction feels like. |
-| **4. Three perspectives** | The same incident told from three seats: student A, student B, a bystander. Three tabs or stacked cards; each perspective ends with the feeling the person is holding. After all three are read, a "what was actually in dispute" card reveals. | Tab micro-pattern from `make/localai/css/tabs.css` (small scale), perspective stacking from the `edu/ai` compare component (`edu/ai/js/compare.js`) which runs two parallel narratives. |
-| **5. Branching decision** | "It's Friday, 2:55pm. What do you do?" Two or three large choice buttons. Each choice reveals a 3-step consequence chain (immediate / that day / next week) as a vertical chain, then all branches are visible side by side for comparison. No right answer stated; a facilitator prompt reveals last. | Branch structure from `edu/tools/cyoa` (choose your own adventure) as reference; rendering is new. |
-| **6. Poll the room** | A 5-option show-of-hands poll with on-screen tallies the presenter clicks up; when done, the results render as a human dot strip (one dot per person, a small local render function in `js/scenarios.js`), making the room's own split the discussion. | Tally-click pattern from `trivia` (presenter enters scores from their own device, scoreboard updates); the dot strip is new. |
+1. **Dialogue player** (the core; every scenario except s4): the committee script, line by line, speaker chips (Teacher / Student 1 / Student 2 / Group), tap or space for the next line, a progress count, and a reset so the presenter can replay. `aria-live` announces each line. The player area carries `data-keys-live` so the arrow keys never hijack it. Reduced motion: the full script shows at once and one tap ("I have read the script") earns the player element, so the reward is still earned, never given.
+2. **Readiness check, three shapes**: a static chip with the script's number (s1: 6, s2: 5, s9: 5); an interactive 1 to 10 scale with banded guidance (s3: 1 to 3 "give it time", 4 to 5 "a little time", 6 and up "talk now", and the script's own path 4 then 6 is shown, because the wait is the lesson); a branch of three choices (s5: wait / go slow together / mediate now, where "go slow together" matches the script and reveals its resume line).
+3. **Repeat back card**: the flat repeat ("That she doesn't like that name.") flips to the full repeat ("You feel disrespected because you asked me to stop and I didn't."). Used in s1, s2 (twice), s3, s5, s9.
+4. **Harm banner** (s5 to s7, s9): a static banner that names the harm before the script starts ("no Japanese students in the room. That's the point."). s8 carries a tone tag instead ("light, not alarmed").
+5. **Rule stamp**: the going forward rule, stamped at the end of the scenario (all except s6 and s7, which close on a different beat).
+6. **Debrief card**: the committee's discussion note, revealed on tap (the discussion element the brief requires). s3 has no committee note, so its card is a labelled placeholder until staff write one.
+7. **Bespoke pieces**: a qualities board with chips plus four flip cards and a boundary card (s4, the guided discussion); the three way choice where only one option is right (s6, the only scenario in the set with a right answer); the fact or stereotype card plus the forward move task card (s7); the dare filter, four cards each judged keep or cut against the script's verdict (s8).
 
-Each method has: a keyboard path, an `aria` story (live region announcing state changes), a still version for reduced motion, a "reset" control so the presenter can replay a scenario, and a **discussion element** (the brief requires one per scenario): either a facilitator prompt card that reveals on tap ("Ask the room: whose job was it to notice first, and why?") or a two-column steelman of the two sides before the suggestions appear.
+Every component has: a keyboard path, an `aria` story, a still version for reduced motion and presenter mode, and no state that depends on colour alone. Where the script calls out a facilitation note (s2 "one or two of the group, not a crowd", s5 the weight of body comments, s9 the tossed around word), it ships as a static note card beside the piece it belongs to.
 
 ### The explorer reward, earned not given
 
-The reward exists only for genuine completion of all six scenarios (Paul's rule, 2026-10-14): scrolling a tab or opening it earns nothing. Every interactive element must be engaged:
+The reward exists only for genuine completion of all nine scenarios (Paul's rule, 2026-10-14; retabulated 2026-10-15 when the content arrived): scrolling a tab or opening it earns nothing. Every interactive element must be engaged:
 
 | Scenario | Element counts as done when |
 |----------|------------------------------|
-| 1 flip cards | every card has been flipped to its back face at least once |
-| 2 matching | all four pairs locked |
-| 3 sequencing | all fragments ordered and the confirm control pressed |
-| 4 perspectives | all three perspectives opened and the "what was actually in dispute" card tapped |
-| 5 branching | at least two of the branches chosen and their consequence chains revealed |
-| 6 poll | the presenter has tallied at least three of the five options and the results shown |
+| 1 unkind nickname | the player reaches its last line, the repeat back card is flipped, the debrief is opened |
+| 2 excluded at recess | the player reaches its last line (the pause note hangs in the script), both repeat back cards are flipped, the debrief is opened |
+| 3 "don't go play with [name]" | the readiness scale is tapped, the player reaches its last line, the repeat back card is flipped, the debrief is opened |
+| 4 "a boy should lead" | all four qualities are added to the board, all four quality flips are turned, the boundary card is revealed, the debrief is opened |
+| 5 body shaming | the readiness branch is chosen, the player reaches its last line, the repeat back card is flipped, the debrief is opened |
+| 6 Hitler salute | the player reaches its last line, the three way choice is made, the debrief is opened |
+| 7 racist remarks | the player reaches its last line, the fact or stereotype card is answered, the debrief is opened |
+| 8 truth or dare | the player reaches its last line, all four dares are judged keep or cut, the debrief is opened |
+| 9 "you're so gay" | the player reaches its last line, the repeat back card is flipped, the debrief is opened |
 
 Mechanics:
 
-- `js/progress.js` exposes `markDone(scenarioId, elementId)`. Each component calls it the moment its element is engaged (not when the scenario ends). A scenario's tab on the strip shows a small completion mark only when all of its elements are done; the tab strip doubles as the completion scoreboard (the progress rail still tracks the screens within the active tab).
-- State persists in `localStorage` (`dei-progress`), so a staff member who works the scenarios on their phone over the week still earns it, and a presenter can "reset room progress" from the presenter strip to replay a session with a new group.
-- When the last outstanding element is marked, the celebration plays once (the adapted burst from `make/localai`), the badge appears in the header reading "All scenarios, every card", and it stays on for that browser until reset. Reduced motion version: the badge appears, no particles.
-- Nothing about it is announced as a prize in the page copy. The rail quietly fills; the reward is a small pleasure for the thorough, not a goal the room chases.
+- `js/progress.js` exposes `markDone(scenarioId, elementId)`. Each component calls it the moment its element is engaged (not when the scenario ends). Each jump chip shows a completion mark when all of its scenario's elements are done; each tab link gains a mark when every scenario in that tab is done; the jump strip doubles as the completion scoreboard (the progress rail still tracks the screens within the active tab).
+- State persists in `localStorage` (`dei-progress`), so a staff member who works the scenarios on their phone over the week still earns it, and a presenter can reset room progress from the reset button in the presenter strip to replay a session with a new group.
+- When the last outstanding element is marked, the celebration plays once (a 12 spark burst, the adapted idea from `make/localai`), the badge appears in the header reading "All nine scenarios", and it stays on for that browser until reset. Reduced motion version: the badge appears, no burst. Work completed in earlier visits shows the badge without replaying the celebration.
+- Nothing about it is announced as a prize in the page copy. The marks quietly fill; the reward is a small pleasure for the thorough, not a goal the room chases.
 
 ## 3. Styling and polish
 
@@ -113,7 +115,7 @@ Mechanics:
 | Item | Source | Treatment |
 |------|--------|-----------|
 | Pre-paint theme bootstrap | `make/localai/index.html` (head script) | Cloned, storage key changed to `dei-theme` |
-| Tab strip markup + CSS | `make/localai/index.html` (`.tabs`, `data-tab-link`) and `make/localai/css/tabs.css` | Adapted to 6 tabs (one per scenario), horizontally scrollable on phones |
+| Tab strip markup + CSS | `make/localai/index.html` (`.tabs`, `data-tab-link`) and `make/localai/css/tabs.css` | Adapted to two tabs (PYP, MS/HS), horizontally scrollable on phones |
 | Theme toggle button (sun/moon SVG) | `make/localai/index.html` header | Cloned |
 | Explorer badge + particle burst | `make/localai/index.html` (`.badge-explorer`, `.celebrate`) | Adapted: "All scenarios explored" reward |
 | Card styles (flip card face, locked state) | `edu/tools/cards.html` | Chosen style's CSS block copied in (the catalogue is written for this) |
@@ -127,14 +129,14 @@ Mechanics:
 | Arrow key input guards | `trivia` keyboard handling | Pattern adopted into `js/screens.js` |
 | Style/writing rules | `make/localai/style-guide.md`, `edu/ai/style.md`, `trivia/CLAUDE.md` | Adopted into `dei/CLAUDE.md` |
 
-New code (no clone source): `js/screens.js` (screen grid + arrow nav), `js/mode.js` (presenter mode), the six scenario components in `js/scenarios.js`, `js/progress.js` (explorer reward), the branching method (method 5).
+New code (no clone source): `js/screens.js` (screen grid + arrow nav), `js/mode.js` (presenter mode), the scenario renderer and its components in `js/scenarios.js`, `js/progress.js` (explorer reward), the jump strips.
 
 ## 5. Build order
 
 1. **Scaffold.** `index.html` (six scenario tabs, header, rail shell, footer), `css/tokens.css`, `css/base.css`, `js/theme.js`, `js/i18n.js`, `js/tabs.js`, `CLAUDE.md`, `HANDOFF.md`. Checkpoint: tabs switch, theme toggles with no flash, EN/中文 toggle swaps every UI string with no reload and no flash, both themes AA in both languages. **Done 2026-10-14; see HANDOFF.md for the unverified items.**
 2. **Screen engine.** `data-screen` on 3 test screens, arrow key nav, snap, progress rail, reveals, presenter mode, height check script. Checkpoint: arrow keys never land mid-screen on a 720p and a 1080p viewport; typing in a test input is unharmed. **This checkpoint gates everything else.** **Done 2026-10-14: `js/screens.js` + `js/mode.js`, 35/35 tests; browser-verified items listed in HANDOFF.md.**
-3. **Scenarios, one at a time**, each with its own checkpoint (keyboard path, aria, reset, reduced motion, discussion element, placeholder image frame, 390px phone pass): flip cards, matching, sequencing, perspectives, branching, poll. The survey step and the showcase screen are out of scope (pivot 2026-10-14).
-4. **Explorer reward.** `js/progress.js`, per-element completion, tab strip scoreboard, persistence, reset control, celebration. Checkpoint: opening the tabs and scrolling to the bottom of any of them earns nothing; doing every element in any order earns it exactly once; reset clears it.
+3. **Scenarios and components.** `data/scenarios.js` (all nine, en/zh pairs), `js/scenarios.js` (renderer plus the components in §2), `css/scenarios.css`, the two tab panels with jump strips in `index.html`, `js/tabs.js` retargeted to `#/pyp` and `#/mshs`. **In progress 2026-10-15:** code and unit tests are written (55 node tests, all passing); the browser checklist for each scenario (keyboard path, aria, still versions, 390px phone pass, 1280x720 screen fit) is not yet run and is listed in HANDOFF.md.
+4. **Explorer reward.** `js/progress.js`, per-element completion, jump chip and tab marks, persistence, reset control in the presenter strip, one-time celebration. **Written 2026-10-15,** unit tested; the checkpoint (opening the tabs and scrolling earns nothing; every element in any order earns it exactly once; reset clears it) is verified in the node tests, the browser pass is not yet run.
 5. **Polish pass.** Motion budget audit, contrast audit at both scales, phone pass (390x844, primary), widescreen pass (1920x1080), zh layout pass, final reduced-motion pass.
 6. **Deploy.** Lives at `contrapaul.com/dei/` inside the contrapaul site (this repo is now a subdirectory of `contrapaul-main-directory`), straight from source, no build step. Changed 2026-10-15 from `dei.contrapaul.com` at Paul's request.
 
@@ -156,13 +158,13 @@ New code (no clone source): `js/screens.js` (screen grid + arrow nav), `js/mode.
 
 Pivot (2026-10-14, Paul): the survey element is out of scope because it is covered elsewhere; the introduction tab goes with it. The page is the six scenarios, one tab each. The effects showcase screen is out with them; the celebration burst still fires for the explorer reward. The earlier settled item "all nine survey methods into tab 1" is void.
 
-Settled from the brief (2026-10-14): domain is `contrapaul.com/dei/` (was `dei.contrapaul.com`, changed 2026-10-15); 6 scenarios each with an image and a discussion element; presenter uses a keyboard (or an assistant); the explorer reward stays but is earned by engaging every interactive element of all six scenarios, never by scrolling (§2, The explorer reward).
+Settled from the brief (2026-10-14): domain is `contrapaul.com/dei/` (was `dei.contrapaul.com`, changed 2026-10-15); the scenarios each carry a placeholder image and a discussion element (the count moved to nine on 2026-10-15); presenter uses a keyboard (or an assistant); the explorer reward stays but is earned by engaging every interactive element of all nine scenarios, never by scrolling (§2, The explorer reward).
+
+Settled (2026-10-15, from Paul): the tab pair is **PYP and MS/HS** (not MYP/DP); the nine committee scenarios are unedited AI output and staff review them the same night, so the build keeps all copy in `data/scenarios.js` to make the review edits data swaps; the Chinese translation runs preliminary (before the meeting) then final (after the text locks), and every zh pair is a `示例` placeholder until then; scenario 6's garbled line keeps its existing words with asterisks and a "(Fix text)" note; scenario 5's "I just stopped being hungry." stays as written; the explorer reward is retabulated for nine (§2).
 
 Settled (2026-10-14, from Paul's answers written in this file):
 
 1. **Accent colour: deep teal.** Already the working default in `css/tokens.css`; the terracotta candidate stays in tokens as a one-line flip in case of regret.
 2. **Methods 2 and 3: tap/click only**, no drag, for phones. `drag-sort.js` is a feel reference, not a clone.
 
-Still open:
-
-3. Do scenarios have a "recommended move" the presenter reveals, or purely open facilitation? Paul will revisit once the finalized content is in place. Affects the reveal card copy structure. 
+Answered by the content (2026-10-15, question 3): the committee scripts carry their own recommended moves in the data. The s5 branch and the s6 three way choice mark the option the script follows, and the s7 fact card names the correct answer. If the staff review decides a scenario should be purely open facilitation, the mark is a data change, not a code change. 
