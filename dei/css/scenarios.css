@@ -1,646 +1,561 @@
 /* ============================================================
-   DEI training page: scenario components
+   DEI training page: scenarios, player, chat, layouts, rewards
    ------------------------------------------------------------
-   Styles for the two scenario tabs: the sticky jump strip, the
-   dialogue player, the readiness chip / scale / branch, the
-   repeat back flip card, harm and tone banners, the rule stamp,
-   the debrief card, and the method specific pieces (qualities
-   board, three way choice, fact or stereotype, dare filter).
-
-   Rules carried in:
-   - mobile first: 390px wide is the reference, 44px targets,
-     the "next line" button is the big thumb button
-   - no colour alone: every state change also changes an icon,
-     a shape or a word
-   - still versions: prefers-reduced-motion and presenter mode
-     get the no-motion layouts (flip cards stack both faces,
-     reveals are instant, the celebration never runs)
+   Phone first (360 to 430px). Colours from tokens.css; each
+   speaker's bubble uses --sp-<key> and --sp-<key>-edge.
    ============================================================ */
 
-/* ---------- Scenario screens ----------------------------------
-   Scenario screens hold more than the placeholder screens, so
-   the title steps down one size from the placeholder screens.
-   The min-height of .screen (base.css) keeps one screen per
-   arrow step. */
-.scenario-screen .screen-title { font-size: var(--fs-6); }
-.scenario-screen .screen-inner { max-width: 920px; }
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
 
-/* ---------- Jump strip ----------------------------------------
-   Sticky below the header, one chip per scenario in the tab.
-   Horizontal scroll on phones; the chips are the in-page
-   navigation, so they never wrap into a wall. */
-.jump-strip {
-  position: sticky;
-  top: 68px;               /* under the sticky header */
-  z-index: 15;
+/* ---------- Speaker colours ---------- */
+.sp-t  { --b: var(--sp-t);  --e: var(--sp-t-edge); }
+.sp-s2 { --b: var(--sp-s2); --e: var(--sp-s2-edge); }
+.sp-s1, .sp-s { --b: var(--sp-s1); --e: var(--sp-s1-edge); }
+.sp-g  { --b: var(--sp-g);  --e: var(--sp-g-edge); }
+
+/* ---------- Jump links ---------- */
+.jump {
   display: flex;
   gap: var(--sp-2);
-  padding: var(--sp-3) var(--sp-5);
-  background: color-mix(in srgb, var(--bg) 92%, transparent);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--line);
+  margin: var(--sp-4) calc(-1 * var(--sp-4)) 0;
+  padding: 2px var(--sp-4) var(--sp-2);
   overflow-x: auto;
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
-.jump-strip::-webkit-scrollbar { display: none; }
 
-.jump-chip {
+.jump::-webkit-scrollbar { display: none; }
+
+.jump-link {
   flex: none;
   display: inline-flex;
   align-items: center;
-  gap: var(--sp-1);
+  gap: 6px;
   min-height: 44px;
-  padding: 6px 14px;
-  font: inherit;
+  padding: 0 14px;
   font-size: var(--fs-1);
   font-weight: 600;
   color: var(--text-secondary);
+  text-decoration: none;
+  white-space: nowrap;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 999px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: border-color var(--dur-micro) var(--ease-out),
-              color var(--dur-micro) var(--ease-out);
 }
-.jump-chip:hover { color: var(--text); border-color: var(--line-strong); }
-.jump-chip .jump-num { color: var(--text-faint); }
-.jump-chip .jump-done { display: none; font-weight: 700; color: var(--ok); }
-.jump-chip.is-done { border-color: color-mix(in srgb, var(--ok) 55%, var(--line)); }
-.jump-chip.is-done .jump-done { display: inline; }
-.jump-chip.is-done .jump-done::before { content: "✓ "; }
 
-/* A finished tab earns a check on its header link. */
-.tab-link.is-done::after { content: " ✓"; color: var(--ok); font-weight: 700; }
+.jump-link:hover { color: var(--text); border-color: var(--line-strong); }
 
-/* Header badge: all nine scenarios done. */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  min-height: 32px;
-  padding: 4px 12px;
-  font-size: var(--fs-1);
-  font-weight: 700;
-  color: var(--accent-contrast);
-  background: var(--accent);
-  border-radius: 999px;
-  white-space: nowrap;
+.jump-mark { display: none; color: var(--ok); font-weight: 700; }
+.jump-link.is-done .jump-mark { display: inline; }
+
+/* ---------- Scenario ---------- */
+.scenario {
+  padding: var(--sp-6) 0 var(--sp-5);
+  scroll-margin-top: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
 }
-.badge[hidden="true"], .badge[hidden] { display: none; }
 
-/* ---------- One-time celebration ------------------------------ */
-.celebrate {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 60;
+.scenario + .scenario { border-top: 1px solid var(--line); }
+
+.sc-title {
+  font-size: var(--fs-5);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  font-weight: 750;
 }
-.celebrate span {
+
+.sc-context {
+  font-size: var(--fs-2);
+  color: var(--text-secondary);
+}
+
+.sc-note {
+  font-size: 17px;
+  padding: var(--sp-3) var(--sp-4);
+  border-left: 3px solid var(--bad);
+  background: color-mix(in srgb, var(--bad) 7%, transparent);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+}
+
+.sc-debrief {
+  font-size: 17px;
+  padding: var(--sp-4);
+  background: var(--accent-wash);
+  border-radius: var(--radius-m);
+}
+
+.sc-debrief strong { font-weight: 700; }
+
+.sc-debrief.is-placeholder {
+  background: transparent;
+  border: 1px dashed var(--line-strong);
+  color: var(--text-faint);
+}
+
+/* ---------- Player ---------- */
+.player {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.stage {
+  display: grid;
+  overflow: hidden;
+  margin: 0 calc(-1 * var(--sp-4));
+  padding: 0 var(--sp-4);
+}
+
+.player[data-mode="idle"] .stage { display: none; }
+
+.card {
+  grid-area: 1 / 1;
+  width: 88%;
+  max-width: 440px;
+  align-self: start;
+  transition: transform var(--dur-slide) var(--ease-out),
+              opacity var(--dur-slide) var(--ease-out);
+}
+
+.card.side-left  { justify-self: start; }
+.card.side-right { justify-self: end; }
+
+.card.side-left.is-entering,
+.card.side-left.is-leaving  { transform: translateX(-110%); opacity: 0; }
+.card.side-right.is-entering,
+.card.side-right.is-leaving { transform: translateX(110%); opacity: 0; }
+
+.card-img {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  border-radius: var(--radius-l);
+  overflow: hidden;
+  background: var(--b);
+}
+
+.card-img img { width: 100%; height: 100%; object-fit: cover; }
+
+.card-img.is-placeholder {
+  background:
+    linear-gradient(160deg, color-mix(in srgb, var(--e) 22%, var(--b)), var(--b));
+}
+
+.card-img svg {
   position: absolute;
   left: 50%;
-  top: 62%;
-  width: 10px;
-  height: 10px;
-  border-radius: 2px;
-  background: var(--accent);
-  animation: dei-spark 1.5s var(--ease-out) forwards;
-}
-.celebrate span:nth-child(1)  { --dx: -180px; --dy: -260px; background: var(--ok); }
-.celebrate span:nth-child(2)  { --dx: 160px;  --dy: -300px; }
-.celebrate span:nth-child(3)  { --dx: -320px; --dy: -120px; background: var(--warn); }
-.celebrate span:nth-child(4)  { --dx: 300px;  --dy: -160px; background: var(--ok); }
-.celebrate span:nth-child(5)  { --dx: -90px;  --dy: -380px; }
-.celebrate span:nth-child(6)  { --dx: 90px;   --dy: -360px; background: var(--warn); }
-.celebrate span:nth-child(7)  { --dx: -420px; --dy: 40px; }
-.celebrate span:nth-child(8)  { --dx: 420px;  --dy: 20px;  background: var(--ok); }
-.celebrate span:nth-child(9)  { --dx: -240px; --dy: 120px; background: var(--warn); }
-.celebrate span:nth-child(10) { --dx: 250px;  --dy: 140px; }
-.celebrate span:nth-child(11) { --dx: -40px;  --dy: 220px; background: var(--ok); }
-.celebrate span:nth-child(12) { --dx: 60px;   --dy: 240px; }
-@keyframes dei-spark {
-  to { transform: translate(var(--dx, 0), var(--dy, 0)) scale(0); opacity: 0; }
+  top: 10%;
+  width: 46%;
+  transform: translateX(-50%);
+  fill: color-mix(in srgb, var(--e) 45%, transparent);
 }
 
-/* ---------- Scenario block chrome ------------------------------ */
-.scenario { border-top: 1px solid var(--line); }
-.scenario > .screen:first-child { border-top: none; }
-
-.card-kicker {
-  font-size: var(--fs-1);
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-}
-
-/* Placeholder image frame, 16:9, labelled. */
-.ph-frame { margin: 0; }
-.ph-img {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  min-height: 180px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--sp-2);
-  background:
-    repeating-linear-gradient(45deg,
-      transparent 0 14px,
-      color-mix(in srgb, var(--line) 40%, transparent) 14px 15px),
-    var(--bg-soft);
-  border: 1px dashed var(--line-strong);
-  border-radius: var(--radius-m);
-  text-align: center;
-  padding: var(--sp-4);
-}
-.ph-img .ph-tag { align-self: center; }
-.ph-cap { font-size: var(--fs-1); color: var(--text-faint); max-width: 40ch; }
-
-/* ---------- Harm + tone banners -------------------------------- */
-.harm-banner, .tone-tag {
-  padding: var(--sp-4) var(--sp-5);
-  border-radius: var(--radius-m);
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-2);
-}
-.harm-banner {
-  background: color-mix(in srgb, var(--warn) 12%, transparent);
-  border: 1px solid color-mix(in srgb, var(--warn) 40%, transparent);
-}
-.harm-banner .card-kicker { color: var(--warn); }
-.tone-tag {
-  background: var(--accent-wash);
-  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
-}
-.tone-tag .card-kicker { color: var(--accent); }
-.banner-text { font-size: var(--fs-2); max-width: 65ch; }
-
-/* ---------- Dialogue player ------------------------------------ */
-.player {
-  border: 1px solid var(--line);
-  border-radius: var(--radius-l);
+.card-img .ph-tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
   background: var(--surface);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+}
+
+.card.side-right .card-img .ph-tag { left: auto; right: 10px; }
+
+/* The bubble sits across the bottom of the image. */
+.card .bubble {
+  position: relative;
+  margin: -64px 10px 0;
   box-shadow: var(--shadow-1);
 }
-.player-lines {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-3);
-  padding: var(--sp-4);
-  max-height: 62vh;
-  overflow-y: auto;
-  scroll-behavior: smooth;
-}
-.player-line {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-1);
-  padding: var(--sp-2) var(--sp-3);
-  border-left: 3px solid var(--line-strong);
-}
-.player-line.static-line { border-left-color: var(--accent); background: var(--bg-soft); }
-.player-dir {
-  font-size: var(--fs-1);
-  color: var(--text-faint);
-  font-style: italic;
-  max-width: 60ch;
-}
-.player-speaker {
-  align-self: flex-start;
-  padding: 2px 10px;
-  font-size: var(--fs-1);
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--accent-contrast);
-  background: var(--accent);
-  border-radius: 999px;
-  white-space: nowrap;
-}
-.player-text { font-size: var(--fs-2); max-width: 65ch; }
-.player-line.is-hidden { display: none; }
 
-/* The line bar: big thumb button first, count, reset. On
-   phones it pins to the bottom of the viewport while the
-   player is on screen. */
-.player-bar {
-  position: sticky;
-  bottom: 0;
+.bubble {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 14px 12px;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--b);
+  border: 1px solid color-mix(in srgb, var(--e) 35%, transparent);
+  border-radius: 18px;
+}
+
+.bubble .who {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--e);
+}
+
+.bubble .dir {
+  font-size: 15px;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+/* Controls: the main button, then (after a full play) step back,
+   the line count, step forward. */
+.controls {
   display: flex;
   align-items: center;
-  gap: var(--sp-3);
-  padding: var(--sp-3) var(--sp-4);
-  background: var(--surface);
-  border-top: 1px solid var(--line);
+  gap: var(--sp-2);
 }
-.player-next {
-  flex: 1;
-  min-height: 56px;
-  padding: var(--sp-3) var(--sp-4);
-  font: inherit;
-  font-size: var(--fs-3);
-  font-weight: 700;
-  color: var(--accent-contrast);
-  background: var(--accent);
-  border: none;
-  border-radius: var(--radius-m);
-  cursor: pointer;
-}
-.player-next:hover { filter: brightness(1.06); }
-.player-next.is-done {
-  background: var(--bg-soft);
-  color: var(--ok);
-  border: 1px solid color-mix(in srgb, var(--ok) 50%, var(--line));
-}
-.player-count {
-  font-size: var(--fs-1);
-  font-weight: 600;
-  color: var(--text-faint);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-.player-reset {
-  min-height: 44px;
-  padding: 6px 14px;
-  font: inherit;
-  font-size: var(--fs-1);
-  font-weight: 600;
-  color: var(--text-secondary);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  cursor: pointer;
-}
-.player-reset:hover { color: var(--text); border-color: var(--line-strong); }
 
-/* ---------- Readiness chip / scale ----------------------------- */
-.ready-chip {
-  align-self: flex-start;
+.btn-play {
   display: inline-flex;
   align-items: center;
-  min-height: 34px;
-  padding: 4px 14px;
-  font-size: var(--fs-1);
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 22px 0 18px;
+  font-size: var(--fs-2);
   font-weight: 700;
-  color: var(--accent);
-  background: var(--accent-wash);
-  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  color: var(--accent-contrast);
+  background: var(--accent);
+  border: 0;
   border-radius: 999px;
-}
-
-.ready-scale {
-  border: 1px solid var(--line);
-  border-radius: var(--radius-l);
-  background: var(--surface);
-  padding: var(--sp-4);
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-4);
+  cursor: pointer;
   box-shadow: var(--shadow-1);
 }
-.ready-prompt { font-size: var(--fs-3); font-weight: 600; max-width: 55ch; }
-.ready-nums { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
-.ready-num {
+
+.btn-play .icon { font-size: 14px; line-height: 1; min-width: 14px; text-align: center; }
+
+.player[data-mode="done"] .btn-play,
+.player[data-mode="paused"] .btn-play {
+  color: var(--accent);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  box-shadow: none;
+}
+
+.btn-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 48px;
   height: 48px;
-  font: inherit;
-  font-size: var(--fs-2);
-  font-weight: 700;
-  color: var(--text-secondary);
-  background: var(--bg-soft);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-s);
-  cursor: pointer;
-}
-.ready-num:hover { color: var(--text); border-color: var(--line-strong); }
-.ready-num.is-picked {
-  color: var(--accent-contrast);
-  background: var(--accent);
-  border-color: var(--accent);
-}
-.ready-band {
-  min-height: 1.6em;
-  font-size: var(--fs-3);
-  font-weight: 600;
-  color: var(--accent);
-}
-.ready-path {
-  font-size: var(--fs-1);
-  color: var(--text-faint);
-  padding-top: var(--sp-2);
-  border-top: 1px dashed var(--line);
-}
-
-/* ---------- Pause note + reveal cards -------------------------- */
-.note-card, .reveal-card, .debrief-card {
-  width: 100%;
-  text-align: left;
-  font: inherit;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--sp-2);
-  padding: var(--sp-4) var(--sp-5);
+  font-size: 28px;
+  line-height: 1;
+  color: var(--text);
   background: var(--surface);
   border: 1px solid var(--line-strong);
-  border-radius: var(--radius-m);
+  border-radius: 50%;
   cursor: pointer;
-  transition: border-color var(--dur-micro) var(--ease-out);
 }
-.note-card:hover, .reveal-card:hover, .debrief-card:hover {
-  border-color: var(--accent);
-}
-.note-card.is-hidden { display: none; }
-.reveal-body { font-size: var(--fs-2); max-width: 65ch; }
-.note-card.is-open, .reveal-card.is-open, .debrief-card.is-open {
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
-  background: var(--accent-wash);
-}
-.debrief-card { border-width: 2px; }
 
-/* ---------- Static notes (method, weight, toss, forward) ------ */
-.static-note {
-  padding: var(--sp-4) var(--sp-5);
-  border-radius: var(--radius-m);
-  background: var(--bg-soft);
-  border: 1px solid var(--line);
+.btn-step:disabled { opacity: 0.35; cursor: default; }
+
+.btn-step[hidden], .count[hidden] { display: none; }
+
+.count {
+  min-width: 56px;
+  text-align: center;
+  font-size: var(--fs-1);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+}
+
+/* While playing, the count sits at the far right on its own. */
+.player[data-mode="playing"] .count,
+.player[data-mode="paused"]:not(:has(.btn-step:not([hidden]))) .count { margin-left: auto; }
+
+/* ---------- Chat (after a full play) ---------- */
+.chat {
+  list-style: none;
+  margin: var(--sp-3) 0 0;
+  padding: var(--sp-4) 0 0;
+  border-top: 1px dashed var(--line);
   display: flex;
   flex-direction: column;
-  gap: var(--sp-2);
+  gap: 6px;
 }
-.static-note .note-text { font-size: var(--fs-2); max-width: 65ch; }
-.forward-card {
-  background: var(--accent-wash);
-  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
-}
-.forward-card .card-kicker { color: var(--accent); }
 
-/* ---------- Repeat back flip cards -----------------------------
-   Front: the flat repeat back. Back: the full one. 3D flip,
-   200ms. Still version (reduced motion, presenter): both faces
-   stacked, no transform. */
-.flip-card {
-  position: relative;
+.chat[hidden] { display: none; }
+
+.msg { display: flex; }
+.msg.side-left  { justify-content: flex-start; }
+.msg.side-right { justify-content: flex-end; }
+
+.msg .bubble { max-width: 84%; }
+.msg.side-left  .bubble { border-bottom-left-radius: 6px; }
+.msg.side-right .bubble { border-bottom-right-radius: 6px; }
+
+/* Group chat: the name shows when the speaker changes. */
+.msg .bubble.same-speaker .who { display: none; }
+.msg:has(.bubble:not(.same-speaker)):not(:first-child) { margin-top: 8px; }
+
+.msg.is-current .bubble { outline: 2px solid var(--e); outline-offset: 2px; }
+
+/* ---------- Placeholder layouts ---------- */
+.piece {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  background: var(--bg-soft);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-m);
+}
+
+.piece > .ph-tag { align-self: flex-start; }
+
+.piece-prompt { font-weight: 600; }
+
+.quote {
+  display: block;
+  padding: 10px 14px;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--b);
+  border: 1px solid color-mix(in srgb, var(--e) 35%, transparent);
+  border-radius: 16px;
+}
+
+/* Flip card (layouts A and B). Both faces share one grid cell so
+   the card is as tall as its longer face. */
+.flip {
   display: block;
   width: 100%;
-  min-height: 170px;
   padding: 0;
-  font: inherit;
   text-align: left;
   background: none;
-  border: none;
+  border: 0;
   cursor: pointer;
-  perspective: 900px;
+  perspective: 1000px;
 }
-.flip-face {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: var(--sp-2);
-  padding: var(--sp-5);
-  background: var(--surface);
-  border: 2px solid var(--line-strong);
-  border-radius: var(--radius-m);
-  backface-visibility: hidden;
-  transition: transform var(--dur-base) var(--ease-out);
-}
-.flip-front { border-color: var(--line-strong); }
-.flip-back {
-  transform: rotateY(180deg);
-  border-color: var(--accent);
-}
-.flip-card.is-flipped .flip-front { transform: rotateY(180deg); }
-.flip-card.is-flipped .flip-back { transform: rotateY(0deg); }
-.flip-card.is-flipped .flip-back { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); }
-.flip-text { font-size: var(--fs-2); max-width: 60ch; }
 
-/* ---------- Qualities board (scenario 4) ----------------------- */
-.board {
-  border: 1px solid var(--line);
-  border-radius: var(--radius-l);
-  background: var(--surface);
-  padding: var(--sp-5);
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-4);
-  box-shadow: var(--shadow-1);
-}
-.board-prompt { font-size: var(--fs-3); font-weight: 600; }
-.board-chips { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
-.board-chip {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 8px 18px;
-  font: inherit;
-  font-size: var(--fs-2);
-  font-weight: 600;
-  color: var(--text-secondary);
-  background: var(--bg-soft);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  cursor: pointer;
-}
-.board-chip:hover { color: var(--text); border-color: var(--line-strong); }
-.board-chip.is-added {
-  color: var(--accent);
-  background: var(--accent-wash);
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
-}
-.board-chip.is-added::before { content: "✓ "; font-weight: 700; }
-
-.turn { display: flex; flex-direction: column; gap: var(--sp-4); }
-.turn-q { font-size: var(--fs-3); font-weight: 600; max-width: 55ch; }
-.turn-a { font-size: var(--fs-2); color: var(--text-secondary); max-width: 55ch; }
-.turn-hint { font-size: var(--fs-1); color: var(--text-faint); }
-.quality-cards {
+.flip-inner {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  transition: transform 450ms var(--ease-out);
+  transform-style: preserve-3d;
+}
+
+.flip.is-flipped .flip-inner { transform: rotateY(180deg); }
+
+.flip-face {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  min-height: 170px;
+  padding: var(--sp-4);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-1);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-back { transform: rotateY(180deg); justify-content: flex-start; }
+
+.flip-q { font-size: var(--fs-3); font-weight: 650; line-height: 1.35; }
+
+.flip-hint {
+  font-size: var(--fs-1);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.flip-hint::before { content: "\21bb  "; }
+
+.flip-back .flip-hint { margin-top: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-inner { transform: none !important; }
+  .flip-back { transform: none; visibility: hidden; }
+  .flip.is-flipped .flip-front { visibility: hidden; }
+  .flip.is-flipped .flip-back { visibility: visible; }
+}
+
+/* A: swipe row */
+.flip-row {
+  display: flex;
+  gap: var(--sp-3);
+  margin: 0 calc(-1 * var(--sp-4));
+  padding: 4px var(--sp-4) 8px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.flip-row::-webkit-scrollbar { display: none; }
+
+.flip-row .flip {
+  flex: none;
+  width: 82%;
+  max-width: 340px;
+  scroll-snap-align: start;
+}
+
+/* B: deck */
+.deck { position: relative; padding-bottom: 10px; }
+
+.deck::before,
+.deck::after {
+  content: "";
+  position: absolute;
+  left: 10px; right: 10px;
+  height: 20px;
+  bottom: 4px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  z-index: 0;
+}
+
+.deck::after { left: 20px; right: 20px; bottom: 0; opacity: 0.6; }
+
+.deck .flip { position: relative; z-index: 1; }
+
+.flip-back .quote + .quote { margin-top: 6px; }
+
+.deck-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: var(--sp-3);
 }
-.quality-flip { min-height: 120px; }
-.quality-flip .flip-face { justify-content: center; }
 
-/* ---------- Choice (s5 branch, s6 three way) ------------------- */
-.choice { display: flex; flex-direction: column; gap: var(--sp-3); }
-.choice-prompt { font-size: var(--fs-3); font-weight: 600; max-width: 60ch; }
-.choice-opts { display: flex; flex-direction: column; gap: var(--sp-2); }
-.choice-opt {
+/* C: pick */
+.pick { display: flex; flex-direction: column; gap: var(--sp-2); }
+
+.pick-opt {
+  display: block;
   width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
   text-align: left;
-  font: inherit;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--sp-1);
-  min-height: 56px;
-  padding: var(--sp-3) var(--sp-4);
+  font-size: 17px;
   background: var(--surface);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius-m);
   cursor: pointer;
-  transition: border-color var(--dur-micro) var(--ease-out);
 }
-.choice-opt:hover { border-color: var(--line-strong); }
-.opt-label { font-size: var(--fs-2); font-weight: 600; }
-.opt-tag {
-  display: none;
-  align-items: center;
-  font-size: var(--fs-1);
-  font-weight: 700;
+
+.pick-opt.is-picked { border-width: 2px; border-color: var(--accent); }
+
+.pick-opt.is-best::after {
+  content: " \2713";
   color: var(--ok);
-}
-.opt-result {
-  display: none;
-  font-size: var(--fs-1);
-  color: var(--text-secondary);
-  max-width: 65ch;
-}
-.choice-opt.is-picked { border-color: var(--line-strong); background: var(--bg-soft); }
-.choice-opt.is-picked .opt-result { display: block; }
-.choice-opt.is-picked.is-good { border-color: color-mix(in srgb, var(--ok) 55%, var(--line)); }
-.choice-opt.is-picked.is-good .opt-tag { display: inline-flex; }
-.choice-opt.is-picked.is-good .opt-tag::before { content: "✓ "; }
-.choice-opt.is-picked.is-warn { border-color: color-mix(in srgb, var(--warn) 55%, var(--line)); }
-.choice-resume {
-  margin-top: var(--sp-1);
-  border-left-color: var(--accent);
-  background: var(--accent-wash);
-}
-.choice-resume.is-hidden { display: none; }
-
-/* ---------- Fact or stereotype (scenario 7) -------------------- */
-.fact { display: flex; flex-direction: column; gap: var(--sp-3); }
-.fact-claim {
-  font-size: var(--fs-3);
-  font-weight: 600;
-  max-width: 60ch;
-  padding: var(--sp-3) var(--sp-4);
-  background: var(--bg-soft);
-  border-radius: var(--radius-m);
-  border: 1px solid var(--line);
-}
-.fact-reveal {
-  font-size: var(--fs-2);
-  font-weight: 600;
-  color: var(--accent);
-  max-width: 65ch;
-}
-.fact-reveal.is-hidden { display: none; }
-
-/* ---------- Dare filter (scenario 8) --------------------------- */
-.dares { display: flex; flex-direction: column; gap: var(--sp-3); }
-.dare-card {
-  padding: var(--sp-4);
-  border: 2px solid var(--line);
-  border-radius: var(--radius-m);
-  background: var(--surface);
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-2);
-}
-.dare-text { font-size: var(--fs-2); font-weight: 600; max-width: 60ch; }
-.dare-card > .dare-keep, .dare-card > .dare-cut { align-self: flex-start; }
-.dare-keep, .dare-cut {
-  min-height: 44px;
-  padding: 8px 22px;
-  font: inherit;
-  font-size: var(--fs-2);
   font-weight: 700;
+}
+
+.pick-result { display: flex; flex-direction: column; gap: var(--sp-2); }
+
+.pick-verdict::before {
+  content: attr(data-mark) "  ";
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* D: match */
+.match { display: flex; flex-direction: column; gap: var(--sp-4); }
+
+.match-col { display: flex; flex-direction: column; gap: var(--sp-2); }
+
+.match-head {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.match-item {
+  position: relative;
+  width: 100%;
+  min-height: 48px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.match-item.is-picked { outline: 3px solid var(--e); outline-offset: 2px; }
+
+.match-item.is-matched { opacity: 0.75; cursor: default; padding-right: 44px; }
+
+.match-item.is-matched::after {
+  content: attr(data-n);
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 26px; height: 26px;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent-contrast);
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+.match-item.is-wrong { animation: shake 320ms; }
+
+@keyframes shake {
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.match-done { font-weight: 700; color: var(--ok); }
+.match-done::before { content: "\2713  "; }
+
+@media (min-width: 640px) {
+  .match { flex-direction: row; }
+  .match-col { flex: 1; }
+}
+
+/* E: write, then compare */
+.write-area {
+  width: 100%;
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 17px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-m);
+  resize: vertical;
+}
+
+.btn-soft {
+  align-self: flex-start;
+  min-height: 44px;
+  padding: 0 18px;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
   border-radius: 999px;
   cursor: pointer;
-  border: 1px solid var(--line-strong);
-  background: var(--bg-soft);
-  color: var(--text-secondary);
-}
-.dare-keep:hover, .dare-cut:hover { color: var(--text); border-color: var(--text-faint); }
-.dare-verdict {
-  font-size: var(--fs-1);
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-.dare-verdict.is-hidden { display: none; }
-.dare-reason { font-size: var(--fs-1); color: var(--text-secondary); max-width: 60ch; }
-.dare-reason.is-hidden { display: none; }
-.dare-card.is-keep { border-color: color-mix(in srgb, var(--ok) 60%, var(--line)); }
-.dare-card.is-keep .dare-verdict { color: var(--ok); }
-.dare-card.is-keep .dare-verdict::before { content: "✓ "; }
-.dare-card.is-cut { border-color: color-mix(in srgb, var(--bad) 60%, var(--line)); }
-.dare-card.is-cut .dare-verdict { color: var(--bad); }
-.dare-card.is-cut .dare-verdict::before { content: "✕ "; }
-
-/* ---------- Rule stamp + solutions ----------------------------- */
-.rule-stamp {
-  padding: var(--sp-5);
-  border: 3px double var(--accent);
-  border-radius: var(--radius-m);
-  background: var(--accent-wash);
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-2);
-}
-.rule-stamp .card-kicker { color: var(--accent); }
-.rule-text { font-size: var(--fs-3); font-weight: 700; max-width: 55ch; }
-
-.solutions { display: flex; flex-direction: column; gap: var(--sp-2); }
-.solution-item {
-  font-size: var(--fs-2);
-  padding-left: var(--sp-4);
-  border-left: 3px solid var(--accent);
-  max-width: 65ch;
 }
 
-/* ---------- Beat (s5): static lines + branch -------------------- */
-.beat { display: flex; flex-direction: column; gap: var(--sp-3); }
+.write-reveal { display: flex; flex-direction: column; gap: var(--sp-2); }
+.write-label { font-weight: 600; }
 
-/* ---------- Mobile: 390x844 reference -------------------------- */
-@media (max-width: 720px) {
-  /* Header wraps on phones, so the strip sits lower. */
-  .jump-strip { top: 118px; }
-  .scenario-screen .screen-title { font-size: var(--fs-5); }
-  .scenario-screen { padding: var(--sp-5) var(--sp-4); }
-  .player-lines { max-height: 52vh; }
-  .quality-cards { grid-template-columns: 1fr; }
-  .player-bar { padding: var(--sp-2) var(--sp-3); }
-  .player-count { display: none; }
+[hidden] { display: none !important; }
+
+/* ---------- Rewards (header) ---------- */
+.rewards { display: inline-flex; font-size: 18px; line-height: 1; white-space: nowrap; }
+
+.reward.is-new { animation: pop 700ms var(--ease-out); }
+
+@keyframes pop {
+  0%   { transform: scale(0.2); }
+  60%  { transform: scale(1.35); }
+  100% { transform: scale(1); }
 }
 
-/* ---------- Still versions --------------------------------------
-   prefers-reduced-motion: reveals are instant and flip cards
-   stack both faces (front above back) so nothing is hidden
-   behind motion. The celebration never runs (guarded in JS too).
-   Presenter mode: same stillness, the presenter drives the
-   player line by line on purpose. */
-@media (prefers-reduced-motion: reduce) {
-  .celebrate { display: none; }
-  .flip-face {
-    position: static;
-    transform: none;
-    backface-visibility: visible;
-    transition: none;
-  }
-  .flip-front { display: none; }
-  .flip-card.is-flipped .flip-front { display: flex; }
-  .flip-card.is-flipped .flip-back { display: flex; }
-  .player-lines { scroll-behavior: auto; }
+/* ---------- Wider screens ---------- */
+@media (min-width: 640px) {
+  .sc-title { font-size: var(--fs-6); }
+  .card { width: 76%; }
 }
-:root[data-mode="presenter"] .flip-face {
-  position: static;
-  transform: none;
-  backface-visibility: visible;
-  transition: none;
-}
-:root[data-mode="presenter"] .flip-front { display: none; }
-:root[data-mode="presenter"] .flip-card.is-flipped .flip-front { display: flex; }
-:root[data-mode="presenter"] .flip-card.is-flipped .flip-back { display: flex; }
-:root[data-mode="presenter"] .celebrate { display: none; }
-:root[data-mode="presenter"] .player-lines { scroll-behavior: auto; }

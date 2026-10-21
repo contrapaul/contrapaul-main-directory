@@ -74,7 +74,7 @@
     } catch (e) { /* no live updates, fine */ }
   }
 
-  // Exposed for tests and the presenter strip (step 2).
+  // Exposed for tests.
   window.dei = window.dei || {};
   window.dei.theme = { get current() { return theme; }, toggle: toggle };
 })();

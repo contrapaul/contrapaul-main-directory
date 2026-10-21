@@ -12,9 +12,9 @@ Rules for working in this folder. Each rule says why. If a rule and a request co
 
 ## Interaction
 
-- **The conversation player is settled** (plans.md section 3): a Play button per scenario, one line at a time, a speaker image with the line in a colour coded bubble, sliding in from that speaker's side.
-- **Flip, match and other pieces are Paul's call.** They are wanted, but which scenario gets which piece, and the text inside it, is decided by Paul. Never invent their content. Until Paul picks, build nothing.
-- **Rewards are earned, never given.** Three rewards: PYP, MS/HS, and Conflict Resolution (all nine). Scrolling or opening a tab earns nothing (plans.md section 5).
+- **The conversation player is settled** (plans.md section 3). Play runs the lines on a timer; Pause and Resume share the button. Each line is a card: its image with the words in a colour coded bubble across the bottom, sliding in from the speaker's side (teacher and student 2 left; student 1, "STUDENT" and the group right). After the first full play, back and forward buttons step through the lines and the whole conversation shows below as a group chat. Never make the reader tap for each line on the first play.
+- **Placeholder layouts A to E are for Paul to choose from** (plans.md section 4). Do not add new kinds or move them between scenarios unless Paul asks. Their suggestions are committee lines; their questions and feedback are labelled placeholder wording until Paul replaces them.
+- **Rewards are earned, never given.** A scenario counts when its conversation has played to the last line. Three rewards, each a small emoji in the header once earned: PYP, MS/HS, Conflict Resolution. No reset (plans.md section 5).
 - **No hover-only states.** Every interaction works by tap and by keyboard, has an aria story, and has a still version for `prefers-reduced-motion`.
 - **Never colour alone.** Bubble colour is backed by side, image and a speaker label.
 
@@ -33,14 +33,14 @@ Rules for working in this folder. Each rule says why. If a rule and a request co
 ## Language
 
 - **The EN/中文 toggle stays.** Page chrome carries `data-en` / `data-zh` pairs; scenario data carries `{en, zh}` pairs. A missing pair never blanks the page.
-- Chinese is Simplified only. A preliminary translation comes after tonight's staff review, the final one after the English locks. The zh text translates the committee text as written, nothing added. Until then zh shows a labelled placeholder.
+- Chinese is Simplified only. A preliminary translation comes after tonight's staff review, the final one after the English locks. The zh text translates the committee text as written, nothing added. Until then scenario text falls back to English in 中文 mode; page chrome is already translated.
 
 ## Writing (our own words only)
 
 These apply to text we write: page chrome, code comments, docs. They never apply to the committee's scenario text.
 
 - Plain grade 8 to 10 English. No em dashes. No AI tells. Not preachy, not cute.
-- Keep chrome to the minimum: tab names, jump links, Play and Next, the footer.
+- Keep chrome to the minimum: tab names, jump links, the player buttons, the footer.
 
 ## Placeholders
 
@@ -56,4 +56,4 @@ These apply to text we write: page chrome, code comments, docs. They never apply
 - **Work on `main`. Do not create branches.** (Paul, 2026-10-21.) Cloudflare Pages deploys `main` to `contrapaul.com/dei/`.
 - **After every change that works, add a dated entry to the top of HANDOFF.md**: what was asked, what changed, what is still unverified. Use today's real date. Update the status section. Do this before saying the work is finished.
 - **`brief.md` says what the page is; `plans.md` says how it is built.** If a request conflicts with them, say so and update them. Do not fill gaps with your own ideas: ask.
-- **Verify before claiming.** Tests pass (`node --test test/*.test.mjs`), and the phone check is done in a real browser at 390x844, before saying a change is done.
+- **Verify before claiming.** Tests pass (`npm test`), and the phone check is done in a real browser at 390x844 and 360x740 (Playwright with the preinstalled Chromium works), before saying a change is done.

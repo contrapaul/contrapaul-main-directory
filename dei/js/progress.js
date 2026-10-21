@@ -1,151 +1,108 @@
 /* ============================================================
-   DEI training page: explorer progress
+   DEI training page: rewards
    ------------------------------------------------------------
-   The explorer reward (plans.md, "The explorer reward"): a badge
-   when every interactive element of all nine scenarios has been
-   engaged. Scrolling a tab or opening it earns nothing; only the
-   interactions in js/scenarios.js mark progress.
+   A scenario is complete when its conversation has been played
+   to the last line (js/scenarios.js calls complete()). Opening a
+   tab or scrolling earns nothing. Three rewards, each a small
+   emoji in the header, shown once earned:
 
-   Stored in localStorage under 'dei-progress' as
-   { "sc1": { "player": 1, "debrief": 1 }, ... }. Survives reload,
-   resettable from the presenter strip (the bilingual reset
-   button) and from the console via dei.progress.reset().
+     PYP                  scenarios 1 to 4 complete
+     MS/HS                scenarios 5 to 9 complete
+     Conflict Resolution  all nine complete
+
+   Stored on this device only, under 'dei-progress'. No reset
+   (Paul, 2026-10-21).
+
+   Plain script, not a module: the page must run from file://.
    ============================================================ */
 (function () {
   'use strict';
 
   var KEY = 'dei-progress';
   var scenarios = (window.dei && window.dei.scenarios) || [];
-  var i18n = window.dei.i18n;
 
-  var DONE = { en: '(done)', zh: '示例：待翻译' };
-  var store = load();
-  var wasAll = allDone(); /* no celebration for work done in earlier visits */
+  var REWARDS = [
+    { id: 'pyp', emoji: '🌱', name: { en: 'PYP reward', zh: 'PYP 奖励' },
+      ids: ids('pyp') },
+    { id: 'mshs', emoji: '🧭', name: { en: 'MS/HS reward', zh: 'MS/HS 奖励' },
+      ids: ids('mshs') },
+    { id: 'all', emoji: '🤝', name: { en: 'Conflict Resolution', zh: '冲突解决' },
+      ids: ids() }
+  ];
+
+  function ids(tab) {
+    return scenarios
+      .filter(function (sc) { return !tab || sc.tab === tab; })
+      .map(function (sc) { return sc.id; });
+  }
 
   function load() {
-    try { return JSON.parse(localStorage.getItem(KEY)) || {}; }
-    catch (e) { return {}; }
+    try {
+      var v = JSON.parse(localStorage.getItem(KEY));
+      // Older builds stored a different shape; start fresh then.
+      return (v && v.done && typeof v.done === 'object') ? v.done : {};
+    } catch (e) { return {}; }
   }
+
+  var done = load();
+
   function save() {
-    try { localStorage.setItem(KEY, JSON.stringify(store)); }
-    catch (e) { /* file:// or private mode: progress just does not persist */ }
+    try { localStorage.setItem(KEY, JSON.stringify({ done: done })); }
+    catch (e) { /* private mode: progress lasts this visit only */ }
   }
 
-  function elements(scId) {
-    for (var i = 0; i < scenarios.length; i++) {
-      if (scenarios[i].id === scId) return scenarios[i].elements || [];
-    }
-    return [];
+  function isComplete(id) { return done[id] === 1; }
+
+  function hasReward(r) {
+    return r.ids.length > 0 && r.ids.every(isComplete);
   }
 
-  function isDone(scId, elName) {
-    return !!(store[scId] && store[scId][elName]);
+  function earned() {
+    return REWARDS.filter(hasReward).map(function (r) { return r.id; });
   }
 
-  function scenarioDone(scId) {
-    var els = elements(scId);
-    if (!els.length) return false;
-    for (var i = 0; i < els.length; i++) {
-      if (!isDone(scId, els[i])) return false;
-    }
-    return true;
+  function lang() {
+    return (window.dei.i18n && window.dei.i18n.current) || 'en';
   }
 
-  function allDone() {
-    for (var i = 0; i < scenarios.length; i++) {
-      if (!scenarioDone(scenarios[i].id)) return false;
-    }
-    return scenarios.length > 0;
-  }
-
-  function reduced() {
-    try { return matchMedia('(prefers-reduced-motion: reduce)').matches; }
-    catch (e) { return false; }
-  }
-
-  /* ---------- marks: jump chips, tab links, header badge ------ */
-
-  function paintMarks() {
-    var ui = window.dei.ui;
-    if (ui && ui.chips) {
-      scenarios.forEach(function (sc) {
-        var chip = ui.chips[sc.id];
-        if (!chip) return;
-        var done = scenarioDone(sc.id);
-        chip.el.classList.toggle('is-done', done);
-        chip.doneEl.textContent = done ? i18n.t(DONE) : '';
-      });
-    }
-    var links = document.querySelectorAll('[data-tab]');
-    links.forEach(function (link) {
-      var tab = link.getAttribute('data-tab');
-      var all = true;
-      var any = false;
-      scenarios.forEach(function (sc) {
-        if (sc.tab !== tab) return;
-        any = true;
-        if (!scenarioDone(sc.id)) all = false;
-      });
-      link.classList.toggle('is-done', any && all);
+  function paint(fresh) {
+    var slot = document.querySelector('[data-rewards]');
+    if (!slot) return;
+    slot.innerHTML = '';
+    REWARDS.forEach(function (r) {
+      if (!hasReward(r)) return;
+      var el = document.createElement('span');
+      el.className = 'reward' + (fresh && fresh.indexOf(r.id) !== -1 ? ' is-new' : '');
+      el.setAttribute('role', 'img');
+      el.setAttribute('aria-label', r.name[lang()]);
+      el.setAttribute('title', r.name[lang()]);
+      el.textContent = r.emoji;
+      slot.appendChild(el);
     });
-    var badge = document.querySelector('[data-badge]');
-    if (badge) badge.setAttribute('hidden', allDone() ? 'false' : 'true');
   }
 
-  function celebrate() {
-    if (reduced()) return; /* the badge alone is the still version */
-    var burst = document.createElement('div');
-    burst.className = 'celebrate';
-    burst.setAttribute('aria-hidden', 'true');
-    for (var i = 0; i < 12; i++) {
-      burst.appendChild(document.createElement('span'));
-    }
-    document.body.appendChild(burst);
-    if (typeof setTimeout === 'function') {
-      setTimeout(function () {
-        if (burst.parentNode) burst.parentNode.removeChild(burst);
-      }, 1600);
-    }
-  }
-
-  function reset() {
-    store = {};
+  function complete(id) {
+    if (isComplete(id)) return;
+    var before = earned();
+    done[id] = 1;
     save();
-    wasAll = allDone();
-    paintMarks();
-    var ui = window.dei.ui;
-    if (ui && ui.resetAll) ui.resetAll();
+    var fresh = earned().filter(function (r) { return before.indexOf(r) === -1; });
+    paint(fresh);
+    if (typeof document.dispatchEvent === 'function' && typeof CustomEvent === 'function') {
+      document.dispatchEvent(new CustomEvent('dei:progress', { detail: { id: id } }));
+    }
+  }
+
+  paint();
+  if (typeof document.addEventListener === 'function') {
+    document.addEventListener('dei:lang', function () { paint(); });
   }
 
   window.dei = window.dei || {};
   window.dei.progress = {
-    markDone: function (scId, elName) {
-      if (!store[scId] || !store[scId][elName]) {
-        store[scId] = store[scId] || {};
-        store[scId][elName] = 1;
-        save();
-      }
-      paintMarks();
-      if (!wasAll && allDone()) {
-        wasAll = true;
-        celebrate();
-      }
-    },
-    isDone: isDone,
-    scenarioDone: scenarioDone,
-    allDone: allDone,
-    reset: reset
+    complete: complete,
+    isComplete: isComplete,
+    earned: earned,
+    rewards: REWARDS
   };
-
-  var resetBtn = document.querySelector('[data-reset-progress]');
-  if (resetBtn) {
-    resetBtn.addEventListener('click', function () { reset(); });
-  }
-
-  /* Re-apply the (done) marks on language switch so the pair is
-     right. Registered after js/i18n.js's listener. */
-  var langBtn = document.querySelector('[data-lang-toggle]');
-  if (langBtn) langBtn.addEventListener('click', paintMarks);
-
-  paintMarks();
 })();
