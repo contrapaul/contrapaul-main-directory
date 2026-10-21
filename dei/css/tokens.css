@@ -1,0 +1,135 @@
+/* ============================================================
+   DEI training page: design tokens
+   ------------------------------------------------------------
+   All colour values live here. base.css and later component
+   files use var(--...) only, never raw colours.
+
+   Themes: light + dark via [data-theme] on <html>.
+     - default follows prefers-color-scheme (no-JS fallback below)
+     - manual toggle persists to localStorage("dei-theme")
+       and sets [data-theme] explicitly (js/theme.js)
+   Languages: [data-lang] on <html>, "en" or "zh" (js/i18n.js).
+   ============================================================ */
+
+/* ---------- Shared structural tokens (theme independent) ---- */
+:root {
+  /* Spacing scale: 4 / 8 / 12 / 16 / 24 / 32 / 48 */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+
+  /* Type scale. Body base is 18px (brief: legible from the back
+     of the room), one step up from a normal website. */
+  --fs-1: 14px;
+  --fs-2: 18px;   /* body base */
+  --fs-3: 21px;
+  --fs-4: 24px;
+  --fs-5: 30px;
+  --fs-6: 40px;
+  --fs-7: 54px;
+
+  /* System stack, CJK covered by the generic slot plus an
+     explicit Noto fallback where it is installed.
+     No webfonts, ever (brief rule: nothing from another host). */
+  --font-sans: system-ui, -apple-system, "SF Pro Text", "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "PingFang SC",
+    "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo,
+    Consolas, "Liberation Mono", monospace;
+
+  /* Motion budget (plans.md section 3):
+     state changes 200-400ms, reveals 350ms staggered,
+     data growth 800ms. One easing curve, defined once. */
+  --dur-micro: 200ms;
+  --dur-base: 300ms;
+  --dur-reveal: 350ms;
+  --dur-data: 800ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --stagger-step: 60ms;
+
+  /* Shape */
+  --radius-s: 8px;
+  --radius-m: 14px;
+  --radius-l: 20px;
+
+  /* Focus ring: visible at both themes, 2px, offset.
+     Brief: focus visible, accessibility. */
+  --focus-ring: 2px;
+  --focus-offset: 2px;
+}
+
+/* ---------- Accent ------------------------------------------
+   Deep teal, settled 2026-10-14. Terracotta stays in tokens as
+   a one-line flip in case of regret. */
+:root {
+  --accent-teal:      #0d6a60;
+  --accent-teal-soft: #0d6a60;
+  --accent-terracotta:#a34a24;
+  --accent-terracotta-soft:#a34a24;
+
+  --accent: var(--accent-teal);
+  --accent-soft: var(--accent-teal-soft);
+}
+
+/* ---------- Light theme (default) ---------------------------- */
+:root,
+:root[data-theme="light"] {
+  --bg: #faf7f2;
+  --bg-soft: #f1ece3;
+  --surface: #ffffff;
+  --text: #1f2328;
+  --text-secondary: #464c54;
+  --text-faint: #656c75;
+  --line: #ddd6c9;
+  --line-strong: #c8c0b1;
+
+  --accent: #0d5f56;            /* AA on --bg for text and graphics */
+  --accent-contrast: #ffffff;  /* text on accent */
+  --accent-wash: #e2efec;      /* tinted fills, badges */
+
+  --ok: #1e6b34;
+  --warn: #8a5a12;
+  --bad: #a02c2c;
+
+  --shadow-1: 0 1px 2px rgb(31 35 40 / 8%), 0 4px 14px rgb(31 35 40 / 6%);
+  color-scheme: light;
+}
+
+/* ---------- Dark theme (projector option) --------------------- */
+:root[data-theme="dark"] {
+  --bg: #14161a;
+  --bg-soft: #1b1e24;
+  --surface: #1f232b;
+  --text: #e9e7e2;
+  --text-secondary: #b8b5ae;
+  --text-faint: #8f8d87;
+  --line: #343943;
+  --line-strong: #4a5160;
+
+  --accent: #4fc4b4;
+  --accent-contrast: #10201d;
+  --accent-wash: #1d3330;
+
+  --ok: #58b374;
+  --warn: #d9a441;
+  --bad: #e06c6c;
+
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 40%), 0 4px 14px rgb(0 0 0 / 30%);
+  color-scheme: dark;
+}
+
+/* ---------- Presenter mode (wired in step 2) -------------------
+   Type scale multiplied by 1.25, motion off. Placeholder hook
+   so later CSS can branch on it. */
+:root[data-mode="presenter"] {
+  --fs-2: 22px;
+  --fs-3: 26px;
+  --fs-4: 30px;
+  --fs-5: 38px;
+  --fs-6: 50px;
+  --fs-7: 68px;
+}
