@@ -12,11 +12,11 @@ Rules for working in this folder. Each rule says why. If a rule and a request co
 
 ## Interaction
 
-- **The conversation player is settled** (plans.md section 3). Play runs the lines on a timer; Pause and Resume share the button. Each line is a card: its image with the words in a colour coded bubble across the bottom, sliding in from the speaker's side (teacher and student 2 left; student 1, "STUDENT" and the group right). After the first full play, back and forward buttons step through the lines and the whole conversation shows below as a group chat. Never make the reader tap for each line on the first play.
+- **Every conversation is a phone chat** (plans.md section 3). Pure text, no images. Play starts it; messages arrive at the bottom of a chat window and push older ones up. Teacher and student 2 send from the left; student 1, "STUDENT" and the group from the right, each in their own colour. Stage directions are small centred notes. Each message stays alone for as long as it takes to read (short replies quick, long ones longer), with typing dots just before the next one. Once played, the whole chat stays to scroll. Never make the reader tap for each message.
 - **Placeholder layouts A to E are for Paul to choose from** (plans.md section 4). Do not add new kinds or move them between scenarios unless Paul asks. Their suggestions are committee lines; their questions and feedback are labelled placeholder wording until Paul replaces them.
-- **Rewards are earned, never given.** A scenario counts when its conversation has played to the last line. Three rewards, each a small emoji in the header once earned: PYP, MS/HS, Conflict Resolution. No reset (plans.md section 5).
+- **Rewards are earned, never given.** A scenario counts when its conversation has played to the last message. One trophy button in the header opens the three awards (PYP, MS/HS, Conflict Resolution). No reset (plans.md section 5).
 - **No hover-only states.** Every interaction works by tap and by keyboard, has an aria story, and has a still version for `prefers-reduced-motion`.
-- **Never colour alone.** Bubble colour is backed by side, image and a speaker label.
+- **Never colour alone.** Bubble colour is backed by side and a speaker label.
 
 ## The scenarios
 
@@ -27,7 +27,7 @@ Rules for working in this folder. Each rule says why. If a rule and a request co
 
 ## Zero network
 
-- **Nothing is fetched from another host.** No CDN fonts, no external scripts, no analytics. Images are local files. The page runs from `file://` and from any static host.
+- **Nothing is fetched from another host.** No CDN fonts, no external scripts, no analytics. The page runs from `file://` and from any static host.
 - **So: no ES modules and no `fetch()`.** They break on `file://`. Plain scripts; data lives in plain `.js` data files.
 
 ## Language
@@ -44,7 +44,7 @@ These apply to text we write: page chrome, code comments, docs. They never apply
 
 ## Placeholders
 
-- Every placeholder is labelled ("placeholder" / "占位内容") so Paul can find it: line images, the scenario 3 debrief, untranslated zh.
+- Every placeholder is labelled ("placeholder" / "占位内容") so Paul can find it: the layouts, the scenario 3 debrief.
 
 ## Look and access
 

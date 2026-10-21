@@ -3,8 +3,9 @@
    ------------------------------------------------------------
    A scenario is complete when its conversation has been played
    to the last line (js/scenarios.js calls complete()). Opening a
-   tab or scrolling earns nothing. Three rewards, each a small
-   emoji in the header, shown once earned:
+   tab or scrolling earns nothing. A trophy button in the header
+   opens the list of the three awards, each with its emoji and
+   either "earned" or how many conversations are played so far:
 
      PYP                  scenarios 1 to 4 complete
      MS/HS                scenarios 5 to 9 complete
@@ -65,19 +66,95 @@
     return (window.dei.i18n && window.dei.i18n.current) || 'en';
   }
 
+  var UI = {
+    trophy:  { en: 'Awards', zh: '奖励' },
+    earned:  { en: '\u2713 Earned', zh: '\u2713 已获得' },
+    played:  { en: '{n} of {m} played', zh: '已播放 {n} / {m}' }
+  };
+
+  function say(pair) { return pair[lang()] || pair.en; }
+
+  var btn = null, count = null, pop = null, rows = [];
+
+  /* The trophy button and its awards list, built once. */
+  function build(slot) {
+    btn = document.createElement('button');
+    btn.className = 'tool-btn trophy';
+    btn.setAttribute('type', 'button');
+    btn.setAttribute('aria-expanded', 'false');
+    var icon = document.createElement('span');
+    icon.setAttribute('aria-hidden', 'true');
+    icon.textContent = '\uD83C\uDFC6';
+    count = document.createElement('span');
+    count.className = 'trophy-count';
+    btn.appendChild(icon);
+    btn.appendChild(count);
+
+    pop = document.createElement('div');
+    pop.className = 'awards';
+    pop.setAttribute('hidden', '');
+    var list = document.createElement('ul');
+    rows = REWARDS.map(function (r) {
+      var li = document.createElement('li');
+      var emoji = document.createElement('span');
+      emoji.className = 'award-emoji';
+      emoji.setAttribute('aria-hidden', 'true');
+      emoji.textContent = r.emoji;
+      var name = document.createElement('span');
+      name.className = 'award-name';
+      var status = document.createElement('span');
+      status.className = 'award-status';
+      li.appendChild(emoji);
+      li.appendChild(name);
+      li.appendChild(status);
+      list.appendChild(li);
+      return { li: li, name: name, status: status };
+    });
+    pop.appendChild(list);
+    slot.appendChild(btn);
+    slot.appendChild(pop);
+
+    btn.addEventListener('click', function (e) {
+      if (e && e.stopPropagation) e.stopPropagation();
+      setOpen(pop.hasAttribute('hidden'));
+    });
+    if (typeof document.addEventListener === 'function') {
+      document.addEventListener('click', function (e) {
+        if (!pop.hasAttribute('hidden') && !(e.target && pop.contains && pop.contains(e.target))) setOpen(false);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !pop.hasAttribute('hidden')) { setOpen(false); btn.focus(); }
+      });
+    }
+  }
+
+  function setOpen(on) {
+    if (on) pop.removeAttribute('hidden'); else pop.setAttribute('hidden', '');
+    btn.setAttribute('aria-expanded', String(on));
+  }
+
   function paint(fresh) {
-    var slot = document.querySelector('[data-rewards]');
-    if (!slot) return;
-    slot.innerHTML = '';
-    REWARDS.forEach(function (r) {
-      if (!hasReward(r)) return;
-      var el = document.createElement('span');
-      el.className = 'reward' + (fresh && fresh.indexOf(r.id) !== -1 ? ' is-new' : '');
-      el.setAttribute('role', 'img');
-      el.setAttribute('aria-label', r.name[lang()]);
-      el.setAttribute('title', r.name[lang()]);
-      el.textContent = r.emoji;
-      slot.appendChild(el);
+    if (!btn) {
+      var slot = document.querySelector('[data-rewards]');
+      if (!slot) return;
+      build(slot);
+    }
+    var got = earned();
+    count.textContent = got.length ? String(got.length) : '';
+    btn.setAttribute('aria-label', say(UI.trophy) + ': ' + got.length + ' / ' + REWARDS.length);
+    btn.setAttribute('title', say(UI.trophy));
+    if (fresh && fresh.length) {
+      btn.classList.remove('is-new');
+      void btn.offsetWidth;
+      btn.classList.add('is-new');
+    }
+    REWARDS.forEach(function (r, k) {
+      var n = r.ids.filter(isComplete).length;
+      var on = hasReward(r);
+      rows[k].li.classList.toggle('is-earned', on);
+      rows[k].name.textContent = say(r.name);
+      rows[k].status.textContent = on ? say(UI.earned)
+        : say(UI.played).replace('{n}', n).replace('{m}', r.ids.length);
     });
   }
 

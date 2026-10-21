@@ -32,6 +32,7 @@ export function makeEl(attrs = {}) {
     getAttribute(k) { return Object.prototype.hasOwnProperty.call(this.attrs, k) ? this.attrs[k] : null; },
     setAttribute(k, v) { this.attrs[k] = String(v); },
     removeAttribute(k) { delete this.attrs[k]; },
+    hasAttribute(k) { return Object.prototype.hasOwnProperty.call(this.attrs, k); },
     addEventListener(type, fn) { (this.listeners[type] ||= []).push(fn); },
     fire(type, ev) { (this.listeners[type] || []).forEach((fn) => fn(ev || {})); },
     classList: {

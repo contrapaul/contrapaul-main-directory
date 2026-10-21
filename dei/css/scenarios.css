@@ -100,89 +100,68 @@
   color: var(--text-faint);
 }
 
-/* ---------- Player ---------- */
+/* ---------- Player: a phone chat ----------
+   A fixed height window; messages arrive at the bottom and push
+   older ones up. Short chats sit at the bottom, as on a phone. */
 .player {
   display: flex;
   flex-direction: column;
   gap: var(--sp-3);
 }
 
-.stage {
-  display: grid;
-  overflow: hidden;
-  margin: 0 calc(-1 * var(--sp-4));
-  padding: 0 var(--sp-4);
-}
-
-.player[data-mode="idle"] .stage { display: none; }
-
-.card {
-  grid-area: 1 / 1;
-  width: 88%;
-  max-width: 440px;
-  align-self: start;
-  transition: transform var(--dur-slide) var(--ease-out),
-              opacity var(--dur-slide) var(--ease-out);
-}
-
-.card.side-left  { justify-self: start; }
-.card.side-right { justify-self: end; }
-
-.card.side-left.is-entering,
-.card.side-left.is-leaving  { transform: translateX(-110%); opacity: 0; }
-.card.side-right.is-entering,
-.card.side-right.is-leaving { transform: translateX(110%); opacity: 0; }
-
-.card-img {
-  position: relative;
-  aspect-ratio: 3 / 2;
-  border-radius: var(--radius-l);
-  overflow: hidden;
-  background: var(--b);
-}
-
-.card-img img { width: 100%; height: 100%; object-fit: cover; }
-
-.card-img.is-placeholder {
-  background:
-    linear-gradient(160deg, color-mix(in srgb, var(--e) 22%, var(--b)), var(--b));
-}
-
-.card-img svg {
-  position: absolute;
-  left: 50%;
-  top: 10%;
-  width: 46%;
-  transform: translateX(-50%);
-  fill: color-mix(in srgb, var(--e) 45%, transparent);
-}
-
-.card-img .ph-tag {
-  position: absolute;
-  top: 10px;
-  left: 10px;
+.phone {
+  height: min(64svh, 560px);
+  min-height: 320px;
+  overflow-y: auto;
+  padding: var(--sp-4) var(--sp-3);
   background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--line) 50%, transparent);
+  scrollbar-width: thin;
 }
 
-.card.side-right .card-img .ph-tag { left: auto; right: 10px; }
+.player[data-mode="idle"] .phone { display: none; }
 
-/* The bubble sits across the bottom of the image. */
-.card .bubble {
-  position: relative;
-  margin: -64px 10px 0;
-  box-shadow: var(--shadow-1);
+.chat {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.msg { display: flex; }
+.msg.side-left  { justify-content: flex-start; }
+.msg.side-right { justify-content: flex-end; }
+
+/* A new run (name shown) gets a little air above it. */
+.msg:has(.who) { margin-top: 8px; }
+.chat > :first-child { margin-top: 0; }
+
+.msg .bubble { max-width: 82%; }
+.msg.side-left  .bubble { border-bottom-left-radius: 6px; }
+.msg.side-right .bubble { border-bottom-right-radius: 6px; }
+
+.msg.is-new, .note.is-new { animation: arrive 320ms var(--ease-out); }
+
+@keyframes arrive {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
 }
 
 .bubble {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding: 10px 14px 12px;
+  padding: 8px 13px 9px;
   font-size: 17px;
-  line-height: 1.5;
+  line-height: 1.45;
   color: var(--text);
   background: var(--b);
-  border: 1px solid color-mix(in srgb, var(--e) 35%, transparent);
+  border: 1px solid color-mix(in srgb, var(--e) 30%, transparent);
   border-radius: 18px;
 }
 
@@ -194,14 +173,43 @@
   color: var(--e);
 }
 
-.bubble .dir {
-  font-size: 15px;
+/* Stage directions: small centred notes between messages. */
+.note {
+  align-self: center;
+  max-width: 88%;
+  margin: 8px 0 2px;
+  font-size: 14px;
   font-style: italic;
-  color: var(--text-secondary);
+  line-height: 1.4;
+  text-align: center;
+  color: var(--text-faint);
 }
 
-/* Controls: the main button, then (after a full play) step back,
-   the line count, step forward. */
+/* Typing dots */
+.is-typing .bubble { padding: 12px 14px; }
+
+.dots { display: inline-flex; gap: 4px; }
+
+.dots i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--e);
+  opacity: 0.35;
+  animation: dot 1s infinite;
+}
+
+.dots i:nth-child(2) { animation-delay: 0.15s; }
+.dots i:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes dot {
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dots i { animation: none; opacity: 0.7; }
+}
+
 .controls {
   display: flex;
   align-items: center;
@@ -226,6 +234,7 @@
 
 .btn-play .icon { font-size: 14px; line-height: 1; min-width: 14px; text-align: center; }
 
+.player[data-mode="playing"] .btn-play,
 .player[data-mode="done"] .btn-play,
 .player[data-mode="paused"] .btn-play {
   color: var(--accent);
@@ -234,6 +243,7 @@
   box-shadow: none;
 }
 
+/* Back / forward buttons (used by layout B). */
 .btn-step {
   display: inline-flex;
   align-items: center;
@@ -251,8 +261,6 @@
 
 .btn-step:disabled { opacity: 0.35; cursor: default; }
 
-.btn-step[hidden], .count[hidden] { display: none; }
-
 .count {
   min-width: 56px;
   text-align: center;
@@ -260,37 +268,6 @@
   font-variant-numeric: tabular-nums;
   color: var(--text-faint);
 }
-
-/* While playing, the count sits at the far right on its own. */
-.player[data-mode="playing"] .count,
-.player[data-mode="paused"]:not(:has(.btn-step:not([hidden]))) .count { margin-left: auto; }
-
-/* ---------- Chat (after a full play) ---------- */
-.chat {
-  list-style: none;
-  margin: var(--sp-3) 0 0;
-  padding: var(--sp-4) 0 0;
-  border-top: 1px dashed var(--line);
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.chat[hidden] { display: none; }
-
-.msg { display: flex; }
-.msg.side-left  { justify-content: flex-start; }
-.msg.side-right { justify-content: flex-end; }
-
-.msg .bubble { max-width: 84%; }
-.msg.side-left  .bubble { border-bottom-left-radius: 6px; }
-.msg.side-right .bubble { border-bottom-right-radius: 6px; }
-
-/* Group chat: the name shows when the speaker changes. */
-.msg .bubble.same-speaker .who { display: none; }
-.msg:has(.bubble:not(.same-speaker)):not(:first-child) { margin-top: 8px; }
-
-.msg.is-current .bubble { outline: 2px solid var(--e); outline-offset: 2px; }
 
 /* ---------- Placeholder layouts ---------- */
 .piece {
@@ -543,19 +520,67 @@
 
 [hidden] { display: none !important; }
 
-/* ---------- Rewards (header) ---------- */
-.rewards { display: inline-flex; font-size: 18px; line-height: 1; white-space: nowrap; }
+/* ---------- Trophy and awards (header) ---------- */
+.trophy { gap: 4px; font-size: 18px; }
 
-.reward.is-new { animation: pop 700ms var(--ease-out); }
+.trophy-count {
+  font-size: var(--fs-1);
+  font-weight: 700;
+  color: var(--text);
+}
+
+.trophy-count:empty { display: none; }
+
+.trophy.is-new { animation: pop 700ms var(--ease-out); }
 
 @keyframes pop {
-  0%   { transform: scale(0.2); }
-  60%  { transform: scale(1.35); }
+  0%   { transform: scale(0.6); }
+  60%  { transform: scale(1.2); }
   100% { transform: scale(1); }
 }
+
+.awards {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: var(--sp-4);
+  z-index: 30;
+  min-width: 240px;
+  padding: var(--sp-2);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-1);
+}
+
+.awards ul { list-style: none; margin: 0; padding: 0; }
+
+.awards li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--sp-3);
+  align-items: center;
+  padding: var(--sp-2) var(--sp-3);
+}
+
+.awards li + li { border-top: 1px solid var(--line); }
+
+.award-emoji {
+  grid-row: span 2;
+  font-size: 26px;
+  line-height: 1;
+  filter: grayscale(1);
+  opacity: 0.45;
+}
+
+.awards li.is-earned .award-emoji { filter: none; opacity: 1; }
+
+.award-name { font-weight: 700; font-size: var(--fs-1); }
+
+.award-status { font-size: 13px; color: var(--text-faint); }
+
+.awards li.is-earned .award-status { color: var(--ok); font-weight: 600; }
 
 /* ---------- Wider screens ---------- */
 @media (min-width: 640px) {
   .sc-title { font-size: var(--fs-6); }
-  .card { width: 76%; }
 }

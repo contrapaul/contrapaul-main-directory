@@ -4,16 +4,18 @@
    Fills each tab panel from data/scenarios.js:
 
      jump links  one per scenario, a tick once complete
-     scenario    title, context, harm note, the conversation
-                 player, a placeholder layout (some scenarios),
-                 the debrief
+     scenario    title, context, harm note, the conversation,
+                 a placeholder layout (some scenarios), the debrief
 
-   The conversation player (plans.md section 3): Play runs the
-   lines on a timer. Each line is a card, an image with the words
-   in a bubble across its bottom, sliding in from the speaker's
-   side (teacher and student 2 left, everyone else right). After
-   the first full play, back and forward buttons step through the
-   lines and the whole conversation shows below as a group chat.
+   The conversation (plans.md section 3) plays as a phone chat.
+   Play starts it; messages arrive at the bottom of the chat
+   window and push older ones up. Teacher and student 2 send from
+   the left, everyone else from the right, each in their own
+   colour. Stage directions show as small centred notes. Each
+   message stays alone for as long as it takes to read, so short
+   replies come quickly and long ones get time, and the next
+   speaker's typing dots show just before their message lands.
+   Once played, the whole chat stays there to scroll and read.
 
    Placeholder layouts A to E are for Paul to choose from. They do
    not count toward the rewards.
@@ -26,11 +28,13 @@
   var dei = window.dei || {};
   var data = dei.scenarios || [];
 
-  /* How long a line stays up while playing, from its English
-     length. Paul will tune this; a line can set its own ms in
-     data/scenarios.js. */
-  var PACE = { base: 900, perChar: 40, min: 1600, max: 9000 };
-  var SLIDE_MS = 380;
+  /* Pace. A message stays alone for base + perChar for each
+     character of its English text, between min and max. In the
+     last part of that wait (share of it, between min and max) the
+     next speaker's typing dots show. Paul will tune these; a say
+     part can set its own ms in data/scenarios.js. */
+  var PACE = { base: 700, perChar: 45, min: 1000, max: 14000 };
+  var TYPING = { share: 0.35, min: 400, max: 900 };
 
   var SIDE = { t: 'left', s2: 'left', s1: 'right', s: 'right', g: 'right' };
 
@@ -40,11 +44,11 @@
     pause:     { en: 'Pause',  zh: '暂停' },
     resume:    { en: 'Resume', zh: '继续' },
     replay:    { en: 'Replay', zh: '重播' },
-    prev:      { en: 'Previous line', zh: '上一句' },
-    next:      { en: 'Next line', zh: '下一句' },
+    prev:      { en: 'Previous', zh: '上一个' },
+    next:      { en: 'Next', zh: '下一个' },
     jump:      { en: 'Scenarios', zh: '情境' },
     chat:      { en: 'Conversation', zh: '对话' },
-    phImage:   { en: 'placeholder image', zh: '占位图片' },
+    typing:    { en: 'typing', zh: '正在输入' },
     phLayout:  { en: 'placeholder layout', zh: '占位版式' },
     tapFlip:   { en: 'Tap for a suggestion', zh: '点击查看建议' },
     tapBack:   { en: 'Tap for the question', zh: '点击返回问题' },
@@ -70,8 +74,8 @@
   var painters = [];
   function paint(fn) { painters.push(fn); fn(); }
   function text(el, pair) { paint(function () { el.textContent = tr(pair); }); return el; }
-  /* Cards and chat bubbles are rebuilt on a language switch, so
-     they set their text once instead of registering painters. */
+  /* Chat messages are rebuilt on a language switch, so they set
+     their text once instead of registering painters. */
   function once(el, pair) { el.textContent = tr(pair); return el; }
 
   function h(tag, cls, attrs) {
@@ -86,57 +90,32 @@
     catch (e) { return false; }
   }
 
-  function lineEn(line) {
-    return line.parts.map(function (p) { return (p.say || p.dir).en; }).join(' ');
-  }
+  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 
-  function lineMs(line) {
-    if (line.ms) return line.ms;
-    var ms = PACE.base + PACE.perChar * lineEn(line).length;
-    return Math.max(PACE.min, Math.min(PACE.max, ms));
-  }
-
-  function pad2(n) { return n < 10 ? '0' + n : String(n); }
-
-  /* ---------- One line: parts and the bubble ---------- */
-
-  function partsInto(el, line) {
-    line.parts.forEach(function (p) {
-      var row = h('span', p.dir ? 'part dir' : 'part say');
-      once(row, p.dir || p.say);
-      el.appendChild(row);
+  /* The script as a flat list of chat items: a message per say
+     part, a note per stage direction. The speaker's name shows on
+     the first message of a run, as in a group chat. */
+  function flatten(sc) {
+    var items = [];
+    var prev = null;
+    sc.lines.forEach(function (line) {
+      line.parts.forEach(function (part) {
+        if (part.dir) {
+          items.push({ kind: 'note', pair: part.dir });
+          prev = null;
+        } else {
+          items.push({ kind: 'msg', who: line.who, label: line.label, pair: part.say,
+                       ms: part.ms, showName: prev !== line.who });
+          prev = line.who;
+        }
+      });
     });
+    return items;
   }
 
-  function bubble(line, cls) {
-    var b = h('div', 'bubble sp-' + line.who + (cls ? ' ' + cls : ''));
-    var who = h('span', 'who');
-    once(who, line.label);
-    b.appendChild(who);
-    partsInto(b, line);
-    return b;
-  }
-
-  /* A card: the line's image (or its labelled placeholder) with
-     the bubble across the bottom. */
-  function card(sc, line, i) {
-    var c = h('div', 'card side-' + SIDE[line.who] + ' sp-' + line.who);
-    var frame = h('div', 'card-img');
-    if (line.img) {
-      var img = h('img', null, { src: line.img, alt: '', loading: 'lazy' });
-      frame.appendChild(img);
-    } else {
-      frame.classList.add('is-placeholder');
-      frame.innerHTML =
-        '<svg viewBox="0 0 120 90" aria-hidden="true"><circle cx="60" cy="34" r="16"/>' +
-        '<path d="M28 90c0-20 14-32 32-32s32 12 32 32z"/></svg>';
-      var tag = h('span', 'ph-tag');
-      tag.textContent = tr(UI.phImage) + ' · ' + sc.id + '-' + pad2(i + 1);
-      frame.appendChild(tag);
-    }
-    c.appendChild(frame);
-    c.appendChild(bubble(line));
-    return c;
+  function readMs(item) {
+    if (item.ms) return item.ms;
+    return clamp(PACE.base + PACE.perChar * item.pair.en.length, PACE.min, PACE.max);
   }
 
   /* ---------- The conversation player ---------- */
@@ -145,7 +124,10 @@
 
   function buildPlayer(sc) {
     var root = h('div', 'player');
-    var stage = h('div', 'stage');
+    var phone = h('div', 'phone');
+    var chat = h('ol', 'chat');
+    paint(function () { chat.setAttribute('aria-label', tr(UI.chat)); });
+    phone.appendChild(chat);
     var live = h('div', 'sr-only', { 'aria-live': 'polite' });
     var controls = h('div', 'controls');
     var main = h('button', 'btn-play', { type: 'button' });
@@ -153,95 +135,119 @@
     var mainLabel = h('span');
     main.appendChild(mainIcon);
     main.appendChild(mainLabel);
-    var prev = h('button', 'btn-step', { type: 'button' });
-    prev.innerHTML = '<span aria-hidden="true">‹</span>';
-    var count = h('span', 'count');
-    var next = h('button', 'btn-step', { type: 'button' });
-    next.innerHTML = '<span aria-hidden="true">›</span>';
-    paint(function () {
-      prev.setAttribute('aria-label', tr(UI.prev));
-      next.setAttribute('aria-label', tr(UI.next));
-    });
     controls.appendChild(main);
-    controls.appendChild(prev);
-    controls.appendChild(count);
-    controls.appendChild(next);
-
-    var chat = h('ol', 'chat');
-    paint(function () { chat.setAttribute('aria-label', tr(UI.chat)); });
-
-    root.appendChild(stage);
+    root.appendChild(phone);
     root.appendChild(live);
     root.appendChild(controls);
-    root.appendChild(chat);
 
-    var total = sc.lines.length;
-    var p = {
-      id: sc.id, total: total, i: -1,
-      mode: 'idle',              // idle | playing | paused | done
-      everDone: false, timer: null, current: null, tallest: 0, chatItems: []
-    };
+    var items = flatten(sc);
+    var p = { id: sc.id, total: items.length, i: -1, mode: 'idle', timers: [], typing: null,
+              follow: true, touched: 0 };
     players[sc.id] = p;
 
-    function show(i) {
-      p.i = i;
-      var old = p.current;
-      var c = card(sc, sc.lines[i], i);
-      var still = reduced();
-      if (!still) c.classList.add('is-entering');
-      stage.appendChild(c);
-      p.current = c;
-      if (!still) {
-        void c.offsetWidth;      // commit the start position
-        c.classList.remove('is-entering');
-      }
-      if (old) {
-        old.classList.add('is-leaving');
-        setTimeout(function () { if (old.parentNode) old.parentNode.removeChild(old); }, still ? 0 : SLIDE_MS);
-      }
-      // While playing, grow and never shrink, so the page below
-      // does not jump. Stepping by hand lets the stage fit the card.
-      if (p.mode === 'playing') {
-        var hgt = c.offsetHeight || 0;
-        if (hgt > p.tallest) { p.tallest = hgt; stage.style.minHeight = hgt + 'px'; }
-      } else {
-        p.tallest = 0;
-        stage.style.minHeight = '';
-      }
-      live.textContent = tr(sc.lines[i].label) + ': ' +
-        sc.lines[i].parts.map(function (x) { return tr(x.say || x.dir); }).join(' ');
-      p.chatItems.forEach(function (li, k) { li.classList.toggle('is-current', k === i); });
-      sync();
+    /* The chat follows new messages down until the reader scrolls
+       it themselves; scrolling back to the bottom resumes it. Only
+       the reader's own scrolling counts, never ours. */
+    ['wheel', 'touchmove', 'keydown', 'pointerdown'].forEach(function (type) {
+      phone.addEventListener(type, function () { p.touched = Date.now(); }, { passive: true });
+    });
+    phone.addEventListener('scroll', function () {
+      if (Date.now() - p.touched < 1200) p.follow = nearBottom();
+    }, { passive: true });
+
+    function itemEl(k) {
+      var it = items[k];
+      if (it.kind === 'note') return once(h('li', 'note'), it.pair);
+      var li = h('li', 'msg side-' + SIDE[it.who]);
+      var b = h('div', 'bubble sp-' + it.who);
+      if (it.showName) b.appendChild(once(h('span', 'who'), it.label));
+      b.appendChild(once(h('span', 'say'), it.pair));
+      li.appendChild(b);
+      return li;
     }
 
-    function tick() {
-      p.timer = setTimeout(function () {
-        if (p.i + 1 < total) { show(p.i + 1); tick(); }
-        else finish();
-      }, lineMs(sc.lines[p.i]));
+    function nearBottom() {
+      return phone.scrollHeight - phone.scrollTop - phone.clientHeight < 80;
+    }
+
+    function toBottom() {
+      var top = phone.scrollHeight;
+      if (phone.scrollTo) phone.scrollTo({ top: top, behavior: reduced() ? 'auto' : 'smooth' });
+      else phone.scrollTop = top;
+    }
+
+    function clearTyping() {
+      if (p.typing && p.typing.parentNode) p.typing.parentNode.removeChild(p.typing);
+      p.typing = null;
+    }
+
+    function showTyping(k) {
+      var it = items[k];
+      var li = h('li', 'msg is-typing side-' + SIDE[it.who]);
+      var b = h('div', 'bubble sp-' + it.who);
+      b.innerHTML = '<span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>';
+      li.appendChild(b);
+      chat.appendChild(li);
+      p.typing = li;
+      if (p.follow) toBottom();
+    }
+
+    // A message arrives. Follow it down unless the reader has
+    // scrolled up to look back.
+    function append(k) {
+      clearTyping();
+      var li = itemEl(k);
+      if (!reduced()) li.classList.add('is-new');
+      chat.appendChild(li);
+      p.i = k;
+      if (p.follow) toBottom();
+      var it = items[k];
+      live.textContent = (it.kind === 'msg' ? tr(it.label) + ': ' : '') + tr(it.pair);
+    }
+
+    function later(fn, ms) { p.timers.push(setTimeout(fn, ms)); }
+
+    function stop() {
+      p.timers.forEach(clearTimeout);
+      p.timers = [];
+      clearTyping();
+    }
+
+    // With item p.i showing, wait for it to be read, then the next.
+    function schedule() {
+      if (p.i >= p.total - 1) { finish(); return; }
+      var wait = readMs(items[p.i]);
+      if (items[p.i + 1].kind === 'msg') {
+        var dots = clamp(wait * TYPING.share, TYPING.min, TYPING.max);
+        later(function () { showTyping(p.i + 1); }, Math.max(0, wait - dots));
+      }
+      later(function () { append(p.i + 1); schedule(); }, wait);
     }
 
     function finish() {
-      p.timer = null;
+      p.timers = [];
       p.mode = 'done';
-      p.everDone = true;
-      p.tallest = 0;
-      stage.style.minHeight = '';
       if (dei.progress) dei.progress.complete(sc.id);
       sync();
     }
 
-    function stop() {
-      if (p.timer) { clearTimeout(p.timer); p.timer = null; }
-    }
-
     function play() {
       Object.keys(players).forEach(function (k) { if (k !== sc.id) players[k].pause(); });
-      if (p.mode === 'paused') { p.mode = 'playing'; tick(); sync(); return; }
+      if (p.mode === 'paused') { p.mode = 'playing'; sync(); schedule(); return; }
       stop();
+      chat.innerHTML = '';
+      phone.scrollTop = 0;
+      p.follow = true;
+      p.i = -1;
       p.mode = 'playing';
-      show(0);
-      tick();
+      sync();
+      if (items[0].kind === 'msg') {
+        showTyping(0);
+        later(function () { append(0); schedule(); }, TYPING.max);
+      } else {
+        append(0);
+        schedule();
+      }
     }
 
     p.pause = function () {
@@ -251,66 +257,38 @@
       sync();
     };
 
-    function step(d) {
-      var j = p.i + d;
-      if (j < 0 || j >= total) return;
-      stop();
-      if (p.mode === 'playing') p.mode = 'paused';
-      show(j);
-    }
-
     main.addEventListener('click', function () {
       if (p.mode === 'playing') p.pause(); else play();
     });
-    prev.addEventListener('click', function () { step(-1); });
-    next.addEventListener('click', function () { step(1); });
 
-    function buildChat() {
+    function renderUpTo(last) {
       chat.innerHTML = '';
-      p.chatItems = sc.lines.map(function (line, k) {
-        var li = h('li', 'msg side-' + SIDE[line.who]);
-        var b = bubble(line);
-        // Group chat style: the name shows when the speaker changes.
-        if (k > 0 && sc.lines[k - 1].who === line.who) b.classList.add('same-speaker');
-        li.appendChild(b);
-        chat.appendChild(li);
-        return li;
-      });
+      for (var k = 0; k <= last; k++) chat.appendChild(itemEl(k));
     }
 
-    // Language switch: redraw the current card in place and the chat.
+    // Language switch: redraw the messages so far.
     p.refresh = function () {
-      if (p.current) {
-        var c = card(sc, sc.lines[p.i], p.i);
-        stage.replaceChild(c, p.current);
-        p.current = c;
-      }
-      if (chat.childNodes.length) buildChat();
-      p.chatItems.forEach(function (li, k) { li.classList.toggle('is-current', k === p.i); });
+      var typing = p.typing;
+      renderUpTo(p.i);
+      if (typing) chat.appendChild(typing);
+      if (p.follow && p.mode !== 'done') phone.scrollTop = phone.scrollHeight;
     };
 
     function sync() {
-      var icon = { idle: '▶', playing: '❚❚', paused: '▶', done: '↻' }[p.mode];
+      var icon = { idle: '\u25b6', playing: '\u275a\u275a', paused: '\u25b6', done: '\u21bb' }[p.mode];
       var label = { idle: UI.play, playing: UI.pause, paused: UI.resume, done: UI.replay }[p.mode];
       mainIcon.textContent = icon;
       mainLabel.textContent = tr(label);
       root.setAttribute('data-mode', p.mode);
-      var stepping = p.everDone && p.mode !== 'playing';
-      prev.hidden = next.hidden = !stepping;
-      prev.disabled = p.i <= 0;
-      next.disabled = p.i >= total - 1;
-      count.hidden = p.i < 0;
-      count.textContent = (p.i + 1) + ' ' + tr(UI.of) + ' ' + total;
-      if (p.everDone && !chat.childNodes.length) buildChat();
-      chat.hidden = !p.everDone;
     }
     paint(sync);
 
-    // Finished on an earlier visit: open ready to step and read.
+    // Finished on an earlier visit: the whole chat is there to read.
     if (dei.progress && dei.progress.isComplete(sc.id)) {
-      p.everDone = true;
       p.mode = 'done';
-      show(0);
+      p.i = p.total - 1;
+      renderUpTo(p.i);
+      sync();
     }
 
     return root;

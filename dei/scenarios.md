@@ -16,7 +16,7 @@ How the page displays this file (Paul, 2026-10-21; details in `plans.md`):
 - **One title per scenario: the real title only.** The page shows "Unkind Nickname", not "Scenario 1: PYP - Unkind Nickname". No scenario numbers, group names or extra headings above or below it.
 - The "Context :" label is not shown; the sentence after it is.
 - A harm note loses its leading "*"; a debrief loses its outer brackets. The words stay.
-- Script lines show in speech bubbles: the speaker label as written, bracketed stage directions as written, and the spoken words without their outer quote marks (the bubble already says it is speech).
+- Conversations show as a phone chat. Spoken words go in message bubbles without their outer quote marks (the bubble already says it is speech), with the speaker label as written on the first message of a run. A long turn may be split into several messages at sentence breaks; the words and their order never change. Bracketed stage directions show as written, as small centred notes between messages.
 - Everything else appears word for word. `test/verbatim.test.mjs` checks this.
 - PYP tab: scenarios 1 to 4. MS/HS tab: scenarios 5 to 9.
 

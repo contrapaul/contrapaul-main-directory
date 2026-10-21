@@ -19,6 +19,20 @@ const source = parse();
 const data = loadData();
 const en = (pair) => (pair ? pair.en : null);
 
+/* A turn may be split into several chat messages (say parts).
+   Join neighbouring says back into the committee's line before
+   comparing, so splitting never changes the words or their order. */
+function joined(parts) {
+  const out = [];
+  parts.forEach((p) => {
+    const last = out[out.length - 1];
+    if (p.say && last && last.say !== undefined) last.say += ' ' + en(p.say);
+    else out.push(p.dir ? { dir: en(p.dir) } : { say: en(p.say) });
+  });
+  return out.map((p) => (p.say !== undefined ? { say: p.say.replace(/\s+/g, ' ') } : p));
+}
+const flat = (parts) => parts.map((p) => (p.say !== undefined ? { say: p.say.replace(/\s+/g, ' ') } : p));
+
 test('nine scenarios: 1 to 4 in PYP, 5 to 9 in MS/HS', () => {
   assert.equal(data.length, 9);
   assert.deepEqual(data.map((s) => s.tab), source.map((s) => s.tab));
@@ -37,11 +51,7 @@ source.forEach((src, i) => {
       const want = src.lines[j];
       assert.equal(line.who, want.who, `line ${j + 1} speaker`);
       assert.equal(en(line.label), want.label, `line ${j + 1} label`);
-      assert.deepEqual(
-        line.parts.map((p) => (p.dir ? { dir: en(p.dir) } : { say: en(p.say) })),
-        want.parts,
-        `line ${j + 1} words`
-      );
+      assert.deepEqual(joined(line.parts), flat(want.parts), `line ${j + 1} words`);
     });
   });
 });

@@ -15,13 +15,13 @@ Each tab is one scrolling page with jump links at the top, one per scenario. Eac
 
 1. its title (the real title only, one line),
 2. the context, and any harm note, as written,
-3. a **Play** button. The conversation plays on its own, line by line: a speaker image slides in from that speaker's side with the line in a colour coded bubble over the bottom of the image. Teacher and student 2 come from the left; student 1, "STUDENT" and the group from the right. After it has played once, back and forward buttons step through the lines, and the whole conversation shows below as a group chat in the same colours and sides,
-4. interactive pieces (flip, match and similar). Five placeholder layouts are in place now; Paul picks the best and they get expanded,
+3. a **Play** button. The conversation plays on its own as a phone chat, pure text: messages arrive at the bottom and push older ones up, in a colour per speaker. Teacher and student 2 send from the left; student 1, "STUDENT" and the group from the right. Longer messages stay alone longer, short replies come quickly, like a real conversation. Once played, the whole chat stays to scroll and read,
+4. interactive pieces (flip, match and similar). Five placeholder layouts are in place; Paul returns to them once the conversations are settled,
 5. the debrief note, shown openly, as written (scenario 3's is a placeholder until the team writes it).
 
 ## Rewards
 
-Earned by playing the conversations through, never given. Each is a small emoji in the header once earned. No reset.
+Earned by playing the conversations through, never given. A trophy button in the header opens the list: each award with its emoji and either "earned" or how many conversations are played. No reset.
 
 - **PYP** for completing scenarios 1 to 4,
 - **MS/HS** for completing scenarios 5 to 9,

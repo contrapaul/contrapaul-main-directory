@@ -4,12 +4,35 @@ Working notes for the next session. Newest entry first. Paul's standing requests
 
 ## Status at a glance
 
-- **Draft built 2026-10-21.** Two tabs (PYP, MS/HS), nine committee scenarios word for word, the auto-playing conversation player with back/forward stepping and the group chat after, five placeholder layouts (A to E) to choose from, three emoji rewards. Presenter mode and the Qwen components are gone.
-- **Tests:** `npm test` passes 32/32, including the verbatim check against `scenarios.md`. Browser checked in Chromium at 360x740, 390x844 and 1280x800, light and dark, EN and 中文. Not yet seen on a real phone.
-- **Staff review the scenario text tonight.** Edits go into `scenarios.md` first, then `data/scenarios.js`; the verbatim test catches a mismatch.
-- **Waiting on Paul**: which layouts to keep, the pace, the emoji, and the open questions in the newest entry.
+- **Phone chat build 2026-10-21.** Two tabs (PYP, MS/HS), nine committee scenarios word for word. Every conversation plays as a phone chat: pure text, messages arrive at the bottom and push older ones up, paced by length, typing dots between. One trophy button in the header opens the three awards. Five placeholder layouts (A to E) wait for Paul's later pass.
+- **Tests:** `npm test` passes 33/33, including the verbatim check (split messages are joined back before comparing). Browser checked in Chromium at 360x740 and 390x844, light and dark. Not yet seen on a real phone.
+- **Staff review the scenario text tonight.** Edits go into `scenarios.md` first, then `data/scenarios.js`.
+- **Waiting on Paul**: his review of the message splits and the pace, then the layouts.
 
 ## Entries
+
+### 2026-10-21 (fourth pass: conversations become phone chats)
+
+**Asked:** Paul liked the chat view enough to lock it in: every conversation looks like a phone conversation, pure text, no photos, messages moving up as new ones are received. Replace the three header emoji with one trophy that opens the awards. Vary the timing: a longer message stays longer before the reply, short ones come quickly so it feels conversational. Break the scripts into chat messages as a logical start; Paul reviews the code and the splits afterwards. Drop images entirely. Layouts wait until after this.
+
+**Changed:**
+
+- `js/scenarios.js`: the card player and its back/forward stepping are gone. The conversation now plays inside a fixed height chat window: messages arrive at the bottom, the window follows them unless the reader scrolls up, stage directions are small centred notes, typing dots show before each message, and the speaker's name shows on the first message of a run. Pace is `PACE` and `TYPING` at the top of the file.
+- `data/scenarios.js`: regenerated with long turns split into several `say` parts (messages) at sentence breaks, about 100 characters each; turns up to 110 characters stay whole. 170 messages in all. No image fields.
+- `test/verbatim.test.mjs`: joins neighbouring `say` parts back into the committee line before comparing, so splitting can never change words or order. Checked that dropping a word still fails it.
+- `js/progress.js`: the three emoji became one trophy button (count of awards earned beside it) that opens a small awards list: emoji (grey until earned), name, "✓ Earned" or "N of M played". Closes on outside tap or Escape. `test/progress.test.mjs` updated, plus a test for opening and closing.
+- `css/scenarios.css`: card and image styles removed; phone window, message arrival, notes, typing dots, trophy and awards list added.
+- Docs: `brief.md`, `plans.md` (section 3 rewritten with a pace table), `CLAUDE.md`, `scenarios.md` display rules.
+
+**Verified:** 33/33 tests. In Chromium at 390x844 and 360x740: the chat plays and follows new messages; scrolling up stops the following and scrolling back down resumes it; all five MS/HS chats play to the end and the trophy count updates; the awards list opens and closes; no horizontal scroll; no console errors; no network requests.
+
+**Unverified:** a real phone (iOS Safari: smooth scrolling inside the chat window, `:has()`, backdrop blur); how the pace feels at full length (the pace table is arithmetic, not a reading test).
+
+**For Paul to review:**
+
+1. **Message splits** in `data/scenarios.js`: each `{ say: ... }` is one message. Split or join them freely; the test only checks the words and their order.
+2. **Pace**: the table in `plans.md` section 3. One number speeds up or slows down everything.
+3. Back/forward stepping is gone, because the finished chat can be scrolled. Say if you still want stepping.
 
 ### 2026-10-21 (third pass: the draft build)
 
@@ -91,7 +114,7 @@ What does not stand: the Qwen presentation plan and build (presenter mode and sc
 - One title per scenario, the real title only. No extra titles, kickers, tags or filler text.
 - Two tabs: PYP and MS/HS, jump links at the top. No presenter mode.
 - Mobile first. It must look great on a phone.
-- Conversations play on their own, line by line, with speaker images and colour coded bubbles (teacher and student 2 left; student 1, "STUDENT" and the group right). Never tap per line on the first play; step back and forward after. Then a group chat view.
-- Rewards are earned by playing through: PYP, MS/HS, Conflict Resolution. Small emoji in the header, no reset.
+- Every conversation is a phone chat: pure text, no images, messages arrive at the bottom and push older ones up, paced by length (teacher and student 2 left; student 1, "STUDENT" and the group right). Never tap per message.
+- Awards are earned by playing through: PYP, MS/HS, Conflict Resolution, behind one trophy button in the header. No reset.
 - Work on `main`. Do not branch.
 - If something is unclear, ask. Do not fill gaps with your own ideas.

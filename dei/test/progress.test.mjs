@@ -16,12 +16,28 @@ function setup(opts = {}) {
 
 // Copy out of the sandbox so deepEqual sees a plain array.
 const earned = (ctx) => Array.from(ctx.dei.progress.earned());
-const shown = (env) => env.rewardsEl.children.map((c) => c.textContent);
+/* The header slot holds the trophy button and the awards list. */
+const trophy = (env) => env.rewardsEl.children[0];
+const count = (env) => trophy(env).children[1].textContent;
+const status = (env) => env.rewardsEl.children[1].children[0].children.map((li) => li.children[2].textContent);
+
+test('the trophy opens and closes the awards list', () => {
+  const env = setup();
+  const pop = env.rewardsEl.children[1];
+  assert.ok(pop.hasAttribute('hidden'));
+  trophy(env).fire('click');
+  assert.ok(!pop.hasAttribute('hidden'));
+  assert.equal(trophy(env).attrs['aria-expanded'], 'true');
+  trophy(env).fire('click');
+  assert.ok(pop.hasAttribute('hidden'));
+});
 
 test('nothing is earned on load', () => {
   const { ctx, rewardsEl } = setup();
   assert.deepEqual(earned(ctx), []);
-  assert.equal(rewardsEl.children.length, 0);
+  const env = { rewardsEl };
+  assert.equal(count(env), '');
+  assert.deepEqual(status(env), ['0 of 4 played', '0 of 5 played', '0 of 9 played']);
 });
 
 test('PYP reward needs all four PYP scenarios, and only those', () => {
@@ -30,8 +46,9 @@ test('PYP reward needs all four PYP scenarios, and only those', () => {
   assert.deepEqual(earned(env.ctx), []);
   env.ctx.dei.progress.complete('sc4');
   assert.deepEqual(earned(env.ctx), ['pyp']);
-  assert.equal(shown(env).length, 1);
-  assert.ok(env.rewardsEl.children[0].classes.has('is-new'));
+  assert.equal(count(env), '1');
+  assert.deepEqual(status(env), ['\u2713 Earned', '0 of 5 played', '4 of 9 played']);
+  assert.ok(trophy(env).classes.has('is-new'));
 });
 
 test('all nine earn MS/HS and Conflict Resolution too', () => {
@@ -40,7 +57,8 @@ test('all nine earn MS/HS and Conflict Resolution too', () => {
   assert.deepEqual(earned(env.ctx), ['mshs']);
   PYP.forEach((id) => env.ctx.dei.progress.complete(id));
   assert.deepEqual(earned(env.ctx), ['pyp', 'mshs', 'all']);
-  assert.equal(env.rewardsEl.children[2].attrs['aria-label'], 'Conflict Resolution');
+  assert.equal(count(env), '3');
+  assert.equal(trophy(env).attrs['aria-label'], 'Awards: 3 / 3');
 });
 
 test('progress survives a reload; earlier rewards show without the pop', () => {
@@ -48,7 +66,8 @@ test('progress survives a reload; earlier rewards show without the pop', () => {
   PYP.forEach((id) => first.ctx.dei.progress.complete(id));
   const second = setup({ stored: { [KEY]: first.stored[KEY] } });
   assert.deepEqual(earned(second.ctx), ['pyp']);
-  assert.ok(!second.rewardsEl.children[0].classes.has('is-new'));
+  assert.ok(!trophy(second).classes.has('is-new'));
+  assert.equal(count(second), '1');
 });
 
 test('completing twice changes nothing', () => {
