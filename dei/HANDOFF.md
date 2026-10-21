@@ -4,13 +4,29 @@ Working notes for the next session. Newest entry first. Paul's standing requests
 
 ## Status at a glance
 
+- **RETARGET 2026-10-15 — read this first.** Paul went through the live page and issued five critical notes (dead space / compactness, the tap-to-advance player is wrong, **MS/HS does not load at all**, scenarios must be shown not reworked into activities, and **presenter mode is dropped**). See `plans.md` section 0 and the top entry below (Paul's prompt is quoted verbatim there). **No code has been changed since his review** — a fresh session picks this up. Steps 5 and 6 (polish, deploy) are blocked until the retarget is done.
 - **The page is two tabs (PYP, MS/HS) holding nine scenarios** (2026-10-15, from the committee content). Routes are `#/pyp` and `#/mshs`; deep links like `#/pyp#sc3` work. Mobile is the primary platform.
 - **Steps 1 and 2 of 6 done** (scaffold, screen engine). **Steps 3 and 4 written and unit tested 2026-10-15:** all nine scenarios render with their components (dialogue player, readiness chip/scale/branch, repeat back cards, harm banners, rule stamps, debrief cards, the s4 board, s5 branch, s6 three way choice, s7 fact card, s8 dare filter), plus the explorer reward (`js/progress.js`, badge, one-time celebration, reset in the presenter strip). 55/55 node tests passing. **The browser verification pass for the new screens is not yet run** (checklist in `plans.md` section 6, list in the entry below).
 - The committee text is unedited AI output; staff review it 2026-10-15. All copy lives in `data/scenarios.js`, so review edits are data swaps. Every zh pair is a `示例` placeholder: preliminary translation before the meeting, final after the text locks.
 - Decisions settled 2026-10-14 and 2026-10-15 (plans.md section 7): accent is deep teal; two tabs PYP and MS/HS; the six proposed methods are retired in favour of the content-driven components; the "recommended move" question is answered by the data (marked options in s5, s6, s7).
-- Still open: steps 5 and 6 (polish pass, deploy) and the browser verification of steps 3 and 4. Note for the next session: if the session's working directory is the pre-move path (`GitHub/dei`), the bash tool dies and tests must run via a delegate or a new session from `GitHub/contrapaul-main-directory/dei`.
+- Still open: **the §0 retarget first** (see top entry), then the browser verification of the reworked screens, then steps 5 and 6 (polish pass, deploy). Note for the next session: if the session's working directory is the pre-move path (`GitHub/dei`), the bash tool dies and tests must run via a delegate or a new session from `GitHub/contrapaul-main-directory/dei`.
 
 ## Entries
+
+### 2026-10-15 (Paul reviewed the live page: retarget, no code changes yet)
+
+**Asked:** Paul went through the built page, gave five critical notes, and asked that the plan and handoff be updated to record them, with his prompt quoted verbatim here as a check on future progress. **No changes to the page** — a fresh session starts the retarget. The full prompt, verbatim:
+
+> I've been through the page. A few critical notes to add to the plan, and fix/add now. 1. There is a HUGE amount of dead/empty space. On a phone it's possible to end up looking at almost nothing but background. The content in each scenario needs to be far more compact. 2. The 'next line' in script is not at all the implementation I want. The conversation should print in/be revealed automatically when started, not require 18+ taps/clicks to view. 3. MS/HS doesn't work at all- nothing loads. 4. I should have more closely reviewed your notes. The scripts and scenarios are intended to be shown to staff, not reworked into discussions or activities that don't actually include the content. PYP scenario 4 is a strong example where you created something far, far from the intended outcome. 5. This is no longer a presentation first, and we don't need presentation mode or any features built around being a presentation. Update the project plan and handoff, but do not make changes. Include my prompt here verbatim in the handoff as a check on future progress. Do NOT make changes to the page. I will have another session start fresh.
+
+**Changed (docs only, per the request):**
+
+- `plans.md`: new **section 0. Retarget 2026-10-15** at the top carrying all five notes, what each implies, and what still stands after the retarget; **build order** gains a new **step 0 (Retarget, active)** that gates steps 5 and 6.
+- `HANDOFF.md`: this entry; **Status at a glance** now leads with the retarget and marks steps 5/6 blocked on it.
+
+**Not changed (per "do not make changes to the page"):** every file in `css/`, `js/`, `data/`, `index.html`, and `test/` is untouched. Tests still pass 55/55 but that is stale against the retarget — the node suite does not cover the MS/HS load bug (note 3) or the compactness/player/rework issues (notes 1, 2, 4).
+
+**Next (fresh session, in this order):** (1) fix the **MS/HS load bug** — nothing renders on tab two, blocking; (2) **compact the per-scenario layout** so a phone screen is content not background (reconsider the four-`data-screen`-per-scenario split); (3) **redesign the dialogue player to auto-reveal** the script instead of per-line taps; (4) **rework components to present the actual script** to staff rather than bury it in activities — s4 (qualities board + flips + boundary card) is the flagged example; (5) **strip presenter mode** (`js/mode.js`, the toggle, the strip, stills, 1.25x scale, and the reset-from-presenter-strip control). Then the browser verification pass, then steps 5 and 6. Keep the zh `示例` placeholders until the real translation lands.
 
 ### 2026-10-15 (build: two tabs, nine scenarios, components, explorer reward)
 
