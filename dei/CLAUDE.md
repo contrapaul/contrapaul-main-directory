@@ -7,6 +7,7 @@ Rules for working in this folder. Each rule says why. If a rule and a request co
 - **A discussion page for teachers, built for phones first.** Two tabs, PYP and MS/HS. Each tab holds its group's scenarios with jump links at the top. Teachers play each conversation, work its interactive pieces, and discuss.
 - **Mobile is the top priority.** Every change is checked at 390x844 and 360x740 before anything else. No horizontal scrolling, body text at least 17px, touch targets at least 44px. Desktop only needs to look tidy.
 - **One title per scenario, and nothing extra.** The scenario's real title only ("Unkind Nickname"). No kicker or number above it ("PYP SCENARIO 3"), no subtitle, no method tag, no section headings inside a scenario, no label that repeats what the tab or the layout already says. Extra text pushes the conversation down the screen. If text is neither committee content nor a control the reader needs, cut it.
+- **Nothing scrolls sideways under the column edges.** On screens wider than the reading column (681px and up) every row stays inside the column and wraps. A row may swipe sideways only on a phone, where it runs to the screen edge. Check new rows at 1280x800 as well as on the phone.
 - **No presentation features.** No presenter mode, no presenter strip, no arrow key screen stepping, no `data-screen` grid, no progress rail, no scroll snap. Ask Paul before adding anything like them.
 - **Normal scrolling, normal links.** Tabs are `#/pyp` and `#/mshs`; jump links go to each scenario (`#/pyp#sc3`).
 

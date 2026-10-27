@@ -11,6 +11,15 @@ Working notes for the next session. Newest entry first. Paul's standing requests
 
 ## Entries
 
+### 2026-10-27 (desktop: nothing scrolls under the column edges)
+
+**Asked:** on a desktop browser the scenario jump links scrolled sideways under the frames at the sides of the page. Paul will shorten the titles; he asked that nothing scroll horizontally under the frames.
+
+**Changed:** `css/scenarios.css`: above 680px (wider than the reading column) the jump links and layout A's flip cards wrap inside the column instead of swiping, and cards sharing a row share its height. Phones keep the edge to edge swipe. `CLAUDE.md` gained the rule; `plans.md` checklist updated.
+
+**Verified:** an audit script found no sideways scrolling element and nothing past the column edges on either tab at 681, 700, 1280 and 1920px; at 390px only the jump links swipe and the page itself never scrolls sideways. 33/33 tests.
+
+
 ### 2026-10-21 (fourth pass: conversations become phone chats)
 
 **Asked:** Paul liked the chat view enough to lock it in: every conversation looks like a phone conversation, pure text, no photos, messages moving up as new ones are received. Replace the three header emoji with one trophy that opens the awards. Vary the timing: a longer message stays longer before the reply, short ones come quickly so it feels conversational. Break the scripts into chat messages as a logical start; Paul reviews the code and the splits afterwards. Drop images entirely. Layouts wait until after this.

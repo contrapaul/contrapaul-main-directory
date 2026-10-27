@@ -584,3 +584,28 @@
 @media (min-width: 640px) {
   .sc-title { font-size: var(--fs-6); }
 }
+
+/* Once the screen is wider than the reading column (main,
+   max-width 680px), the column has margins on both sides. Rows
+   that swipe edge to edge on a phone would slide under those
+   margins, so here they stay inside the column and wrap. */
+@media (min-width: 681px) {
+  .jump,
+  .flip-row {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+
+  .flip-row { scroll-snap-type: none; }
+
+  .flip-row .flip {
+    flex: 1 1 240px;
+    width: auto;
+    max-width: none;
+  }
+
+  /* Cards sharing a row share its height. */
+  .flip-row .flip-inner { height: 100%; }
+}

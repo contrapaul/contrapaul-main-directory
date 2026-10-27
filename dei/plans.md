@@ -97,6 +97,7 @@ When Paul picks, the chosen layouts get real content and spread to the scenarios
 ## 8. Phone checklist
 
 - [x] No horizontal scroll at 360px wide (both tabs)
+- [x] Above 680px nothing scrolls sideways or reaches past the column (jump links and layout A wrap); checked at 681, 700, 1280 and 1920px
 - [x] One title per scenario; no kickers, tags or extra headings
 - [x] Play visible right under the context; the chat follows new messages
 - [x] Message text 17px; speakers distinct by side, colour and name
