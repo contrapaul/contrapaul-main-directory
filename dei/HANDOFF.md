@@ -11,6 +11,19 @@ Working notes for the next session. Newest entry first. Paul's standing requests
 
 ## Entries
 
+### 2026-10-28 (heading renamed; Paul's script and question edits synced)
+
+**Asked:** change the "Debrief" heading to "Discussion Questions".
+
+**Also found:** Paul's commits `eff9540` and `32c5b7f` edited `data/scenarios.js` directly: new group questions for scenarios 1 and 2 and two of scenario 6's, three rewritten teacher turns in scenario 6 (the "(Fix text)" line is gone), and new footer text in `index.html`. The verbatim test failed until `scenarios.md` was synced; Paul's wording stands. The footer change only edited the visible text, and `js/i18n.js` overwrites that from `data-en` on load, so the new footer would not have shown; `data-en` and `data-zh` now carry it.
+
+**Changed:** the box heading reads "Discussion Questions" (讨论问题). `scenarios.md` synced to Paul's edits (script turns and questions), its scenario 6 note updated. Footer attributes fixed. Docs renamed the box.
+
+**Left as written, flagged to Paul:** "weer" (scenario 6, turn 4), no full stop after "agree with the Nazis" (turn 1), "unacceptible" (scenario 6, question 2). The instructions still say "the debrief questions".
+
+**Verified:** 33/33 tests; browser check below.
+
+
 ### 2026-10-28 (discussion questions replace the layouts)
 
 **Asked:** the three flip-card questions under the PYP "Excluded" scenario become its discussion questions and that box goes; extend the approach to the other scenarios and remove all the alternative interactive elements.

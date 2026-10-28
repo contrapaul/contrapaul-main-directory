@@ -9,11 +9,11 @@ dei/
   index.html          header (brand, two tabs, trophy, 中文, theme), two tab panels, footer
   css/tokens.css      colours (both themes, speaker bubble colours), type, spacing, motion
   css/base.css        header, tabs, instructions, reading column, footer, placeholder tag
-  css/scenarios.css   jump links, scenario, phone chat, Debrief box, trophy
+  css/scenarios.css   jump links, scenario, phone chat, Discussion Questions box, trophy
   js/theme.js         theme resolve + toggle
   js/i18n.js          EN/中文 apply + toggle; fires 'dei:lang' so rendered text redraws
   js/progress.js      scenario completion, the trophy and the three awards
-  js/scenarios.js     renders each tab: jump links, scenarios, phone chat, Debrief box
+  js/scenarios.js     renders each tab: jump links, scenarios, phone chat, Discussion Questions box
   js/tabs.js          #/pyp and #/mshs routes, deep links (#/pyp#sc3)
   data/scenarios.js   the nine scenarios, committee text verbatim (split into messages), group questions
   scenarios.md        source of truth for the scenario text
@@ -30,7 +30,7 @@ Top to bottom, nothing else:
 2. **Context** sentence (no "Context :" label).
 3. **Harm note** where the committee wrote one (scenarios 5, 6, 9).
 4. **The conversation**, a phone chat (section 3).
-5. **The Debrief box**, the same under every conversation (staff request, 2026-10-28): a "Debrief" heading, then the three group questions as a deck of cards, one at a time with back and forward and a "1 of 3" count. Nothing sits between the heading and the cards: the committee's debrief note stays in `scenarios.md` and the data but is not shown (Paul, 2026-10-28). The deck is the design Paul picked from the old layout B. Unwritten questions are labelled PLACEHOLDER.
+5. **The Discussion Questions box**, the same under every conversation (staff request, 2026-10-28): a "Discussion Questions" heading, then the three group questions as a deck of cards, one at a time with back and forward and a "1 of 3" count. Nothing sits between the heading and the cards: the committee's debrief note stays in `scenarios.md` and the data but is not shown (Paul, 2026-10-28). The deck is the design Paul picked from the old layout B. Unwritten questions are labelled PLACEHOLDER.
 
 At the top of the page, on both tabs, the instructions: "Read through the scenarios with your group, then discuss the scenario and the debrief questions." Then one row of jump links (the titles; a tick once a scenario is complete). Below, the footer.
 
@@ -58,11 +58,11 @@ Settled 2026-10-21: every conversation looks like a phone conversation. Pure tex
 
 ## 4. Group questions
 
-Three per scenario, shown in the Debrief deck. Scenario 2's came from the old layout A flip cards, which Paul chose as the model (2026-10-28): a moment from the script, then "What do you say?" or "How do you...?". The other eight scenarios have drafts in that style, written from each script, for Paul to review. Scenario 1's and 9's drafts reuse prompts from the removed layouts C and E. All the placeholder layouts (A to E) are removed.
+Three per scenario, shown in the Discussion Questions deck. Scenario 2's came from the old layout A flip cards, which Paul chose as the model (2026-10-28): a moment from the script, then "What do you say?" or "How do you...?". The other eight scenarios have drafts in that style, written from each script, for Paul to review. Scenario 1's and 9's drafts reuse prompts from the removed layouts C and E. All the placeholder layouts (A to E) are removed.
 
 ## 5. Rewards
 
-- A scenario is **complete** when its conversation has played to the last message. Opening a tab, scrolling, or using the Debrief deck earns nothing.
+- A scenario is **complete** when its conversation has played to the last message. Opening a tab, scrolling, or using the Discussion Questions deck earns nothing.
 - **PYP** 🌱 (scenarios 1 to 4), **MS/HS** 🧭 (5 to 9), **Conflict Resolution** 🤝 (all nine).
 - One **trophy** 🏆 button in the header, with the number earned beside it once there is one. Tapping it opens the list: each award's emoji (greyed until earned), its name, and "✓ Earned" or "2 of 4 played". It pops when a new award is earned. Tap outside or press Escape to close. No reset.
 - Stored on the device under `dei-progress`.
@@ -78,8 +78,8 @@ Three per scenario, shown in the Debrief deck. Scenario 2's came from the old la
 3. Scenario layout and jump links. **Done 2026-10-21.**
 4. Conversations as phone chats, split into messages, paced by length. **Done 2026-10-21.**
 5. Trophy and awards. **Done 2026-10-21.**
-6. Placeholder layouts A to E. Built 2026-10-21; B became the Debrief deck and the rest were removed (2026-10-28).
-7a. Debrief box with three group questions per scenario, and the instructions at the top. **Done 2026-10-28;** scenario 2's questions from layout A, the rest drafted for Paul's review.
+6. Placeholder layouts A to E. Built 2026-10-21; B became the Discussion Questions deck and the rest were removed (2026-10-28).
+7a. Discussion Questions box with three group questions per scenario, and the instructions at the top. **Done 2026-10-28;** scenario 2's questions from layout A, the rest drafted for Paul's review.
 7. Paul reviews the message splits and the pace.
 9. Chinese: preliminary after tonight's review, final after the English locks.
 
@@ -105,7 +105,7 @@ Three per scenario, shown in the Debrief deck. Scenario 2's came from the old la
 - No presenter mode or presentation features.
 - Every conversation is a phone chat (section 3): plays on its own, paced by message length, pure text, no images.
 - Speakers: teacher and student 2 left; student 1, "STUDENT" and group right.
-- Debrief box under every conversation: heading, then three group questions as a card deck; the committee note is not shown (2026-10-28). Questions: scenario 2's from layout A, the rest drafted in that style for Paul to review. No other interactive pieces (2026-10-28).
+- Discussion Questions box under every conversation: heading, then three group questions as a card deck; the committee note is not shown (2026-10-28). Questions: scenario 2's from layout A, the rest drafted in that style for Paul to review. No other interactive pieces (2026-10-28).
 - No hover effects anywhere; the instructions card has a plain even outline (2026-10-28).
 - Instructions at the top of both tabs (2026-10-28).
 - Awards: PYP, MS/HS, Conflict Resolution, behind one trophy button in the header, no reset.
