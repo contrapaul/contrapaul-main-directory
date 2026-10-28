@@ -278,32 +278,31 @@
       debrief: t("This scenario is about education + boundary, not reconciliation. Notice the mediator accepts \"I didn't know\" without letting it excuse the harm, and carries the teaching themselves."),
       questions: [
         t("A student says they didn't know what the gesture meant. What do you say?"),
-        t("No single student was targeted. Who is harmed, and how do you name that?"),
-        t("What follow-up teaching would you plan after the conversation?")
+        t("How can we address behaviours that are unacceptible or reprehensible, but don't target specific students?"),
+        t("It can be awkward to address certain behaviours, like students making sexual noises. How have you approached these things?")
       ],
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
             { dir: t("(calm, firm, to the students)") },
             { say: t("Stop. Put your hands down. What you just did is called a Nazi salute.") },
-            { say: t("It stands for the murder of millions of people. Jewish people, and many others.") },
-            { say: t("That's not something we do here, even as a joke, and that's not up for debate.") }
+            { say: t("The people who use it today aren't just 'being edgy', they're sending a message to others that they agree with the Nazis ") },
+            { say: t("The Nazis massacred millions of people for no reason other than they were Jewish, or gay, or disabled, or Polish, or Chinese, or Romani, and on and on.") }
           ] },
         { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("I swear I didn't know what it meant.") }] },
         { who: 't', label: t("TEACHER"), parts: [
             { say: t("I believe that you might not have. That's exactly why we're going to talk about it.") },
-            { say: t("So now you do know. *Not knowing why we teach it.* (Fix text) It's not a reason to laugh it off.") }
           ] },
         { who: 't', label: t("TEACHER"), parts: [
             { dir: t("(to the group)") },
             { say: t("Here's what I need you to understand.") },
-            { say: t("Some symbols carry real weight because real people were hurt by them.") },
-            { say: t("When you do that and laugh, anyone watching who lost family to that history feels it like a punch.") },
-            { say: t("You may not have meant that, but that's the impact.") }
+            { say: t("Making that salute, or drawing a swastika, tells others that you think the Nazis weer right. That it was a good thing to kill so many innocent people.") },
+            { say: t("'It was just a joke' isn't something you get to say again.") },
+            { say: t("I don't think you actually believe people should be killed for being different, but that's the message you send when you do that salute.") }
           ] },
         { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("We were just messing around.") }] },
         { who: 't', label: t("TEACHER"), parts: [
-            { say: t("I hear that there was no hateful intent.") },
-            { say: t("And the salute still causes harm no matter the intent, which is why it stops now and doesn't come back.") },
+            { say: t("I hear you, but this isn't something people see as 'just messing around'.") },
+            { say: t("Someone who doesn't know you and sees it will probably not make the same assumptions I did.") },
             { say: t("Going forward, what do you do if you see a symbol or gesture and you don't know what it means?") }
           ] },
         { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("Ask an adult instead of copying it.") }] },
