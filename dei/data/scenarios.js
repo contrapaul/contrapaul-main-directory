@@ -101,11 +101,12 @@
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
             { dir: t("(to student #1, individually)") },
-            { say: t("You seem really upset, tell me what zone you're in right now?") },
-            { say: t("We can wait until you're ready to talk about it.") }
+            { say: t("You seem really upset, tell me what zone you're in right now?") }
+          ] },
+          { say: t("We can wait until you're ready to talk about it.") }
           ] },
         { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("I'm in the blue zone, I can talk about it.") }] },
-        { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("They said they didn't want to play with me.") }] },
+          { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("They said they didn't want to play with me.") }] },
         { who: 't', label: t("TEACHER"), parts: [
             { dir: t("(brings student #1 and one or two of the group, not a crowd. To student #1)") },
             { say: t("Tell them how that felt.") }
@@ -343,6 +344,44 @@
             { say: t("Two, your task is to find out what's actually true about Japan and bring me three real things you learned.") },
             { say: t("Sometimes the country you 'got stuck with' turns out to be the most interesting one.") }
           ] }
+      ]
+    },
+    {
+      id: 'sc8', tab: 'mshs',
+      title: t("Truth or Dare"),
+      context: t("A group is playing truth or dare. One student is asked \"would you kiss [names another student]?\" You intervene before they answer. The named student may or may not be present."),
+      debrief: t("This one \"looks like fun,\" so the instinct is to walk past it, but that can still do harm. Notice the mediator preserves the game and gives a clean, usable rule: \"keep it about the people playing.\""),
+      questions: [
+        t("The game looks harmless. When do you step in, and how do you keep your tone light?"),
+        t("How do you explain the harm to someone who isn't there?"),
+        t("What simple rule can students use to keep playing fairly?")
+      ],
+      lines: [
+        { who: 't', label: t("TEACHER"), parts: [
+            { say: t("Stop. Hang on a sec.") },
+            { dir: t("(Light, not alarmed. You're redirecting, not punishing.)") },
+            { say: t("I heard the dare. I'm going to jump in before anyone answers.") }
+          ] },
+        { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("It's just truth or dare, we're not making trouble.") }] },
+        { who: 't', label: t("TEACHER"), parts: [
+            { say: t("The game's fine. I'm not shutting it down. Here's my one issue.") },
+            { say: t("The dare put the other person into it without them here to have any say.") },
+            { say: t("Answering it either way, yes or no, ends up being about their body and their feelings, and they didn't sign up for that.") }
+          ] },
+        { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("We weren't being mean though.") }] },
+        { who: 't', label: t("TEACHER"), parts: [
+            { say: t("I believe you weren't trying to. But think about it impacting them.") },
+            { say: t("If they heard it, they'd probably be really embarrassed.") },
+            { say: t("And if they didn't hear it, now there's a story going around about who'd kiss who and that always finds its way back to the person.") },
+            { say: t("Neither one's fair to them.") }
+          ] },
+        { who: 's2', label: t("STUDENT #2"), parts: [{ dir: t("(relieved)") }, { say: t("Yeah, I didn't really want to answer that.") }] },
+        { who: 't', label: t("TEACHER"), parts: [
+            { say: t("That's the other thing. You got put on the spot too. So, here's the easy fix.") },
+            { say: t("Keep playing, keep it about you all. Dares, silly stuff, questions about yourselves.") },
+            { say: t("Just leave other people who aren't in the game out of it. Deal?") }
+          ] },
+        { who: 'g', label: t("G"), parts: [{ say: t("Deal.") }] }
       ]
     },
     {
