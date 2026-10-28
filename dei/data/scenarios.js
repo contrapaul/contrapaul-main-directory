@@ -227,28 +227,27 @@
     {
       id: 'sc5', tab: 'mshs',
       title: t("\"You're So Fat\""),
-      context: t("A student made a comment on another student’s body in the cafeteria."),
-      note: t("Name the harm first: This is a body-shaming comment that made the student stop eating."),
+      context: t("A student made a comment about another student’s body in the cafeteria."),
       debrief: t("the student stopped eating. The mediator honors the low readiness score and names why this kind of comment carries weight."),
       questions: [
-        t("A student says they are a 3 out of 10 and stopped eating. What do you offer them?"),
         t("The other student says it was just a joke. How do you show why it matters?"),
-        t("How do you name the harm to the group in the moment, before talking privately?")
+        t("What if the students wants to let it go and not talk about it? How do you name the harm to the group while also respecting the student wishes?")
+        t("What might you do differently in this situation?"),
       ],
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
             { dir: t("(to the group in the moment)") },
-            { say: t("Hang on. Commenting on someone's body or how much they eat isn't okay.") },
+            { say: t("Hang on. Commenting about someone's body or how much they eat isn't okay.") },
             { say: t("That's the kind of thing that really sticks with a person, so we don't do it here.") },
             { dir: t("(Privately, to student #1)") },
             { say: t("Are you okay? On a 1–10, how ready are you to talk with them?") }
           ] },
         { who: 's1', label: t("STUDENT #1"), parts: [{ dir: t("(quiet)") }, { say: t("I don't know. Maybe a 3. I just stopped being hungry.") }] },
         { who: 't', label: t("TEACHER"), parts: [
-            { say: t("That tells me it hit hard, and that's exactly why it's worth naming.") },
-            { say: t("We can wait a bit if you want, or take it slow together. Your call.") }
+            { say: t("That tells me it bothered you , and that's why it's important to talk about.") },
+            { say: t("We can wait a bit to talk if you want, it's your call.") }
           ] },
-        { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("We can talk. Slow.") }] },
+        { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("We can talk.") }] },
         { who: 't', label: t("TEACHER"), parts: [{ dir: t("(both, to student #1)") }, { say: t("Tell them what that was like.") }] },
         { who: 's1', label: t("STUDENT #1"), parts: [
             { say: t("I felt embarrassed about eating. I just wanted more food and you made it feel like something's wrong with me.") }
@@ -265,7 +264,7 @@
         { who: 's2', label: t("STUDENT #2"), parts: [{ say: t("I thought it was a funny thing to say. I didn't think it'd actually get to her.") }] },
         { who: 't', label: t("TEACHER"), parts: [
             { say: t("Here's the part to remember.") },
-            { say: t("Comments about someone's body or eating can stick for a really long time. Longer than you'd guess.") },
+            { say: t("Comments about someone's body or eating can stick for a really long time.") },
             { say: t("What can we do differently going forward?") }
           ] },
         { who: 's2', label: t("STUDENT #2"), parts: [{ say: t("I keep comments about people's bodies to myself.") }] },
@@ -277,41 +276,38 @@
       id: 'sc6', tab: 'mshs',
       title: t("The Salute"),
       context: t("Student does a 'heil hitler' salute in class."),
-      note: t("This is not a two-sided conflict. Name the harm first, then teach. There is no \"Student B\" to mediate with. The target here is a whole community."),
       debrief: t("This scenario is about education + boundary, not reconciliation. Notice the mediator accepts \"I didn't know\" without letting it excuse the harm, and carries the teaching themselves."),
       questions: [
         t("A student says they didn't know what the gesture meant. What do you say?"),
-        t("How can we address behaviours that are unacceptible or reprehensible, but don't target specific students?"),
-        t("It can be awkward to address certain behaviours, like students making sexual noises. How have you approached these things?")
+        t("How can we address behaviours that are unacceptable but don't target specific students?"),
+        t("What you do differently or add on to this scenario?")
       ],
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
             { dir: t("(calm, firm, to the students)") },
             { say: t("Stop. Put your hands down. What you just did is called a Nazi salute.") },
-            { say: t("The people who use it today aren't just 'being edgy', they're sending a message to others that they agree with the Nazis ") },
-            { say: t("The Nazis massacred millions of people for no reason other than they were Jewish, or gay, or disabled, or Polish, or Chinese, or Romani, and on and on.") }
-          ] },
-        { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("I swear I didn't know what it meant.") }] },
+            { say: t("Why did you do that?") },
+        { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("It's just a joke") }] },
         { who: 't', label: t("TEACHER"), parts: [
-            { say: t("I believe that you might not have. That's exactly why we're going to talk about it.") },
-          ] },
+            { say: t("What do you think that gesture means?") },
+        { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("I don't know, it's just something people do") }] },
         { who: 't', label: t("TEACHER"), parts: [
-            { dir: t("(to the group)") },
-            { say: t("Here's what I need you to understand.") },
-            { say: t("Making that salute, or drawing a swastika, tells others that you think the Nazis were right. That it was a good thing to kill so many innocent people.") },
-            { say: t("'It was just a joke' isn't something you get to say again.") },
+            { say: t("I believe that you might not fully know what it means, so that's why we're going to talk about it.") },
+          ] },
+               { say: t("The Nazis killed millions of people for no reason other than they were Jewish, or gay, or disabled, or Polish, or Chinese, or Romani, and on and on.") }
+          ] },
+            { say: t("Symbols have meaning. When someone makes makes that salute it communicates that they share those values, and agree with what the Nazis did.") },
             { say: t("I don't think you actually believe people should be killed for being different, but that's the message you send when you do that salute.") }
-          ] },
         { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("We were just messing around.") }] },
+  
+          ] },
         { who: 't', label: t("TEACHER"), parts: [
             { say: t("I hear you, but this isn't something people see as 'just messing around'.") },
             { say: t("Someone who doesn't know you and sees it will probably not make the same assumptions I did.") },
-            { say: t("Going forward, what do you do if you see a symbol or gesture and you don't know what it means?") }
+       { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("I'll be more careful before I do something like that again.") }] },
           ] },
-        { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("Ask an adult instead of copying it.") }] },
         { who: 't', label: t("TEACHER"), parts: [
-            { say: t("Exactly.") },
-            { say: t("I'm also going to make sure you learn a bit more about where this comes from, because this one matters.") }
+            { say: t("I'm also going to make sure you learn a bit more about where this comes from") }
           ] }
       ]
     },
@@ -351,48 +347,9 @@
       ]
     },
     {
-      id: 'sc8', tab: 'mshs',
-      title: t("Truth or Dare"),
-      context: t("A group is playing truth or dare. One student is asked \"would you kiss [names another student]?\" You intervene before they answer. The named student may or may not be present."),
-      debrief: t("This one \"looks like fun,\" so the instinct is to walk past it, but that can still do harm. Notice the mediator preserves the game and gives a clean, usable rule: \"keep it about the people playing.\""),
-      questions: [
-        t("The game looks harmless. When do you step in, and how do you keep your tone light?"),
-        t("How do you explain the harm to someone who isn't there?"),
-        t("What simple rule can students use to keep playing fairly?")
-      ],
-      lines: [
-        { who: 't', label: t("TEACHER"), parts: [
-            { say: t("Stop. Hang on a sec.") },
-            { dir: t("(Light, not alarmed. You're redirecting, not punishing.)") },
-            { say: t("I heard the dare. I'm going to jump in before anyone answers.") }
-          ] },
-        { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("It's just truth or dare, we're not making trouble.") }] },
-        { who: 't', label: t("TEACHER"), parts: [
-            { say: t("The game's fine. I'm not shutting it down. Here's my one issue.") },
-            { say: t("The dare put the other person into it without them here to have any say.") },
-            { say: t("Answering it either way, yes or no, ends up being about their body and their feelings, and they didn't sign up for that.") }
-          ] },
-        { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("We weren't being mean though.") }] },
-        { who: 't', label: t("TEACHER"), parts: [
-            { say: t("I believe you weren't trying to. But think about it impacting them.") },
-            { say: t("If they heard it, they'd probably be really embarrassed.") },
-            { say: t("And if they didn't hear it, now there's a story going around about who'd kiss who and that always finds its way back to the person.") },
-            { say: t("Neither one's fair to them.") }
-          ] },
-        { who: 's2', label: t("STUDENT #2"), parts: [{ dir: t("(relieved)") }, { say: t("Yeah, I didn't really want to answer that.") }] },
-        { who: 't', label: t("TEACHER"), parts: [
-            { say: t("That's the other thing. You got put on the spot too. So, here's the easy fix.") },
-            { say: t("Keep playing, keep it about you all. Dares, silly stuff, questions about yourselves.") },
-            { say: t("Just leave other people who aren't in the game out of it. Deal?") }
-          ] },
-        { who: 'g', label: t("G"), parts: [{ say: t("Deal.") }] }
-      ]
-    },
-    {
       id: 'sc9', tab: 'mshs',
       title: t("\"You're So Gay\""),
       context: t("One student calls another student “gay” meant as an insult in front of the class."),
-      note: t("Name the harm before mediating. This uses an identity as an insult, which harms both the target and every LGBTQ+ student in earshot."),
       debrief: t("the harm reaches beyond the two students. The mediator addresses the room and repairs with the target."),
       questions: [
         t("Student 2 says: \"That he got embarrassed.\" What would you say next?"),
