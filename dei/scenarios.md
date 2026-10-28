@@ -10,7 +10,7 @@ Paul's edits to the committee's original (2026-10-21):
 - Scenario 9: one line's speaker corrected from STUDENT #1 to STUDENT #2 ("That he got embarrassed.").
 - Scenario 5: "I just stopped being hungry." is kept as written.
 - Scenario 3: the committee wrote no debrief. A placeholder debrief marks the space until the team writes one.
-- Every scenario: three group questions follow the debrief (staff request, 2026-10-28). None are written yet; each is a PLACEHOLDER for Paul to replace. Keep them numbered 1 to 3 under "Group questions:".
+- Every scenario: three group questions follow the debrief (staff request, 2026-10-28). Keep them numbered 1 to 3 under "Group questions:". Scenario 2's are the questions from the old flip cards, which Paul chose as the model; the rest are drafts in the same style, written from each script for Paul to review (2026-10-28).
 
 How the page displays this file (Paul, 2026-10-21; details in `plans.md`):
 
@@ -25,7 +25,7 @@ How the page displays this file (Paul, 2026-10-21; details in `plans.md`):
 
 ---
 
-## Scenario 1: PYP - Unkind Nickname  
+## Scenario 1: PYP - Nickname  
 
 Context: Peers keep calling a student a nickname they've asked them to stop using. 
 
@@ -57,13 +57,13 @@ STUDENT #2: “I’m sorry”
 (Debrief note: the "when they ask you to stop, you stop" line is the whole lesson here.)  
 
 Group questions:
-1. PLACEHOLDER: group question 1, to be written.
-2. PLACEHOLDER: group question 2, to be written.
-3. PLACEHOLDER: group question 3, to be written.
+1. A student says the nickname is just a joke. What do you say?
+2. The nickname is in a language you don't speak. What do you ask?
+3. How do you close the conversation once the student agrees to stop?
 
-## Scenario 2: PYP - Excluded at Recess  
+## Scenario 2: PYP - Excluded  
 
-Context : A student comes in upset—a group of friends wouldn't let them play. The group says it's "not their fault." 
+Context : A student comes in upset because a group of friends wouldn't let them play. The group says it's "not their fault." 
 
 TEACHER: (to student #1, individually) "You seem really upset. What happened? And on a 1–10, how ready are you to talk with them?" 
  STUDENT #1: "Like a 5. They said they didn't want to play with me." 
@@ -87,11 +87,11 @@ TEACHER: (to student #1, individually) "You seem really upset. What happened? An
 (Debrief note: watch how the mediator refuses to chase "whose fault" and keeps pulling back to impact.) 
 
 Group questions:
-1. PLACEHOLDER: group question 1, to be written.
-2. PLACEHOLDER: group question 2, to be written.
-3. PLACEHOLDER: group question 3, to be written.
+1. A student starts to blame the group. What do you say?
+2. How do you ask for their side without blame?
+3. How do you move to what happens next time?
 
-## Scenario 3: PYP - "Don't Go Play With [Name]" 
+## Scenario 3: PYP - "Don't Play With Them" 
 
 Context : A student overheard a peer telling others not to play with them. 
 
@@ -116,11 +116,11 @@ TEACHER: (to student #1, individually) "I saw your face. What did you hear? And 
 (Debrief: PLACEHOLDER, to be added by the team.)
 
 Group questions:
-1. PLACEHOLDER: group question 1, to be written.
-2. PLACEHOLDER: group question 2, to be written.
-3. PLACEHOLDER: group question 3, to be written.
+1. A student says they are only a 4 out of 10. What do you do?
+2. The first say-back misses the feeling. How do you help the student say it fully?
+3. The real problem started last week. How do you name that without excusing what happened?
 
-## Scenario 4: PYP  - "A Boy Should Lead"  
+## Scenario 4: PYP - "Boys should lead"  
 
 Context : While picking a team leader, some students argue a boy should lead because "boys are better leaders."  
 
@@ -139,12 +139,12 @@ TEACHER: "Let's pause the vote for a second. I want to pick up on something. A f
 (Debrief: This scenario is a discussion to guide, not necessarily a conflict to mediate. Notice the mediator holds a firm boundary 'gender isn't a qualification' while letting students do the reasoning.) 
 
 Group questions:
-1. PLACEHOLDER: group question 1, to be written.
-2. PLACEHOLDER: group question 2, to be written.
-3. PLACEHOLDER: group question 3, to be written.
+1. Students say a boy should lead. How do you pause the vote without shutting them down?
+2. How do you hold the line that gender isn't a qualification while letting students do the reasoning?
+3. What could students use instead to choose a leader?
  
 
-## Scenario 5: MS/HS - "You're Such a Glutton, You're So Fat" 
+## Scenario 5: MS/HS - "You're So Fat" 
 
 Context: A student made a comment on another student’s body in the cafeteria.  
 
@@ -172,14 +172,14 @@ TEACHER: (to the group in the moment) "Hang on. Commenting on someone's body or 
 (Debrief note: the student stopped eating. The mediator honors the low readiness score and names why this kind of comment carries weight.) 
 
 Group questions:
-1. PLACEHOLDER: group question 1, to be written.
-2. PLACEHOLDER: group question 2, to be written.
-3. PLACEHOLDER: group question 3, to be written.
+1. A student says they are a 3 out of 10 and stopped eating. What do you offer them?
+2. The other student says it was just a joke. How do you show why it matters?
+3. How do you name the harm to the group in the moment, before talking privately?
 
 
-## Scenario 6: MS/HS - Hitler Salute ("I don't know what it means") 
+## Scenario 6: MS/HS - The Salute 
 
-Context: Student does the hitler salute in class. 
+Context: Student does a 'heil hitler' salute in class. 
 
 *This is not a two-sided conflict. Name the harm first, then teach. There is no "Student B" to mediate with. The target here is a whole community. 
 
@@ -195,12 +195,12 @@ TEACHER: "I hear that there was no hateful intent. And the salute still causes h
 (Debrief: This scenario is about education + boundary, not reconciliation. Notice the mediator accepts "I didn't know" without letting it excuse the harm, and carries the teaching themselves.)  
 
 Group questions:
-1. PLACEHOLDER: group question 1, to be written.
-2. PLACEHOLDER: group question 2, to be written.
-3. PLACEHOLDER: group question 3, to be written.
+1. A student says they didn't know what the gesture meant. What do you say?
+2. No single student was targeted. Who is harmed, and how do you name that?
+3. What follow-up teaching would you plan after the conversation?
  
 
-## Scenario 7: MS/HS - RACIST REMARKS 
+## Scenario 7: MS/HS - Racism 
 
 Context : A student assigned Japan for a research task makes a sweeping negative sterotype about the nation and its people. No Japanese students are present. 
 
@@ -215,12 +215,12 @@ STUDENT: "I mean, there's no Japanese kids here, so who cares?"
 (Debrief: How do you address harm when there's no victim in the room to advocate for? Notice the mediator makes the absent group the point, and folds it into the academic task rather than turning it into pure discipline.) 
 
 Group questions:
-1. PLACEHOLDER: group question 1, to be written.
-2. PLACEHOLDER: group question 2, to be written.
-3. PLACEHOLDER: group question 3, to be written.
+1. A student says it doesn't matter because no one from that country is in the room. What do you say?
+2. How do you help a student tell a fact from a stereotype?
+3. How can you fold this into the class task instead of treating it only as discipline?
 
 
-## Scenario 8: MS/HS - Truth or Dare — "Would You Kiss [Student Name]?" 
+## Scenario 8: MS/HS - Truth or Dare 
 
 Context : A group is playing truth or dare. One student is asked "would you kiss [names another student]?" You intervene before they answer. The named student may or may not be present. 
 
@@ -236,12 +236,12 @@ TEACHER: "I believe you weren't trying to. But think about it impacting them. If
 (Debrief: This one "looks like fun," so the instinct is to walk past it, but that can still do harm. Notice the mediator preserves the game and gives a clean, usable rule: "keep it about the people playing.") 
 
 Group questions:
-1. PLACEHOLDER: group question 1, to be written.
-2. PLACEHOLDER: group question 2, to be written.
-3. PLACEHOLDER: group question 3, to be written.
+1. The game looks harmless. When do you step in, and how do you keep your tone light?
+2. How do you explain the harm to someone who isn't there?
+3. What simple rule can students use to keep playing fairly?
 
 
-## Scenario 9: MS/HS - "You're So Gay" (as an insult) 
+## Scenario 9: MS/HS - "You're So Gay"
 
 Context: One student calls another student “gay” meant as an insult in front of the class. 
 
@@ -267,9 +267,9 @@ TEACHER: (to the class, in the moment) "Let's pause. Using 'gay' as an insult is
 (Debrief : the harm reaches beyond the two students. The mediator addresses the room and repairs with the target.)
 
 Group questions:
-1. PLACEHOLDER: group question 1, to be written.
-2. PLACEHOLDER: group question 2, to be written.
-3. PLACEHOLDER: group question 3, to be written.
+1. Student 2 says: "That he got embarrassed." What would you say next?
+2. How do you address the whole class, not just the two students?
+3. A student says everyone uses the word. What do you say?
 
 
  

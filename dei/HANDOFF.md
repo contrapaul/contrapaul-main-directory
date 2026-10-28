@@ -11,6 +11,24 @@ Working notes for the next session. Newest entry first. Paul's standing requests
 
 ## Entries
 
+### 2026-10-28 (discussion questions replace the layouts)
+
+**Asked:** the three flip-card questions under the PYP "Excluded" scenario become its discussion questions and that box goes; extend the approach to the other scenarios and remove all the alternative interactive elements.
+
+**Also found:** Paul's commit `011931f` changed the titles (all nine) and two contexts (scenario 2: "upset because a group..."; scenario 6: "a 'heil hitler' salute") directly in `data/scenarios.js`, which broke the verbatim test. `scenarios.md` was synced to Paul's wording; his edits stand as the text.
+
+**Changed:**
+
+- `scenarios.md`: titles and the two contexts synced; group questions written for all nine. Scenario 2's are the old layout A questions word for word. The other eight are Claude's drafts in the same style, written from each script (scenario 1 and 9 each reuse a prompt from the removed layouts). Paul to review.
+- `data/scenarios.js`: regenerated: questions in, every `piece` (layouts A, C, D, E) out. Titles, contexts and message splits unchanged from Paul's version.
+- `js/scenarios.js` and `css/scenarios.css`: all layout code and styles removed (flip cards, pick, match, write, the layout A wide-screen rule), plus the unused layout strings.
+- Docs: `brief.md`, `plans.md` (section 4 is now the group questions), `CLAUDE.md` (no other interactive pieces).
+
+**Verified:** 33/33 tests. In Chromium at 390x844 and 1280x800: both tabs show Paul's titles, each scenario is title, context, harm note (where written), Play, Debrief, with no layouts left; scenario 2's deck steps through its three questions; no horizontal scroll; no console errors.
+
+**For Paul:** review the drafted questions for scenarios 1 and 3 to 9 in `scenarios.md`. Change them there first, then in `data/scenarios.js` (or ask Claude to sync).
+
+
 ### 2026-10-28 (Debrief box trimmed, instructions outline, no hover)
 
 **Asked:** drop the text between the "Debrief" heading and the question cards; give the instructions card a uniform outline instead of the side accent; no hover effect at all.
