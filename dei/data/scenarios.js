@@ -432,7 +432,7 @@
           ] },
         { who: 's2', label: t("STUDENT #2"), parts: [{ say: t("I stop using it like that.") }] },
         { who: 't', label: t("TEACHER"), parts: [{ say: t("Anything to close it out?") }] },
-        { who: 's2', label: t("STUDENT #2"), parts: [{ say: t("That wasn't fair to you. I'll cut it out.") }] }
+        { who: 's2', label: t("STUDENT #2"), parts: [{ say: t("That wasn't fair to you, and I'll cut it out.") }] }
       ]
     }
   ];
