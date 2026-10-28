@@ -57,38 +57,39 @@ STUDENT #2: “I’m sorry”
 (Debrief note: the "when they ask you to stop, you stop" line is the whole lesson here.)  
 
 Group questions:
-1. How can we recognize when students use codenames for others?
+1. Can you lean on school policy to support your discussion about nicknames?
 2. Are there signs that a student may not like a nickname others have given them, even if they respond to it?
-3. Were you ever called a nickname that you didn't like? How did you respond?
+3. What would you do differently or add to this scenario?
 
 ## Scenario 2: PYP - Excluded  
 
 Context : A student comes in upset because a group of friends wouldn't let them play. The group says it's "not their fault." 
 
-TEACHER: (to student #1, individually) "You seem really upset. What happened? And on a 1–10, how ready are you to talk with them?" 
- STUDENT #1: "Like a 5. They said they didn't want to play with me." 
- TEACHER: (brings student #1 and one or two of the group, not a crowd. To student #1) "Tell them how that felt." 
- STUDENT #1 "I felt left out. You're my friend and you told me to go away in front of everyone." 
- TEACHER: (to Student #2) "What did you hear?" 
- STUDENT #2: "I mean, it wasn't just me, everyone—" 
- TEACHER: "I'm going to pause you there. I didn't ask whose fault it is. I asked what you heard them say." 
- STUDENT #2: "That she felt left out and embarrassed." 
- TEACHER: (to student #1) "Yes. Did you feel heard?" 
- STUDENT #1: "Yeah." 
- TEACHER: (to student #2) "Now your side. Explain using 'I felt,' not 'we didn't.'” 
- STUDENT #2: "I feel like we already had teams and it got awkward, and then it turned into a thing." 
- TEACHER: (to student #1) "What'd you hear?" 
- STUDENT #1: "That the game was already set up and it got weird, not that you hate me." 
- TEACHER: "So going forward, what do you do when the game's already going and someone wants in?" 
- STUDENT #2: "We can say 'next round' instead of 'go away.'" 
- TEACHER: "Anything to close this out?" 
+TEACHER: (to student #1, individually) "You seem really upset, tell me what zone you're in right now? We can wait until you're ready to talk about it."
+ STUDENT #1: "I'm in the blue zone, I can talk about it."
+ STUDENT #1: "They said they didn't want to play with me."
+ TEACHER: (brings student #1 and one or two of the group, not a crowd. To student #1) "Tell them how that felt."
+ STUDENT #1: "I felt left out. You're my friend and you told me to go away in front of everyone."
+ TEACHER: (to Student #2) "What did you hear?"
+ STUDENT #2: "I mean, it wasn't just me, everyone said..."
+ TEACHER: "I'm going to pause you there. I didn't ask whose fault it is. I asked what you heard them say."
+ STUDENT #2: "That she felt left out and embarrassed."
+ TEACHER: (to student #1) "Yes. Did you feel heard?"
+ STUDENT #1: "Yeah."
+ TEACHER: (to student #2) "Now your side. Explain using 'I felt,' not 'we didn't.'"
+ STUDENT #2: "I feel like we already had teams and it got awkward, and then it turned into a thing."
+ TEACHER: (to student #1) "What'd you hear?"
+ STUDENT #1: "That the game was already set up and it got weird, not that you hate me."
+ TEACHER: "So going forward, what do you do when the game's already going and someone wants in?"
+ STUDENT #2: "We can say 'next round' instead of 'go away.'"
+ TEACHER: "Anything to close this out?"
  STUDENT #2: "You can play with us tomorrow. Sorry it came out mean." 
 
 (Debrief note: watch how the mediator refuses to chase "whose fault" and keeps pulling back to impact.) 
 
 Group questions:
 1. Why do we think the teacher avoided discussing blame?
-2. Are teachers responsible for making students include others all the time?
+2. How might teachers build an inclusive environment while balancing student social dynamics?
 3. Does this approach feel realistic for your grade level?
 
 ## Scenario 3: PYP - "Don't Play With Them" 
@@ -106,7 +107,7 @@ TEACHER: (to student #1, individually) "I saw your face. What did you hear? And 
  STUDENT #2: "You felt like no one wanted you there." 
  TEACHER: (to student #1) "Does that sound right to you?" 
  STUDENT #1:"Yeah." 
- TEACHER: (to student #2) "Now you can explain your side." 
+ TEACHER: (Use a Phoenix apology if it feels appropriate) "Now you can explain your side." 
  STUDENT #2: "I feel like we had a fight last week and I was still mad." 
  TEACHER: "So the real issue is something from before, and this spilled into recess. Here's the thing, though. Telling a group not to play with someone shuts them out of everything at once. That doesn’t seem fair. What can be done instead?" 
  STUDENT #2: "If I'm mad at her, I deal with her, I don't turn people against her." 
@@ -133,7 +134,7 @@ TEACHER: "Let's pause the vote for a second. I want to pick up on something. A f
  STUDENT #1: "No. Some of the best group organizers in here are girls." 
  TEACHER: "So here's the standard I want us to hold: leadership is about skills and qualities, not gender. That part's not up for debate. But how we pick, that's yours. How could you choose a leader based on those qualities we listed, instead of on who's a boy or a girl?" 
  STUDENT #2: "We could say what job we're doing and who's actually good at organizing that." 
- STUDENT #1: "Or nominate anyone and say why—what they'd be good at." 
+ STUDENT #1: "Or nominate anyone and say what they'd be good at." 
  TEACHER: "That's a much stronger way to choose, and it's fair to everyone. Let's run it that way. Nominate someone and give a reason based on the qualities on the board." 
 
 (Debrief: This scenario is a discussion to guide, not necessarily a conflict to mediate. Notice the mediator holds a firm boundary 'gender isn't a qualification' while letting students do the reasoning.) 
@@ -186,7 +187,7 @@ Context: Student does a 'heil hitler' salute in class.
 TEACHER: (calm, firm, to the students) "Stop. Put your hands down. What you just did is called a Nazi salute. The people who use it today aren't just 'being edgy', they're sending a message to others that they agree with the Nazis The Nazis massacred millions of people for no reason other than they were Jewish, or gay, or disabled, or Polish, or Chinese, or Romani, and on and on." 
 STUDENT #1: "I swear I didn't know what it meant." 
  TEACHER: "I believe that you might not have. That's exactly why we're going to talk about it." 
-TEACHER: (to the group) "Here's what I need you to understand. Making that salute, or drawing a swastika, tells others that you think the Nazis weer right. That it was a good thing to kill so many innocent people. 'It was just a joke' isn't something you get to say again. I don't think you actually believe people should be killed for being different, but that's the message you send when you do that salute." 
+TEACHER: (to the group) "Here's what I need you to understand. Making that salute, or drawing a swastika, tells others that you think the Nazis were right. That it was a good thing to kill so many innocent people. 'It was just a joke' isn't something you get to say again. I don't think you actually believe people should be killed for being different, but that's the message you send when you do that salute." 
 STUDENT #1: "We were just messing around." 
 TEACHER: "I hear you, but this isn't something people see as 'just messing around'. Someone who doesn't know you and sees it will probably not make the same assumptions I did. Going forward, what do you do if you see a symbol or gesture and you don't know what it means?" 
  STUDENT #1: "Ask an adult instead of copying it." 
@@ -262,7 +263,7 @@ TEACHER: (to the class, in the moment) "Let's pause. Using 'gay' as an insult is
  TEACHER: "That's honest, and here's the piece I'll name. Even when a word gets tossed around a lot, using someone's identity as a put-down tells every kid in that room they'd be a punchline too. What can we do differently?" 
  STUDENT #2: "I stop using it like that." 
  TEACHER: "Anything to close it out?" 
- STUDENT #2: "That wasn't fair to you. I'll cut it out." 
+ STUDENT #2: "That wasn't fair to you, and I'll cut it out." 
 
 (Debrief : the harm reaches beyond the two students. The mediator addresses the room and repairs with the target.)
 

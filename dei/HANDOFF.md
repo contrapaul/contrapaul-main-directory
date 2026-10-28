@@ -11,6 +11,19 @@ Working notes for the next session. Newest entry first. Paul's standing requests
 
 ## Entries
 
+### 2026-10-28 (fixed: Paul's dialogue edits broke the data file)
+
+**Asked:** Paul pushed several changes but the dialogues on the page did not change; investigate.
+
+**Found:** Paul's commit `d804743` (and the two after it) left a syntax error in `data/scenarios.js`: scenario 2's first teacher turn closed after its first message, leaving "We can wait until you're ready to talk about it." outside the turn. A browser cannot run a data file with a syntax error, so the page loaded no scenario data at all (no scenarios render). The live site could not be checked from this session (the network policy blocks contrapaul.com); seeing the old dialogues there means a cached copy or a deploy that had not landed.
+
+**Changed:** the turn now holds both messages, as intended. `scenarios.md` synced to all of Paul's edits in those commits: scenario 2's rewritten opening (zones of regulation, one more turn), "everyone said...", scenario 3's new direction "(Use a Phoenix apology if it feels appropriate)", scenario 4 without the dash, the "were" typo fix in scenario 6, scenario 9's last line, and new questions for scenarios 1 and 2.
+
+**Verified:** the data file parses; the page renders all nine scenarios with no errors; 33/33 tests.
+
+**Tip for direct edits to `data/scenarios.js`:** run `npm test` before pushing. The verbatim test loads the file, so it fails on a syntax error as well as on wording that differs from `scenarios.md`.
+
+
 ### 2026-10-28 (heading renamed; Paul's script and question edits synced)
 
 **Asked:** change the "Debrief" heading to "Discussion Questions".
