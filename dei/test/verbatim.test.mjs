@@ -33,8 +33,8 @@ function joined(parts) {
 }
 const flat = (parts) => parts.map((p) => (p.say !== undefined ? { say: p.say.replace(/\s+/g, ' ') } : p));
 
-test('nine scenarios: 1 to 4 in PYP, 5 to 9 in MS/HS', () => {
-  assert.equal(data.length, 9);
+test('eight scenarios: 1 to 4 in PYP, 5, 6, 7 and 9 in MS/HS', () => {
+  assert.equal(data.length, 8);
   assert.deepEqual(data.map((s) => s.tab), source.map((s) => s.tab));
   assert.deepEqual(data.map((s) => s.id), source.map((s) => 'sc' + s.n));
 });

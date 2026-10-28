@@ -11,6 +11,23 @@ Working notes for the next session. Newest entry first. Paul's standing requests
 
 ## Entries
 
+### 2026-10-28 (Truth or Dare removed; Paul's scenario 5 and 6 rewrites cleaned up)
+
+**Asked:** Paul rewrote the salute scenario and knew the syntax was broken; clean it up, remove the entire Truth or Dare scenario, commit and push.
+
+**Found in Paul's commits `a23d618` and `8b13be3`:** they were made on an older copy of `data/scenarios.js`, so they also undid the scenario 2 fix from `be0a5cf`. Scenario 6's new script had mismatched brackets throughout; scenario 5's questions were missing a comma. Paul also edited scenario 5 (context, three teacher lines, "We can talk.", new questions), gave scenario 6 new questions, and removed the "Name the harm" notes from scenarios 5, 6 and 9.
+
+**Changed:**
+
+- `data/scenarios.js`: scenario 6 rebuilt with Paul's exact words in his order (9 turns, the teacher asks why and what the gesture means before explaining); scenario 5's comma added; scenario 2's fix reapplied; scenario 8 deleted.
+- `scenarios.md`: scenario 8 deleted; the three harm notes deleted; scenario 5 and 6 synced to Paul's wording; header notes updated. The remaining scenarios keep their numbers (MS/HS is 5, 6, 7, 9) and ids, so progress saved on staff devices stays correct.
+- Tests and comments updated for eight scenarios; the awards count out of 4, 4 and 8. Docs updated.
+
+**Left as written, flagged to Paul:** "makes makes" (scenario 6), "What you do differently or add on to this scenario?" (scenario 6, question 3), "What if the students wants..." and "the student wishes" (scenario 5, question 2), "it bothered you ," (scenario 5).
+
+**Verified:** data parses; 32/32 tests; in Chromium both tabs render (PYP 4, MS/HS 4), scenarios 2, 5 and 6 play to the end, no console errors, no horizontal scroll.
+
+
 ### 2026-10-28 (fixed: Paul's dialogue edits broke the data file)
 
 **Asked:** Paul pushed several changes but the dialogues on the page did not change; investigate.

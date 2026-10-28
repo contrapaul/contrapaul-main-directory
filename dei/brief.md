@@ -9,7 +9,7 @@ A single web page for staff DEI training on intra-student conflict (conflict bet
 ## The two tabs
 
 - **PYP**: scenarios 1 to 4.
-- **MS/HS**: scenarios 5 to 9.
+- **MS/HS**: scenarios 5, 6, 7 and 9 (Truth or Dare, scenario 8, was removed 2026-10-28).
 
 Each tab is one scrolling page with jump links at the top, one per scenario. Each scenario shows:
 
@@ -27,8 +27,8 @@ The page opens with the instructions visible: "Read through the scenarios with y
 Earned by playing the conversations through, never given. A trophy button in the header opens the list: each award with its emoji and either "earned" or how many conversations are played. No reset.
 
 - **PYP** for completing scenarios 1 to 4,
-- **MS/HS** for completing scenarios 5 to 9,
-- **Conflict Resolution** for completing all nine.
+- **MS/HS** for completing every MS/HS scenario,
+- **Conflict Resolution** for completing all eight.
 
 ## Hard requirements
 

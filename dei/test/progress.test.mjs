@@ -4,7 +4,7 @@ import { makeEnv, run, runIn } from './shim.mjs';
 
 const KEY = 'dei-progress';
 const PYP = ['sc1', 'sc2', 'sc3', 'sc4'];
-const MSHS = ['sc5', 'sc6', 'sc7', 'sc8', 'sc9'];
+const MSHS = ['sc5', 'sc6', 'sc7', 'sc9'];
 
 function setup(opts = {}) {
   const made = makeEnv(opts);
@@ -37,7 +37,7 @@ test('nothing is earned on load', () => {
   assert.deepEqual(earned(ctx), []);
   const env = { rewardsEl };
   assert.equal(count(env), '');
-  assert.deepEqual(status(env), ['0 of 4 played', '0 of 5 played', '0 of 9 played']);
+  assert.deepEqual(status(env), ['0 of 4 played', '0 of 4 played', '0 of 8 played']);
 });
 
 test('PYP reward needs all four PYP scenarios, and only those', () => {
@@ -47,11 +47,11 @@ test('PYP reward needs all four PYP scenarios, and only those', () => {
   env.ctx.dei.progress.complete('sc4');
   assert.deepEqual(earned(env.ctx), ['pyp']);
   assert.equal(count(env), '1');
-  assert.deepEqual(status(env), ['\u2713 Earned', '0 of 5 played', '4 of 9 played']);
+  assert.deepEqual(status(env), ['\u2713 Earned', '0 of 4 played', '4 of 8 played']);
   assert.ok(trophy(env).classes.has('is-new'));
 });
 
-test('all nine earn MS/HS and Conflict Resolution too', () => {
+test('all eight earn MS/HS and Conflict Resolution too', () => {
   const env = setup();
   MSHS.forEach((id) => env.ctx.dei.progress.complete(id));
   assert.deepEqual(earned(env.ctx), ['mshs']);

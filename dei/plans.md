@@ -15,7 +15,7 @@ dei/
   js/progress.js      scenario completion, the trophy and the three awards
   js/scenarios.js     renders each tab: jump links, scenarios, phone chat, Discussion Questions box
   js/tabs.js          #/pyp and #/mshs routes, deep links (#/pyp#sc3)
-  data/scenarios.js   the nine scenarios, committee text verbatim (split into messages), group questions
+  data/scenarios.js   the eight scenarios, committee text verbatim (split into messages), group questions
   scenarios.md        source of truth for the scenario text
   test/               node --test: verbatim check, rewards, tabs, i18n, theme
 ```
@@ -41,7 +41,7 @@ Settled 2026-10-21: every conversation looks like a phone conversation. Pure tex
 - **Play** starts it; the button becomes **Pause**, then **Resume**, and **Replay** at the end. Only one conversation plays at a time; switching tabs pauses it.
 - **A chat window** of fixed height (about two thirds of a phone screen). Messages arrive at the bottom and push older ones up, as on a phone. It follows new messages unless the reader scrolls up to look back; scrolling back to the bottom resumes following.
 - **Messages.** Each `say` part in `data/scenarios.js` is one message. Long turns were split into several messages at sentence breaks, each up to about 100 characters (a turn up to 110 stays whole). Paul will review and adjust the splits: split or join `say` parts freely, keeping the words and order (the verbatim test joins them back up).
-- **Sides and colours**: TEACHER and STUDENT #2 send from the left; STUDENT #1, STUDENT (scenario 7) and G (scenario 8) from the right. Teacher teal, student 2 amber, student 1 and "student" violet, group rose. The speaker's name (as written) shows on the first message of a run.
+- **Sides and colours**: TEACHER and STUDENT #2 send from the left; STUDENT #1, STUDENT (scenario 7) and G (the group) from the right. Teacher teal, student 2 amber, student 1 and "student" violet, group rose. The speaker's name (as written) shows on the first message of a run.
 - **Stage directions** ("(to student #1, individually)", "(Later, Student #1 is at a 6.)") show as written, as small centred notes between messages, the way a phone shows notices in a group chat.
 - **Pace.** A message stays alone for `700ms + 45ms per character` of its English text, between 1s and 14s, so "Yeah." moves on in a second and a long teacher message gets several. In the last part of that wait (35%, between 0.4s and 0.9s) the next speaker's typing dots show. Tune it at the top of `js/scenarios.js` (`PACE`, `TYPING`), or give one message its own `ms` in `data/scenarios.js`.
 
@@ -63,7 +63,7 @@ Three per scenario, shown in the Discussion Questions deck. Scenario 2's came fr
 ## 5. Rewards
 
 - A scenario is **complete** when its conversation has played to the last message. Opening a tab, scrolling, or using the Discussion Questions deck earns nothing.
-- **PYP** 🌱 (scenarios 1 to 4), **MS/HS** 🧭 (5 to 9), **Conflict Resolution** 🤝 (all nine).
+- **PYP** 🌱 (scenarios 1 to 4), **MS/HS** 🧭 (5, 6, 7, 9), **Conflict Resolution** 🤝 (all eight).
 - One **trophy** 🏆 button in the header, with the number earned beside it once there is one. Tapping it opens the list: each award's emoji (greyed until earned), its name, and "✓ Earned" or "2 of 4 played". It pops when a new award is earned. Tap outside or press Escape to close. No reset.
 - Stored on the device under `dei-progress`.
 
@@ -100,7 +100,7 @@ Three per scenario, shown in the Discussion Questions deck. Scenario 2's came fr
 
 ## 9. Settled (2026-10-21 unless marked)
 
-- Two tabs, PYP (1 to 4) and MS/HS (5 to 9), jump links at the top. Mobile first.
+- Two tabs, PYP (1 to 4) and MS/HS (5, 6, 7, 9), jump links at the top. Mobile first. Scenario 8 (Truth or Dare) removed 2026-10-28; ids are kept so saved progress stays right.
 - Scenario text as written; display rules at the top of `scenarios.md`. One real title per scenario.
 - No presenter mode or presentation features.
 - Every conversation is a phone chat (section 3): plays on its own, paced by message length, pure text, no images.

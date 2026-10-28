@@ -8,8 +8,8 @@
    either "earned" or how many conversations are played so far:
 
      PYP                  scenarios 1 to 4 complete
-     MS/HS                scenarios 5 to 9 complete
-     Conflict Resolution  all nine complete
+     MS/HS                every MS/HS scenario complete
+     Conflict Resolution  every scenario complete
 
    Stored on this device only, under 'dei-progress'. No reset
    (Paul, 2026-10-21).
