@@ -18,10 +18,11 @@
         }
         document.documentElement.setAttribute('data-theme', t);
 
-        var l = localStorage.getItem('dei-lang');
-        if (l !== 'en' && l !== 'zh') l = 'en';
-        document.documentElement.setAttribute('data-lang', l);
-        document.documentElement.lang = (l === 'zh') ? 'zh-Hans' : 'en';
+        // English only (Paul, 2026-10-28): the 中文 toggle is removed,
+        // and a saved Chinese choice is cleared so nobody is stuck in it.
+        localStorage.removeItem('dei-lang');
+        document.documentElement.setAttribute('data-lang', 'en');
+        document.documentElement.lang = 'en';
       } catch (e) { /* CSS defaults to light / English */ }
     })();
   </script>
@@ -45,11 +46,6 @@
     <div class="header-tools">
       <!-- Trophy and awards list (js/progress.js). -->
       <span class="rewards" data-rewards></span>
-
-      <button class="tool-btn" type="button" data-lang-toggle
-              aria-label="Switch to Simplified Chinese">
-        <span data-lang-label>中文</span>
-      </button>
 
       <button class="tool-btn" type="button" data-theme-toggle
               aria-pressed="false"

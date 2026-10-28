@@ -11,6 +11,15 @@ Working notes for the next session. Newest entry first. Paul's standing requests
 
 ## Entries
 
+### 2026-10-28 (language toggle removed)
+
+**Asked:** remove the 中文 toggle completely; no time for translations, the page is in use within minutes.
+
+**Changed:** `index.html`: the toggle button is gone; the pre-paint script clears any saved `dei-lang` and sets English, so a phone that chose Chinese earlier opens in English. `js/i18n.js` and the zh pairs are untouched (unused), so the toggle can return later with only the button and those three lines put back.
+
+**Verified:** 32/32 tests; in Chromium the button is gone, a saved Chinese setting loads in English, all eight scenarios render, no errors.
+
+
 ### 2026-10-28 (Truth or Dare removed; Paul's scenario 5 and 6 rewrites cleaned up)
 
 **Asked:** Paul rewrote the salute scenario and knew the syntax was broken; clean it up, remove the entire Truth or Dare scenario, commit and push.
