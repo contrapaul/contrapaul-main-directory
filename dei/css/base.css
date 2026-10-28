@@ -120,8 +120,6 @@ button { font: inherit; color: inherit; }
               background-color var(--dur-micro) var(--ease-out);
 }
 
-.tab-link:hover { color: var(--text); }
-
 .tab-link.is-active {
   background: var(--surface);
   color: var(--text);
@@ -156,8 +154,6 @@ button { font: inherit; color: inherit; }
               border-color var(--dur-micro) var(--ease-out);
 }
 
-.tool-btn:hover { color: var(--text); border-color: var(--line-strong); }
-
 .tool-btn svg { width: 18px; height: 18px; }
 
 /* The theme button is icon only on phones. */
@@ -178,6 +174,18 @@ main {
   max-width: 680px;
   margin-inline: auto;
   padding: 0 var(--sp-4) var(--sp-7);
+}
+
+/* Instructions, the first thing on the page on both tabs. */
+.instructions {
+  margin-top: var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.45;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-m);
 }
 
 .tab-panel { display: none; }

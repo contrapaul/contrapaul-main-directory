@@ -49,8 +49,6 @@
   border-radius: 999px;
 }
 
-.jump-link:hover { color: var(--text); border-color: var(--line-strong); }
-
 .jump-mark { display: none; color: var(--ok); font-weight: 700; }
 .jump-link.is-done .jump-mark { display: inline; }
 
@@ -85,19 +83,66 @@
   border-radius: 0 var(--radius-s) var(--radius-s) 0;
 }
 
-.sc-debrief {
-  font-size: 17px;
+/* ---------- Debrief box ----------
+   The same under every conversation: a heading, then the group
+   questions as a deck of cards. */
+.debrief {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
   padding: var(--sp-4);
   background: var(--accent-wash);
   border-radius: var(--radius-m);
 }
 
-.sc-debrief strong { font-weight: 700; }
+.debrief-head {
+  font-size: var(--fs-1);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
 
-.sc-debrief.is-placeholder {
-  background: transparent;
-  border: 1px dashed var(--line-strong);
-  color: var(--text-faint);
+.q-card.is-placeholder { color: var(--text-faint); font-style: italic; }
+
+.deck { position: relative; padding-bottom: 10px; }
+
+.deck::before,
+.deck::after {
+  content: "";
+  position: absolute;
+  left: 10px; right: 10px;
+  height: 20px;
+  bottom: 4px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  z-index: 0;
+}
+
+.deck::after { left: 20px; right: 20px; bottom: 0; opacity: 0.6; }
+
+.q-card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  min-height: 120px;
+  padding: var(--sp-4);
+  font-size: var(--fs-3);
+  font-weight: 650;
+  line-height: 1.35;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-1);
+}
+
+.deck-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
 }
 
 /* ---------- Player: a phone chat ----------
@@ -371,35 +416,6 @@
   width: 82%;
   max-width: 340px;
   scroll-snap-align: start;
-}
-
-/* B: deck */
-.deck { position: relative; padding-bottom: 10px; }
-
-.deck::before,
-.deck::after {
-  content: "";
-  position: absolute;
-  left: 10px; right: 10px;
-  height: 20px;
-  bottom: 4px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-m);
-  z-index: 0;
-}
-
-.deck::after { left: 20px; right: 20px; bottom: 0; opacity: 0.6; }
-
-.deck .flip { position: relative; z-index: 1; }
-
-.flip-back .quote + .quote { margin-top: 6px; }
-
-.deck-nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--sp-3);
 }
 
 /* C: pick */

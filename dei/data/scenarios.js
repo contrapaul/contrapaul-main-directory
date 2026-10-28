@@ -9,7 +9,13 @@
    Display rules (Paul, 2026-10-21; see test/parse-scenarios.mjs):
    titles drop "Scenario N: GROUP - ", the context drops its
    label, harm notes drop the leading "*", debriefs drop their
-   outer brackets, and spoken words drop their outer quote marks.
+   outer brackets and "Debrief note:" label, group questions drop
+   their numbers, and spoken words drop their outer quote marks.
+
+   questions fill the Debrief box under the conversation as a deck
+   of cards (2026-10-28). debrief, the committee's note, is kept
+   but not shown on the page (Paul, 2026-10-28). Unwritten questions say
+   PLACEHOLDER; replace them in scenarios.md first, then here.
 
    Each line is one speaker's turn: who (speaker key: t teacher,
    s1 student 1, s2 student 2, s student, g group), label (as
@@ -24,7 +30,7 @@
      ms: 4000   how long the message stays before the next one
               (otherwise worked out from its length)
 
-   piece: a placeholder interactive layout (A to E) for Paul to
+   piece: a placeholder interactive layout (A, C, D, E) for Paul to
    choose from. Its suggestions are committee lines; its
    questions and prompts are placeholder wording.
 
@@ -52,7 +58,12 @@
         best: 1,
         follow: t("It’s more than that. I heard she felt disrespected because she asked you to stop, and it kept going. Say that back.")
       },
-      debrief: t("Debrief note: the \"when they ask you to stop, you stop\" line is the whole lesson here."),
+      debrief: t("the \"when they ask you to stop, you stop\" line is the whole lesson here."),
+      questions: [
+        t("PLACEHOLDER: group question 1, to be written."),
+        t("PLACEHOLDER: group question 2, to be written."),
+        t("PLACEHOLDER: group question 3, to be written.")
+      ],
       lines: [
         { who: 't', label: t("Teacher"), parts: [
             { dir: t("(to student #1, individually)") },
@@ -104,7 +115,12 @@
             a: t("So going forward, what do you do when the game's already going and someone wants in?") }
         ]
       },
-      debrief: t("Debrief note: watch how the mediator refuses to chase \"whose fault\" and keeps pulling back to impact."),
+      debrief: t("watch how the mediator refuses to chase \"whose fault\" and keeps pulling back to impact."),
+      questions: [
+        t("PLACEHOLDER: group question 1, to be written."),
+        t("PLACEHOLDER: group question 2, to be written."),
+        t("PLACEHOLDER: group question 3, to be written.")
+      ],
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
             { dir: t("(to student #1, individually)") },
@@ -145,7 +161,12 @@
       id: 'sc3', tab: 'pyp',
       title: t("\"Don't Play With Them\""),
       context: t("A student overheard a peer telling others not to play with them."),
-      debrief: t("Debrief: PLACEHOLDER, to be added by the team."),
+      debrief: t("PLACEHOLDER, to be added by the team."),
+      questions: [
+        t("PLACEHOLDER: group question 1, to be written."),
+        t("PLACEHOLDER: group question 2, to be written."),
+        t("PLACEHOLDER: group question 3, to be written.")
+      ],
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
             { dir: t("(to student #1, individually)") },
@@ -184,17 +205,12 @@
       id: 'sc4', tab: 'pyp',
       title: t("\"Boys should lead\""),
       context: t("While picking a team leader, some students argue a boy should lead because \"boys are better leaders.\""),
-      piece: { type: 'deck', layout: 'B',
-        cards: [
-          { q: t("What makes someone a good team leader?"),
-            a: [t("Someone organized and listens."), t("Someone who keeps the group on track and is fair.")] },
-          { q: t("Which of those is something only a boy can do?"),
-            a: [t("...None of them.")] },
-          { q: t("How could you choose a leader based on those qualities we listed, instead of on who's a boy or a girl?"),
-            a: [t("We could say what job we're doing and who's actually good at organizing that."), t("Or nominate anyone and say why—what they'd be good at.")] }
-        ]
-      },
-      debrief: t("Debrief: This scenario is a discussion to guide, not necessarily a conflict to mediate. Notice the mediator holds a firm boundary 'gender isn't a qualification' while letting students do the reasoning."),
+      debrief: t("This scenario is a discussion to guide, not necessarily a conflict to mediate. Notice the mediator holds a firm boundary 'gender isn't a qualification' while letting students do the reasoning."),
+      questions: [
+        t("PLACEHOLDER: group question 1, to be written."),
+        t("PLACEHOLDER: group question 2, to be written."),
+        t("PLACEHOLDER: group question 3, to be written.")
+      ],
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
             { say: t("Let's pause the vote for a second. I want to pick up on something.") },
@@ -244,7 +260,12 @@
            t("Here's the part to remember. Comments about someone's body or eating can stick for a really long time. Longer than you'd guess. What can we do differently going forward?")]
         ]
       },
-      debrief: t("Debrief note: the student stopped eating. The mediator honors the low readiness score and names why this kind of comment carries weight."),
+      debrief: t("the student stopped eating. The mediator honors the low readiness score and names why this kind of comment carries weight."),
+      questions: [
+        t("PLACEHOLDER: group question 1, to be written."),
+        t("PLACEHOLDER: group question 2, to be written."),
+        t("PLACEHOLDER: group question 3, to be written.")
+      ],
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
             { dir: t("(to the group in the moment)") },
@@ -288,7 +309,12 @@
       title: t("The Salute"),
       context: t("Student does a 'heil hitler' salute in class."),
       note: t("This is not a two-sided conflict. Name the harm first, then teach. There is no \"Student B\" to mediate with. The target here is a whole community."),
-      debrief: t("Debrief: This scenario is about education + boundary, not reconciliation. Notice the mediator accepts \"I didn't know\" without letting it excuse the harm, and carries the teaching themselves."),
+      debrief: t("This scenario is about education + boundary, not reconciliation. Notice the mediator accepts \"I didn't know\" without letting it excuse the harm, and carries the teaching themselves."),
+      questions: [
+        t("PLACEHOLDER: group question 1, to be written."),
+        t("PLACEHOLDER: group question 2, to be written."),
+        t("PLACEHOLDER: group question 3, to be written.")
+      ],
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
             { dir: t("(calm, firm, to the students)") },
@@ -325,7 +351,12 @@
       id: 'sc7', tab: 'mshs',
       title: t("Racism"),
       context: t("A student assigned Japan for a research task makes a sweeping negative sterotype about the nation and its people. No Japanese students are present."),
-      debrief: t("Debrief: How do you address harm when there's no victim in the room to advocate for? Notice the mediator makes the absent group the point, and folds it into the academic task rather than turning it into pure discipline."),
+      debrief: t("How do you address harm when there's no victim in the room to advocate for? Notice the mediator makes the absent group the point, and folds it into the academic task rather than turning it into pure discipline."),
+      questions: [
+        t("PLACEHOLDER: group question 1, to be written."),
+        t("PLACEHOLDER: group question 2, to be written."),
+        t("PLACEHOLDER: group question 3, to be written.")
+      ],
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
             { say: t("Let's stop there. You just said something about all Japanese people, and it wasn't kind.") },
@@ -355,7 +386,12 @@
       id: 'sc8', tab: 'mshs',
       title: t("Truth or Dare"),
       context: t("A group is playing truth or dare. One student is asked \"would you kiss [names another student]?\" You intervene before they answer. The named student may or may not be present."),
-      debrief: t("Debrief: This one \"looks like fun,\" so the instinct is to walk past it, but that can still do harm. Notice the mediator preserves the game and gives a clean, usable rule: \"keep it about the people playing.\""),
+      debrief: t("This one \"looks like fun,\" so the instinct is to walk past it, but that can still do harm. Notice the mediator preserves the game and gives a clean, usable rule: \"keep it about the people playing.\""),
+      questions: [
+        t("PLACEHOLDER: group question 1, to be written."),
+        t("PLACEHOLDER: group question 2, to be written."),
+        t("PLACEHOLDER: group question 3, to be written.")
+      ],
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
             { say: t("Stop. Hang on a sec.") },
@@ -393,7 +429,12 @@
         prompt: t("Student 2 says: \"That he got embarrassed.\" What would you say next?"),
         answer: t("More than just embarrassed. I heard him say it made him feel like who a person is could be used as an insult. Say that back.")
       },
-      debrief: t("Debrief : the harm reaches beyond the two students. The mediator addresses the room and repairs with the target."),
+      debrief: t("the harm reaches beyond the two students. The mediator addresses the room and repairs with the target."),
+      questions: [
+        t("PLACEHOLDER: group question 1, to be written."),
+        t("PLACEHOLDER: group question 2, to be written."),
+        t("PLACEHOLDER: group question 3, to be written.")
+      ],
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
             { dir: t("(to the class, in the moment)") },

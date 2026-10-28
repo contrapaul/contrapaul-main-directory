@@ -16,8 +16,10 @@ Each tab is one scrolling page with jump links at the top, one per scenario. Eac
 1. its title (the real title only, one line),
 2. the context, and any harm note, as written,
 3. a **Play** button. The conversation plays on its own as a phone chat, pure text: messages arrive at the bottom and push older ones up, in a colour per speaker. Teacher and student 2 send from the left; student 1, "STUDENT" and the group from the right. Longer messages stay alone longer, short replies come quickly, like a real conversation. Once played, the whole chat stays to scroll and read,
-4. interactive pieces (flip, match and similar). Five placeholder layouts are in place; Paul returns to them once the conversations are settled,
-5. the debrief note, shown openly, as written (scenario 3's is a placeholder until the team writes it).
+4. a **Debrief** box, the same under every conversation: the heading, then three group questions to discuss as a deck of cards (placeholders until Paul writes them),
+5. interactive pieces (flip, match and similar). Four placeholder layouts are in place; Paul returns to them once the conversations are settled.
+
+The page opens with the instructions visible: "Read through the scenarios with your group, then discuss the scenario and the debrief questions."
 
 ## Rewards
 

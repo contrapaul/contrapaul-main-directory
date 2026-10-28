@@ -30,10 +30,10 @@ Top to bottom, nothing else:
 2. **Context** sentence (no "Context :" label).
 3. **Harm note** where the committee wrote one (scenarios 5, 6, 9).
 4. **The conversation**, a phone chat (section 3).
-5. **A placeholder layout** in five scenarios (section 4).
-6. **Debrief**, shown openly, with the committee's own "Debrief note:" label in bold. Scenario 3 shows the placeholder.
+5. **The Debrief box**, the same under every conversation (staff request, 2026-10-28): a "Debrief" heading, then the three group questions as a deck of cards, one at a time with back and forward and a "1 of 3" count. Nothing sits between the heading and the cards: the committee's debrief note stays in `scenarios.md` and the data but is not shown (Paul, 2026-10-28). The deck is the design Paul picked from the old layout B. Unwritten questions are labelled PLACEHOLDER.
+6. **A placeholder layout** in four scenarios (section 4).
 
-Above the scenarios, one row of jump links (the titles; a tick once a scenario is complete). Below, the footer.
+At the top of the page, on both tabs, the instructions: "Read through the scenarios with your group, then discuss the scenario and the debrief questions." Then one row of jump links (the titles; a tick once a scenario is complete). Below, the footer.
 
 ## 3. The conversation: a phone chat
 
@@ -59,12 +59,12 @@ Settled 2026-10-21: every conversation looks like a phone conversation. Pure tex
 
 ## 4. Placeholder layouts (for Paul to choose from)
 
-Each is tagged "placeholder layout A" to "E". Suggestions inside them are committee lines; the questions, prompts and feedback lines are placeholder wording. They do not count toward the rewards.
+Each is tagged "placeholder layout" with its letter. Suggestions inside them are committee lines; the questions, prompts and feedback lines are placeholder wording. They do not count toward the rewards.
 
 | Layout | Where | What it does |
 |--------|-------|--------------|
 | A, swipe flip cards | Scenario 2 | A row of question cards; swipe across, tap to flip to a suggested teacher line |
-| B, flip deck | Scenario 4 | One card at a time with back and forward; the teacher's question flips to the students' answers |
+| B, flip deck | (none) | Became the Debrief box's question deck, 2026-10-28 |
 | C, pick the stronger line | Scenario 1 | Two say-backs from the script; tap one, then see the teacher line that got there |
 | D, match | Scenario 5 | Tap a student line, then the teacher reply that answers it; matched pairs get a number |
 | E, write then compare | Scenario 9 | Type your own reply (not saved), then reveal what the teacher said |
@@ -89,7 +89,8 @@ When Paul picks, the chosen layouts get real content and spread to the scenarios
 3. Scenario layout and jump links. **Done 2026-10-21.**
 4. Conversations as phone chats, split into messages, paced by length. **Done 2026-10-21.**
 5. Trophy and awards. **Done 2026-10-21.**
-6. Placeholder layouts A to E. **Done 2026-10-21;** Paul returns to them after the chats.
+6. Placeholder layouts A to E. **Done 2026-10-21;** Paul returns to them after the chats. B became the Debrief deck (2026-10-28).
+7a. Debrief box with three group questions per scenario, and the instructions at the top. **Done 2026-10-28;** questions are placeholders for Paul.
 7. Paul reviews the message splits and the pace.
 8. Expand the chosen layouts with real content.
 9. Chinese: preliminary after tonight's review, final after the English locks.
@@ -116,7 +117,9 @@ When Paul picks, the chosen layouts get real content and spread to the scenarios
 - No presenter mode or presentation features.
 - Every conversation is a phone chat (section 3): plays on its own, paced by message length, pure text, no images.
 - Speakers: teacher and student 2 left; student 1, "STUDENT" and group right.
-- Debrief shown openly; scenario 3's is a placeholder for the team.
+- Debrief box under every conversation: heading, then three group questions as a card deck; the committee note is not shown (2026-10-28). All questions are placeholders for now.
+- No hover effects anywhere; the instructions card has a plain even outline (2026-10-28).
+- Instructions at the top of both tabs (2026-10-28).
 - Awards: PYP, MS/HS, Conflict Resolution, behind one trophy button in the header, no reset.
 - Committee text is unedited AI output; staff review it tonight. Chinese after the review.
 - Work on `main`, no branches. Domain `contrapaul.com/dei/`. Accent deep teal (2026-10-14).
