@@ -30,7 +30,7 @@ Top to bottom, nothing else:
 2. **Context** sentence (no "Context :" label).
 3. **Harm note** where the committee wrote one (scenarios 5, 6, 9).
 4. **The conversation**, a phone chat (section 3).
-5. **The Debrief box**, the same under every conversation (staff request, 2026-10-28): a "Debrief" heading, the committee's note as written (without its own "Debrief note:" label), then the three group questions as a deck of cards, one at a time with back and forward and a "1 of 3" count. The deck is the design Paul picked from the old layout B. Unwritten questions and scenario 3's note are labelled PLACEHOLDER.
+5. **The Debrief box**, the same under every conversation (staff request, 2026-10-28): a "Debrief" heading, then the three group questions as a deck of cards, one at a time with back and forward and a "1 of 3" count. Nothing sits between the heading and the cards: the committee's debrief note stays in `scenarios.md` and the data but is not shown (Paul, 2026-10-28). The deck is the design Paul picked from the old layout B. Unwritten questions are labelled PLACEHOLDER.
 6. **A placeholder layout** in four scenarios (section 4).
 
 At the top of the page, on both tabs, the instructions: "Read through the scenarios with your group, then discuss the scenario and the debrief questions." Then one row of jump links (the titles; a tick once a scenario is complete). Below, the footer.
@@ -117,7 +117,8 @@ When Paul picks, the chosen layouts get real content and spread to the scenarios
 - No presenter mode or presentation features.
 - Every conversation is a phone chat (section 3): plays on its own, paced by message length, pure text, no images.
 - Speakers: teacher and student 2 left; student 1, "STUDENT" and group right.
-- Debrief box under every conversation: the note, then three group questions as a card deck (2026-10-28). Scenario 3's note and all questions are placeholders for now.
+- Debrief box under every conversation: heading, then three group questions as a card deck; the committee note is not shown (2026-10-28). All questions are placeholders for now.
+- No hover effects anywhere; the instructions card has a plain even outline (2026-10-28).
 - Instructions at the top of both tabs (2026-10-28).
 - Awards: PYP, MS/HS, Conflict Resolution, behind one trophy button in the header, no reset.
 - Committee text is unedited AI output; staff review it tonight. Chinese after the review.

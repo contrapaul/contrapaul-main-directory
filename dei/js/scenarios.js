@@ -463,16 +463,14 @@
   /* ---------- Scenario section ---------- */
 
   /* The Debrief box, the same under every conversation (staff
-     request, 2026-10-28): the committee's note, then the three
-     group questions as a deck, one card at a time with back and
-     forward. The deck design is the one Paul picked from the old
-     layout B. */
+     request, 2026-10-28): the heading, then the three group
+     questions as a deck, one card at a time with back and forward.
+     The deck design is the one Paul picked from the old layout B.
+     The committee's debrief note stays in the data but is not
+     shown (Paul, 2026-10-28). */
   function debriefBox(sc) {
     var box = h('div', 'debrief');
     box.appendChild(text(h('h3', 'debrief-head'), UI.debrief));
-    var note = text(h('p', 'debrief-note'), sc.debrief);
-    if (/PLACEHOLDER/.test(sc.debrief.en)) note.classList.add('is-placeholder');
-    box.appendChild(note);
 
     var qs = sc.questions || [];
     if (!qs.length) return box;

@@ -12,9 +12,9 @@
    outer brackets and "Debrief note:" label, group questions drop
    their numbers, and spoken words drop their outer quote marks.
 
-   debrief and questions fill the Debrief box under the
-   conversation: the committee's note, then three group questions
-   as a deck of cards (2026-10-28). Unwritten questions say
+   questions fill the Debrief box under the conversation as a deck
+   of cards (2026-10-28). debrief, the committee's note, is kept
+   but not shown on the page (Paul, 2026-10-28). Unwritten questions say
    PLACEHOLDER; replace them in scenarios.md first, then here.
 
    Each line is one speaker's turn: who (speaker key: t teacher,

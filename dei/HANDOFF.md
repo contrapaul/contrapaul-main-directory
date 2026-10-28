@@ -11,6 +11,15 @@ Working notes for the next session. Newest entry first. Paul's standing requests
 
 ## Entries
 
+### 2026-10-28 (Debrief box trimmed, instructions outline, no hover)
+
+**Asked:** drop the text between the "Debrief" heading and the question cards; give the instructions card a uniform outline instead of the side accent; no hover effect at all.
+
+**Changed:** `js/scenarios.js`: the Debrief box is now the heading, then the question deck; the committee's debrief note is no longer rendered but stays in `scenarios.md` and `data/scenarios.js`. `css/base.css`: the instructions card has an even 1px outline all round, no accent bar. Every `:hover` rule removed (tab links, header buttons, jump links). Docs and `CLAUDE.md` (new no-hover rule) updated.
+
+**Verified:** 33/33 tests. In Chromium: hovering the jump links, header buttons, the inactive tab, the instructions and a question card changes nothing; the instructions border is 1px on all four sides; the Debrief box holds only the heading, the deck and its buttons.
+
+
 ### 2026-10-28 (Debrief box, group questions, instructions)
 
 **Asked:** staff want a standardized Debrief box under each conversation, in the design under "A Boy Should Lead" (the layout B card deck); each scenario gets three group questions, placeholders where unwritten; the page loads with the instructions "Read through the scenarios with your group, then discuss the scenario and the debrief questions" visible. Paul also said he updated some titles, but no new commits or local changes had reached the repo, so titles are unchanged.

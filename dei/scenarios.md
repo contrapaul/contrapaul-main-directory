@@ -16,7 +16,9 @@ How the page displays this file (Paul, 2026-10-21; details in `plans.md`):
 
 - **One title per scenario: the real title only.** The page shows "Unkind Nickname", not "Scenario 1: PYP - Unkind Nickname". No scenario numbers, group names or extra headings above or below it.
 - The "Context :" label is not shown; the sentence after it is.
-- A harm note loses its leading "*". The debrief and the group questions show together in a box headed "Debrief" under the conversation, so the debrief loses its outer brackets and its own "Debrief note:" or "Debrief:" label, and the questions lose their numbers (the box counts them). The words stay.
+- A harm note loses its leading "*".
+- The group questions show in a box headed "Debrief" under the conversation, without their numbers (the box counts them).
+- The debrief notes below stay in this file and in the page data, but are not shown on the page (Paul, 2026-10-28). The data keeps them without their brackets and "Debrief note:" label.
 - Conversations show as a phone chat. Spoken words go in message bubbles without their outer quote marks (the bubble already says it is speech), with the speaker label as written on the first message of a run. A long turn may be split into several messages at sentence breaks; the words and their order never change. Bracketed stage directions show as written, as small centred notes between messages.
 - Everything else appears word for word. `test/verbatim.test.mjs` checks this.
 - PYP tab: scenarios 1 to 4. MS/HS tab: scenarios 5 to 9.

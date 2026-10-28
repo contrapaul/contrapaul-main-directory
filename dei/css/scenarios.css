@@ -49,8 +49,6 @@
   border-radius: 999px;
 }
 
-.jump-link:hover { color: var(--text); border-color: var(--line-strong); }
-
 .jump-mark { display: none; color: var(--ok); font-weight: 700; }
 .jump-link.is-done .jump-mark { display: inline; }
 
@@ -86,8 +84,8 @@
 }
 
 /* ---------- Debrief box ----------
-   The same under every conversation: a heading, the committee's
-   note, then the group questions as a deck of cards. */
+   The same under every conversation: a heading, then the group
+   questions as a deck of cards. */
 .debrief {
   display: flex;
   flex-direction: column;
@@ -105,9 +103,6 @@
   color: var(--accent);
 }
 
-.debrief-note { font-size: 17px; }
-
-.debrief-note.is-placeholder,
 .q-card.is-placeholder { color: var(--text-faint); font-style: italic; }
 
 .deck { position: relative; padding-bottom: 10px; }
