@@ -6,7 +6,7 @@ Provenance: the committee drafted these with unedited AI output. Staff review th
 
 Paul's edits to the committee's original (2026-10-21):
 
-- Scenario 6: the unclear line is marked with asterisks and "(Fix text)". It shows on the page exactly like that until the committee sends the fixed wording.
+- Scenario 6: Paul rewrote three of the teacher's turns (2026-10-28), which replaced the unclear "(Fix text)" line.
 - Scenario 9: one line's speaker corrected from STUDENT #1 to STUDENT #2 ("That he got embarrassed.").
 - Scenario 5: "I just stopped being hungry." is kept as written.
 - Scenario 3: the committee wrote no debrief. A placeholder debrief marks the space until the team writes one.
@@ -17,7 +17,7 @@ How the page displays this file (Paul, 2026-10-21; details in `plans.md`):
 - **One title per scenario: the real title only.** The page shows "Unkind Nickname", not "Scenario 1: PYP - Unkind Nickname". No scenario numbers, group names or extra headings above or below it.
 - The "Context :" label is not shown; the sentence after it is.
 - A harm note loses its leading "*".
-- The group questions show in a box headed "Debrief" under the conversation, without their numbers (the box counts them).
+- The group questions show in a box headed "Discussion Questions" under the conversation, without their numbers (the box counts them).
 - The debrief notes below stay in this file and in the page data, but are not shown on the page (Paul, 2026-10-28). The data keeps them without their brackets and "Debrief note:" label.
 - Conversations show as a phone chat. Spoken words go in message bubbles without their outer quote marks (the bubble already says it is speech), with the speaker label as written on the first message of a run. A long turn may be split into several messages at sentence breaks; the words and their order never change. Bracketed stage directions show as written, as small centred notes between messages.
 - Everything else appears word for word. `test/verbatim.test.mjs` checks this.
@@ -57,9 +57,9 @@ STUDENT #2: “I’m sorry”
 (Debrief note: the "when they ask you to stop, you stop" line is the whole lesson here.)  
 
 Group questions:
-1. A student says the nickname is just a joke. What do you say?
-2. The nickname is in a language you don't speak. What do you ask?
-3. How do you close the conversation once the student agrees to stop?
+1. How can we recognize when students use codenames for others?
+2. Are there signs that a student may not like a nickname others have given them, even if they respond to it?
+3. Were you ever called a nickname that you didn't like? How did you respond?
 
 ## Scenario 2: PYP - Excluded  
 
@@ -87,9 +87,9 @@ TEACHER: (to student #1, individually) "You seem really upset. What happened? An
 (Debrief note: watch how the mediator refuses to chase "whose fault" and keeps pulling back to impact.) 
 
 Group questions:
-1. A student starts to blame the group. What do you say?
-2. How do you ask for their side without blame?
-3. How do you move to what happens next time?
+1. Why do we think the teacher avoided discussing blame?
+2. Are teachers responsible for making students include others all the time?
+3. Does this approach feel realistic for your grade level?
 
 ## Scenario 3: PYP - "Don't Play With Them" 
 
@@ -183,12 +183,12 @@ Context: Student does a 'heil hitler' salute in class.
 
 *This is not a two-sided conflict. Name the harm first, then teach. There is no "Student B" to mediate with. The target here is a whole community. 
 
-TEACHER: (calm, firm, to the students) "Stop. Put your hands down. What you just did is called a Nazi salute. It stands for the murder of millions of people. Jewish people, and many others. That's not something we do here, even as a joke, and that's not up for debate." 
+TEACHER: (calm, firm, to the students) "Stop. Put your hands down. What you just did is called a Nazi salute. The people who use it today aren't just 'being edgy', they're sending a message to others that they agree with the Nazis The Nazis massacred millions of people for no reason other than they were Jewish, or gay, or disabled, or Polish, or Chinese, or Romani, and on and on." 
 STUDENT #1: "I swear I didn't know what it meant." 
- TEACHER: "I believe that you might not have. That's exactly why we're going to talk about it. So now you do know. *Not knowing why we teach it.* (Fix text) It's not a reason to laugh it off." 
-TEACHER: (to the group) "Here's what I need you to understand. Some symbols carry real weight because real people were hurt by them. When you do that and laugh, anyone watching who lost family to that history feels it like a punch. You may not have meant that, but that's the impact." 
+ TEACHER: "I believe that you might not have. That's exactly why we're going to talk about it." 
+TEACHER: (to the group) "Here's what I need you to understand. Making that salute, or drawing a swastika, tells others that you think the Nazis weer right. That it was a good thing to kill so many innocent people. 'It was just a joke' isn't something you get to say again. I don't think you actually believe people should be killed for being different, but that's the message you send when you do that salute." 
 STUDENT #1: "We were just messing around." 
-TEACHER: "I hear that there was no hateful intent. And the salute still causes harm no matter the intent, which is why it stops now and doesn't come back. Going forward, what do you do if you see a symbol or gesture and you don't know what it means?" 
+TEACHER: "I hear you, but this isn't something people see as 'just messing around'. Someone who doesn't know you and sees it will probably not make the same assumptions I did. Going forward, what do you do if you see a symbol or gesture and you don't know what it means?" 
  STUDENT #1: "Ask an adult instead of copying it." 
  TEACHER: "Exactly. I'm also going to make sure you learn a bit more about where this comes from, because this one matters." 
 
@@ -196,8 +196,8 @@ TEACHER: "I hear that there was no hateful intent. And the salute still causes h
 
 Group questions:
 1. A student says they didn't know what the gesture meant. What do you say?
-2. No single student was targeted. Who is harmed, and how do you name that?
-3. What follow-up teaching would you plan after the conversation?
+2. How can we address behaviours that are unacceptible or reprehensible, but don't target specific students?
+3. It can be awkward to address certain behaviours, like students making sexual noises. How have you approached these things?
  
 
 ## Scenario 7: MS/HS - Racism 

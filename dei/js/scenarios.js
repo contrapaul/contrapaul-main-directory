@@ -43,7 +43,7 @@
     replay:    { en: 'Replay', zh: '重播' },
     prevQ:     { en: 'Previous question', zh: '上一个问题' },
     nextQ:     { en: 'Next question', zh: '下一个问题' },
-    debrief:   { en: 'Debrief', zh: '复盘' },
+    debrief:   { en: 'Discussion Questions', zh: '讨论问题' },
     jump:      { en: 'Scenarios', zh: '情境' },
     chat:      { en: 'Conversation', zh: '对话' },
     of:        { en: 'of', zh: '/' }
