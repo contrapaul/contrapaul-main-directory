@@ -47,9 +47,9 @@
       context: t("Peers keep calling a student a nickname they've asked them to stop using."),
       debrief: t("the \"when they ask you to stop, you stop\" line is the whole lesson here."),
       questions: [
-        t("How can we recognize when students use codenames for others?"),
+        t("Can you lean on school policy to support your discussion about nicknames?"),
         t("Are there signs that a student may not like a nickname others have given them, even if they respond to it?"),
-        t("Were you ever called a nickname that you didn't like? How did you respond?")
+        t("What would you do differently or add to this scenario?")
       ],
       lines: [
         { who: 't', label: t("Teacher"), parts: [
@@ -95,15 +95,18 @@
       debrief: t("watch how the mediator refuses to chase \"whose fault\" and keeps pulling back to impact."),
       questions: [
         t("Why do we think the teacher avoided discussing blame?"),
-        t("Are teachers responsible for making students include others all the time?"),
+        t("How might teachers build an inclusive environment while balancing student social dynamics?"),
         t("Does this approach feel realistic for your grade level?")
       ],
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
             { dir: t("(to student #1, individually)") },
-            { say: t("You seem really upset. What happened? And on a 1–10, how ready are you to talk with them?") }
+            { say: t("You seem really upset, tell me what zone you're in right now?") }
           ] },
-        { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("Like a 5. They said they didn't want to play with me.") }] },
+          { say: t("We can wait until you're ready to talk about it.") }
+          ] },
+        { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("I'm in the blue zone, I can talk about it.") }] },
+          { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("They said they didn't want to play with me.") }] },
         { who: 't', label: t("TEACHER"), parts: [
             { dir: t("(brings student #1 and one or two of the group, not a crowd. To student #1)") },
             { say: t("Tell them how that felt.") }
@@ -112,7 +115,7 @@
             { say: t("I felt left out. You're my friend and you told me to go away in front of everyone.") }
           ] },
         { who: 't', label: t("TEACHER"), parts: [{ dir: t("(to Student #2)") }, { say: t("What did you hear?") }] },
-        { who: 's2', label: t("STUDENT #2"), parts: [{ say: t("I mean, it wasn't just me, everyone—") }] },
+        { who: 's2', label: t("STUDENT #2"), parts: [{ say: t("I mean, it wasn't just me, everyone said...") }] },
         { who: 't', label: t("TEACHER"), parts: [
             { say: t("I'm going to pause you there. I didn't ask whose fault it is. I asked what you heard them say.") }
           ] },
@@ -166,7 +169,7 @@
         { who: 's2', label: t("STUDENT #2"), parts: [{ say: t("You felt like no one wanted you there.") }] },
         { who: 't', label: t("TEACHER"), parts: [{ dir: t("(to student #1)") }, { say: t("Does that sound right to you?") }] },
         { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("Yeah.") }] },
-        { who: 't', label: t("TEACHER"), parts: [{ dir: t("(to student #2)") }, { say: t("Now you can explain your side.") }] },
+        { who: 't', label: t("TEACHER"), parts: [{ dir: t("(Use a Phoenix apology if it feels appropriate)") }, { say: t("Now you can explain your side.") }] },
         { who: 's2', label: t("STUDENT #2"), parts: [{ say: t("I feel like we had a fight last week and I was still mad.") }] },
         { who: 't', label: t("TEACHER"), parts: [
             { say: t("So the real issue is something from before, and this spilled into recess. Here's the thing, though.") },
@@ -214,7 +217,7 @@
             { say: t("How could you choose a leader based on those qualities we listed, instead of on who's a boy or a girl?") }
           ] },
         { who: 's2', label: t("STUDENT #2"), parts: [{ say: t("We could say what job we're doing and who's actually good at organizing that.") }] },
-        { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("Or nominate anyone and say why—what they'd be good at.") }] },
+        { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("Or nominate anyone and say what they'd be good at.") }] },
         { who: 't', label: t("TEACHER"), parts: [
             { say: t("That's a much stronger way to choose, and it's fair to everyone. Let's run it that way.") },
             { say: t("Nominate someone and give a reason based on the qualities on the board.") }
@@ -295,7 +298,7 @@
         { who: 't', label: t("TEACHER"), parts: [
             { dir: t("(to the group)") },
             { say: t("Here's what I need you to understand.") },
-            { say: t("Making that salute, or drawing a swastika, tells others that you think the Nazis weer right. That it was a good thing to kill so many innocent people.") },
+            { say: t("Making that salute, or drawing a swastika, tells others that you think the Nazis were right. That it was a good thing to kill so many innocent people.") },
             { say: t("'It was just a joke' isn't something you get to say again.") },
             { say: t("I don't think you actually believe people should be killed for being different, but that's the message you send when you do that salute.") }
           ] },
