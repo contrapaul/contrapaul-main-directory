@@ -60,9 +60,9 @@
       },
       debrief: t("the \"when they ask you to stop, you stop\" line is the whole lesson here."),
       questions: [
-        t("PLACEHOLDER: group question 1, to be written."),
-        t("PLACEHOLDER: group question 2, to be written."),
-        t("PLACEHOLDER: group question 3, to be written.")
+        t("How can we recognize when students use codenames for others?"),
+        t("Are there signs that a student may not like a nickname others have given them, even if they respond to it?"),
+        t("Were you ever called a nickname that you didn't like? How did you respond?")
       ],
       lines: [
         { who: 't', label: t("Teacher"), parts: [
@@ -117,9 +117,9 @@
       },
       debrief: t("watch how the mediator refuses to chase \"whose fault\" and keeps pulling back to impact."),
       questions: [
-        t("PLACEHOLDER: group question 1, to be written."),
-        t("PLACEHOLDER: group question 2, to be written."),
-        t("PLACEHOLDER: group question 3, to be written.")
+        t("Why do we think the teacher avoided discussing blame?"),
+        t("Are teachers responsible for making students include others all the time?"),
+        t("Does this approach feel realistic for your grade level?")
       ],
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
