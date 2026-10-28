@@ -14,8 +14,8 @@
 
    questions fill the Debrief box under the conversation as a deck
    of cards (2026-10-28). debrief, the committee's note, is kept
-   but not shown on the page (Paul, 2026-10-28). Unwritten questions say
-   PLACEHOLDER; replace them in scenarios.md first, then here.
+   but not shown on the page (Paul, 2026-10-28). Change questions
+   in scenarios.md first, then here.
 
    Each line is one speaker's turn: who (speaker key: t teacher,
    s1 student 1, s2 student 2, s student, g group), label (as
@@ -29,10 +29,6 @@
    Optional on a say part:
      ms: 4000   how long the message stays before the next one
               (otherwise worked out from its length)
-
-   piece: a placeholder interactive layout (A, C, D, E) for Paul to
-   choose from. Its suggestions are committee lines; its
-   questions and prompts are placeholder wording.
 
    Text is { en, zh }. zh is added when the translation lands;
    until then the page falls back to English.
@@ -49,15 +45,6 @@
       id: 'sc1', tab: 'pyp',
       title: t("Nickname"),
       context: t("Peers keep calling a student a nickname they've asked them to stop using."),
-      piece: { type: 'pick', layout: 'C',
-        prompt: t("The teacher asks \"What did you hear?\" Which say-back shows the student really heard?"),
-        options: [
-          t("That she doesn't like the name."),
-          t("You feel disrespected because you asked me to stop and I didn't.")
-        ],
-        best: 1,
-        follow: t("It’s more than that. I heard she felt disrespected because she asked you to stop, and it kept going. Say that back.")
-      },
       debrief: t("the \"when they ask you to stop, you stop\" line is the whole lesson here."),
       questions: [
         t("How can we recognize when students use codenames for others?"),
@@ -105,16 +92,6 @@
       id: 'sc2', tab: 'pyp',
       title: t("Excluded"),
       context: t("A student comes in upset because a group of friends wouldn't let them play. The group says it's \"not their fault.\""),
-      piece: { type: 'flips', layout: 'A',
-        cards: [
-          { q: t("A student starts to blame the group. What do you say?"),
-            a: t("I'm going to pause you there. I didn't ask whose fault it is. I asked what you heard them say.") },
-          { q: t("How do you ask for their side without blame?"),
-            a: t("Now your side. Explain using 'I felt,' not 'we didn't.'") },
-          { q: t("How do you move to what happens next time?"),
-            a: t("So going forward, what do you do when the game's already going and someone wants in?") }
-        ]
-      },
       debrief: t("watch how the mediator refuses to chase \"whose fault\" and keeps pulling back to impact."),
       questions: [
         t("Why do we think the teacher avoided discussing blame?"),
@@ -163,9 +140,9 @@
       context: t("A student overheard a peer telling others not to play with them."),
       debrief: t("PLACEHOLDER, to be added by the team."),
       questions: [
-        t("PLACEHOLDER: group question 1, to be written."),
-        t("PLACEHOLDER: group question 2, to be written."),
-        t("PLACEHOLDER: group question 3, to be written.")
+        t("A student says they are only a 4 out of 10. What do you do?"),
+        t("The first say-back misses the feeling. How do you help the student say it fully?"),
+        t("The real problem started last week. How do you name that without excusing what happened?")
       ],
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
@@ -207,9 +184,9 @@
       context: t("While picking a team leader, some students argue a boy should lead because \"boys are better leaders.\""),
       debrief: t("This scenario is a discussion to guide, not necessarily a conflict to mediate. Notice the mediator holds a firm boundary 'gender isn't a qualification' while letting students do the reasoning."),
       questions: [
-        t("PLACEHOLDER: group question 1, to be written."),
-        t("PLACEHOLDER: group question 2, to be written."),
-        t("PLACEHOLDER: group question 3, to be written.")
+        t("Students say a boy should lead. How do you pause the vote without shutting them down?"),
+        t("How do you hold the line that gender isn't a qualification while letting students do the reasoning?"),
+        t("What could students use instead to choose a leader?")
       ],
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
@@ -249,22 +226,11 @@
       title: t("\"You're So Fat\""),
       context: t("A student made a comment on another student’s body in the cafeteria."),
       note: t("Name the harm first: This is a body-shaming comment that made the student stop eating."),
-      piece: { type: 'match', layout: 'D',
-        prompt: t("Match each student line to the teacher reply that answers it."),
-        pairs: [
-          [t("I don't know. Maybe a 3. I just stopped being hungry."),
-           t("That tells me it hit hard, and that's exactly why it's worth naming. We can wait a bit if you want, or take it slow together. Your call.")],
-          [t("That she got upset over a joke."),
-           t("No. It’s deeper than that. I heard her say it made her feel ashamed of eating, so she stopped. Say that back.")],
-          [t("I thought it was a funny thing to say. I didn't think it'd actually get to her."),
-           t("Here's the part to remember. Comments about someone's body or eating can stick for a really long time. Longer than you'd guess. What can we do differently going forward?")]
-        ]
-      },
       debrief: t("the student stopped eating. The mediator honors the low readiness score and names why this kind of comment carries weight."),
       questions: [
-        t("PLACEHOLDER: group question 1, to be written."),
-        t("PLACEHOLDER: group question 2, to be written."),
-        t("PLACEHOLDER: group question 3, to be written.")
+        t("A student says they are a 3 out of 10 and stopped eating. What do you offer them?"),
+        t("The other student says it was just a joke. How do you show why it matters?"),
+        t("How do you name the harm to the group in the moment, before talking privately?")
       ],
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
@@ -311,9 +277,9 @@
       note: t("This is not a two-sided conflict. Name the harm first, then teach. There is no \"Student B\" to mediate with. The target here is a whole community."),
       debrief: t("This scenario is about education + boundary, not reconciliation. Notice the mediator accepts \"I didn't know\" without letting it excuse the harm, and carries the teaching themselves."),
       questions: [
-        t("PLACEHOLDER: group question 1, to be written."),
-        t("PLACEHOLDER: group question 2, to be written."),
-        t("PLACEHOLDER: group question 3, to be written.")
+        t("A student says they didn't know what the gesture meant. What do you say?"),
+        t("No single student was targeted. Who is harmed, and how do you name that?"),
+        t("What follow-up teaching would you plan after the conversation?")
       ],
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
@@ -353,9 +319,9 @@
       context: t("A student assigned Japan for a research task makes a sweeping negative sterotype about the nation and its people. No Japanese students are present."),
       debrief: t("How do you address harm when there's no victim in the room to advocate for? Notice the mediator makes the absent group the point, and folds it into the academic task rather than turning it into pure discipline."),
       questions: [
-        t("PLACEHOLDER: group question 1, to be written."),
-        t("PLACEHOLDER: group question 2, to be written."),
-        t("PLACEHOLDER: group question 3, to be written.")
+        t("A student says it doesn't matter because no one from that country is in the room. What do you say?"),
+        t("How do you help a student tell a fact from a stereotype?"),
+        t("How can you fold this into the class task instead of treating it only as discipline?")
       ],
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
@@ -388,9 +354,9 @@
       context: t("A group is playing truth or dare. One student is asked \"would you kiss [names another student]?\" You intervene before they answer. The named student may or may not be present."),
       debrief: t("This one \"looks like fun,\" so the instinct is to walk past it, but that can still do harm. Notice the mediator preserves the game and gives a clean, usable rule: \"keep it about the people playing.\""),
       questions: [
-        t("PLACEHOLDER: group question 1, to be written."),
-        t("PLACEHOLDER: group question 2, to be written."),
-        t("PLACEHOLDER: group question 3, to be written.")
+        t("The game looks harmless. When do you step in, and how do you keep your tone light?"),
+        t("How do you explain the harm to someone who isn't there?"),
+        t("What simple rule can students use to keep playing fairly?")
       ],
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
@@ -425,15 +391,11 @@
       title: t("\"You're So Gay\""),
       context: t("One student calls another student “gay” meant as an insult in front of the class."),
       note: t("Name the harm before mediating. This uses an identity as an insult, which harms both the target and every LGBTQ+ student in earshot."),
-      piece: { type: 'write', layout: 'E',
-        prompt: t("Student 2 says: \"That he got embarrassed.\" What would you say next?"),
-        answer: t("More than just embarrassed. I heard him say it made him feel like who a person is could be used as an insult. Say that back.")
-      },
       debrief: t("the harm reaches beyond the two students. The mediator addresses the room and repairs with the target."),
       questions: [
-        t("PLACEHOLDER: group question 1, to be written."),
-        t("PLACEHOLDER: group question 2, to be written."),
-        t("PLACEHOLDER: group question 3, to be written.")
+        t("Student 2 says: \"That he got embarrassed.\" What would you say next?"),
+        t("How do you address the whole class, not just the two students?"),
+        t("A student says everyone uses the word. What do you say?")
       ],
       lines: [
         { who: 't', label: t("TEACHER"), parts: [

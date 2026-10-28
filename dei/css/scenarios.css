@@ -288,7 +288,7 @@
   box-shadow: none;
 }
 
-/* Back / forward buttons (used by layout B). */
+/* Back / forward buttons (the Debrief question deck). */
 .btn-step {
   display: inline-flex;
   align-items: center;
@@ -313,226 +313,6 @@
   font-variant-numeric: tabular-nums;
   color: var(--text-faint);
 }
-
-/* ---------- Placeholder layouts ---------- */
-.piece {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-3);
-  padding: var(--sp-4);
-  background: var(--bg-soft);
-  border: 1px dashed var(--line-strong);
-  border-radius: var(--radius-m);
-}
-
-.piece > .ph-tag { align-self: flex-start; }
-
-.piece-prompt { font-weight: 600; }
-
-.quote {
-  display: block;
-  padding: 10px 14px;
-  font-size: 17px;
-  line-height: 1.5;
-  color: var(--text);
-  background: var(--b);
-  border: 1px solid color-mix(in srgb, var(--e) 35%, transparent);
-  border-radius: 16px;
-}
-
-/* Flip card (layouts A and B). Both faces share one grid cell so
-   the card is as tall as its longer face. */
-.flip {
-  display: block;
-  width: 100%;
-  padding: 0;
-  text-align: left;
-  background: none;
-  border: 0;
-  cursor: pointer;
-  perspective: 1000px;
-}
-
-.flip-inner {
-  display: grid;
-  transition: transform 450ms var(--ease-out);
-  transform-style: preserve-3d;
-}
-
-.flip.is-flipped .flip-inner { transform: rotateY(180deg); }
-
-.flip-face {
-  grid-area: 1 / 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: var(--sp-3);
-  min-height: 170px;
-  padding: var(--sp-4);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-m);
-  box-shadow: var(--shadow-1);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-.flip-back { transform: rotateY(180deg); justify-content: flex-start; }
-
-.flip-q { font-size: var(--fs-3); font-weight: 650; line-height: 1.35; }
-
-.flip-hint {
-  font-size: var(--fs-1);
-  font-weight: 600;
-  color: var(--accent);
-}
-
-.flip-hint::before { content: "\21bb  "; }
-
-.flip-back .flip-hint { margin-top: auto; }
-
-@media (prefers-reduced-motion: reduce) {
-  .flip-inner { transform: none !important; }
-  .flip-back { transform: none; visibility: hidden; }
-  .flip.is-flipped .flip-front { visibility: hidden; }
-  .flip.is-flipped .flip-back { visibility: visible; }
-}
-
-/* A: swipe row */
-.flip-row {
-  display: flex;
-  gap: var(--sp-3);
-  margin: 0 calc(-1 * var(--sp-4));
-  padding: 4px var(--sp-4) 8px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-}
-
-.flip-row::-webkit-scrollbar { display: none; }
-
-.flip-row .flip {
-  flex: none;
-  width: 82%;
-  max-width: 340px;
-  scroll-snap-align: start;
-}
-
-/* C: pick */
-.pick { display: flex; flex-direction: column; gap: var(--sp-2); }
-
-.pick-opt {
-  display: block;
-  width: 100%;
-  min-height: 48px;
-  padding: 12px 14px;
-  text-align: left;
-  font-size: 17px;
-  background: var(--surface);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-m);
-  cursor: pointer;
-}
-
-.pick-opt.is-picked { border-width: 2px; border-color: var(--accent); }
-
-.pick-opt.is-best::after {
-  content: " \2713";
-  color: var(--ok);
-  font-weight: 700;
-}
-
-.pick-result { display: flex; flex-direction: column; gap: var(--sp-2); }
-
-.pick-verdict::before {
-  content: attr(data-mark) "  ";
-  font-weight: 700;
-  color: var(--accent);
-}
-
-/* D: match */
-.match { display: flex; flex-direction: column; gap: var(--sp-4); }
-
-.match-col { display: flex; flex-direction: column; gap: var(--sp-2); }
-
-.match-head {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-}
-
-.match-item {
-  position: relative;
-  width: 100%;
-  min-height: 48px;
-  text-align: left;
-  cursor: pointer;
-}
-
-.match-item.is-picked { outline: 3px solid var(--e); outline-offset: 2px; }
-
-.match-item.is-matched { opacity: 0.75; cursor: default; padding-right: 44px; }
-
-.match-item.is-matched::after {
-  content: attr(data-n);
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 26px; height: 26px;
-  display: grid;
-  place-items: center;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--accent-contrast);
-  background: var(--accent);
-  border-radius: 50%;
-}
-
-.match-item.is-wrong { animation: shake 320ms; }
-
-@keyframes shake {
-  25% { transform: translateX(-6px); }
-  75% { transform: translateX(6px); }
-}
-
-.match-done { font-weight: 700; color: var(--ok); }
-.match-done::before { content: "\2713  "; }
-
-@media (min-width: 640px) {
-  .match { flex-direction: row; }
-  .match-col { flex: 1; }
-}
-
-/* E: write, then compare */
-.write-area {
-  width: 100%;
-  padding: 12px 14px;
-  font: inherit;
-  font-size: 17px;
-  color: var(--text);
-  background: var(--surface);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-m);
-  resize: vertical;
-}
-
-.btn-soft {
-  align-self: flex-start;
-  min-height: 44px;
-  padding: 0 18px;
-  font-weight: 700;
-  color: var(--accent);
-  background: var(--surface);
-  border: 1px solid var(--line-strong);
-  border-radius: 999px;
-  cursor: pointer;
-}
-
-.write-reveal { display: flex; flex-direction: column; gap: var(--sp-2); }
-.write-label { font-weight: 600; }
 
 [hidden] { display: none !important; }
 
@@ -604,24 +384,13 @@
 /* Once the screen is wider than the reading column (main,
    max-width 680px), the column has margins on both sides. Rows
    that swipe edge to edge on a phone would slide under those
-   margins, so here they stay inside the column and wrap. */
+   margins, so here the jump links stay inside the column and
+   wrap. */
 @media (min-width: 681px) {
-  .jump,
-  .flip-row {
+  .jump {
     flex-wrap: wrap;
     overflow-x: visible;
     margin-inline: 0;
     padding-inline: 0;
   }
-
-  .flip-row { scroll-snap-type: none; }
-
-  .flip-row .flip {
-    flex: 1 1 240px;
-    width: auto;
-    max-width: none;
-  }
-
-  /* Cards sharing a row share its height. */
-  .flip-row .flip-inner { height: 100%; }
 }
