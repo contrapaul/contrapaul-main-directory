@@ -11,6 +11,24 @@ Working notes for the next session. Newest entry first. Paul's standing requests
 
 ## Entries
 
+### 2026-10-28 (Debrief box, group questions, instructions)
+
+**Asked:** staff want a standardized Debrief box under each conversation, in the design under "A Boy Should Lead" (the layout B card deck); each scenario gets three group questions, placeholders where unwritten; the page loads with the instructions "Read through the scenarios with your group, then discuss the scenario and the debrief questions" visible. Paul also said he updated some titles, but no new commits or local changes had reached the repo, so titles are unchanged.
+
+**Changed:**
+
+- `scenarios.md`: a "Group questions:" block of three numbered PLACEHOLDER questions under every scenario's debrief; header rules updated (the debrief loses its own label inside the box, questions lose their numbers).
+- `test/parse-scenarios.mjs` reads the questions and strips the debrief label; `test/verbatim.test.mjs` checks there are three questions and that the page data matches them.
+- `data/scenarios.js`: `questions` added to every scenario, debriefs without their label, layout B removed from scenario 4.
+- `js/scenarios.js`: new Debrief box (heading, note, question deck with back and forward and a count) directly under each conversation; the placeholder layouts now sit below it; layout B's code removed. `css/scenarios.css` styles it; old debrief and layout B styles removed.
+- `index.html` + `css/base.css`: the instructions at the top of the page, both tabs, with a 中文 pair.
+- Docs: `brief.md`, `plans.md`, `CLAUDE.md`.
+
+**Verified:** 33/33 tests. In Chromium at 390x844: instructions visible on load on both tabs, a Debrief box right under every conversation (4 PYP, 5 MS/HS), the deck steps 1 to 3, 中文 swaps the instructions and heading, no horizontal scroll, no console errors.
+
+**Note:** without the "Debrief note:" label, several committee notes start with a lowercase word ("the student stopped eating..."). Left as written; Paul can capitalise them in `scenarios.md` if he wants.
+
+
 ### 2026-10-27 (desktop: nothing scrolls under the column edges)
 
 **Asked:** on a desktop browser the scenario jump links scrolled sideways under the frames at the sides of the page. Paul will shorten the titles; he asked that nothing scroll horizontally under the frames.

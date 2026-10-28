@@ -180,6 +180,19 @@ main {
   padding: 0 var(--sp-4) var(--sp-7);
 }
 
+/* Instructions, the first thing on the page on both tabs. */
+.instructions {
+  margin-top: var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.45;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-s);
+}
+
 .tab-panel { display: none; }
 .tab-panel.is-active { display: block; }
 

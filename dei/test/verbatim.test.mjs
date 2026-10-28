@@ -46,6 +46,8 @@ source.forEach((src, i) => {
     assert.equal(en(sc.context), src.context, 'context');
     assert.equal(en(sc.note), src.note, 'harm note');
     assert.equal(en(sc.debrief), src.debrief, 'debrief');
+    assert.equal(src.questions.length, 3, 'scenarios.md has three group questions');
+    assert.deepEqual((sc.questions || []).map(en), src.questions, 'group questions');
     assert.equal(sc.lines.length, src.lines.length, 'line count');
     sc.lines.forEach((line, j) => {
       const want = src.lines[j];

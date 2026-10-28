@@ -6,7 +6,9 @@
    - the title drops its "Scenario N: GROUP - " prefix,
    - the context drops its "Context :" label,
    - a harm note drops its leading "*",
-   - the debrief drops its outer brackets,
+   - the debrief drops its outer brackets and its "Debrief note:"
+     or "Debrief:" label (it sits in a box headed "Debrief"),
+   - the group questions drop their numbers (2026-10-28),
    - each script line splits into its speaker label (as written,
      without the colon), bracketed stage directions (as written,
      brackets kept) and spoken words (outer quote marks dropped,
@@ -75,6 +77,7 @@ export function parse(text = readFileSync(SOURCE, 'utf8')) {
       context: null,
       note: null,
       debrief: null,
+      questions: [],
       lines: [],
       raw: [],
     };
@@ -83,7 +86,10 @@ export function parse(text = readFileSync(SOURCE, 'utf8')) {
       if (!r) return;
       if (/^Context\s*:/.test(r)) sc.context = r.replace(/^Context\s*:\s*/, '');
       else if (r.startsWith('*')) sc.note = r.slice(1);
-      else if (r.startsWith('(Debrief')) sc.debrief = r.replace(/^\(/, '').replace(/\)$/, '').trim();
+      else if (r.startsWith('(Debrief')) {
+        sc.debrief = r.replace(/^\(/, '').replace(/\)$/, '').trim().replace(/^Debrief(\s+note)?\s*:\s*/i, '');
+      } else if (/^Group questions\s*:/.test(r)) return;
+      else if (/^\d+\.\s/.test(r)) sc.questions.push(r.replace(/^\d+\.\s+/, ''));
       else {
         const m = r.match(LABEL);
         if (!m) throw new Error('unreadable script line in scenario ' + sc.n + ': ' + r);

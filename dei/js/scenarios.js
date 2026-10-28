@@ -4,8 +4,8 @@
    Fills each tab panel from data/scenarios.js:
 
      jump links  one per scenario, a tick once complete
-     scenario    title, context, harm note, the conversation,
-                 a placeholder layout (some scenarios), the debrief
+     scenario    title, context, harm note, the conversation, the
+                 Debrief box, a placeholder layout (some scenarios)
 
    The conversation (plans.md section 3) plays as a phone chat.
    Play starts it; messages arrive at the bottom of the chat
@@ -17,8 +17,9 @@
    speaker's typing dots show just before their message lands.
    Once played, the whole chat stays there to scroll and read.
 
-   Placeholder layouts A to E are for Paul to choose from. They do
-   not count toward the rewards.
+   Placeholder layouts A, C, D and E are for Paul to choose from
+   (layout B's deck became the Debrief box). They do not count
+   toward the rewards.
 
    Plain script, not a module: the page must run from file://.
    ============================================================ */
@@ -44,8 +45,9 @@
     pause:     { en: 'Pause',  zh: '暂停' },
     resume:    { en: 'Resume', zh: '继续' },
     replay:    { en: 'Replay', zh: '重播' },
-    prev:      { en: 'Previous', zh: '上一个' },
-    next:      { en: 'Next', zh: '下一个' },
+    prevQ:     { en: 'Previous question', zh: '上一个问题' },
+    nextQ:     { en: 'Next question', zh: '下一个问题' },
+    debrief:   { en: 'Debrief', zh: '复盘' },
     jump:      { en: 'Scenarios', zh: '情境' },
     chat:      { en: 'Conversation', zh: '对话' },
     typing:    { en: 'typing', zh: '正在输入' },
@@ -294,7 +296,7 @@
     return root;
   }
 
-  /* ---------- Placeholder layouts (A to E) ---------- */
+  /* ---------- Placeholder layouts (A, C, D, E) ---------- */
 
   function pieceShell(sc) {
     var box = h('div', 'piece piece-' + sc.piece.type);
@@ -338,44 +340,6 @@
       row.appendChild(flipCard(c.q, function (back) { back.appendChild(quote(c.a)); }));
     });
     box.appendChild(row);
-    return box;
-  }
-
-  /* B: a deck, one card at a time, flip then move on. */
-  function layoutDeck(sc) {
-    var box = pieceShell(sc);
-    var cards = sc.piece.cards.map(function (c) {
-      return flipCard(c.q, function (back) {
-        c.a.forEach(function (a) { back.appendChild(quote(a, 's1')); });
-      });
-    });
-    var deck = h('div', 'deck');
-    var nav = h('div', 'deck-nav');
-    var prev = h('button', 'btn-step', { type: 'button' });
-    prev.innerHTML = '<span aria-hidden="true">‹</span>';
-    var count = h('span', 'count');
-    var next = h('button', 'btn-step', { type: 'button' });
-    next.innerHTML = '<span aria-hidden="true">›</span>';
-    nav.appendChild(prev); nav.appendChild(count); nav.appendChild(next);
-    var at = 0;
-    function go(i) {
-      at = i;
-      deck.innerHTML = '';
-      deck.appendChild(cards[at]);
-      prev.disabled = at === 0;
-      next.disabled = at === cards.length - 1;
-      count.textContent = (at + 1) + ' ' + tr(UI.of) + ' ' + cards.length;
-    }
-    paint(function () {
-      prev.setAttribute('aria-label', tr(UI.prev));
-      next.setAttribute('aria-label', tr(UI.next));
-      count.textContent = (at + 1) + ' ' + tr(UI.of) + ' ' + cards.length;
-    });
-    prev.addEventListener('click', function () { if (at > 0) go(at - 1); });
-    next.addEventListener('click', function () { if (at < cards.length - 1) go(at + 1); });
-    go(0);
-    box.appendChild(deck);
-    box.appendChild(nav);
     return box;
   }
 
@@ -494,23 +458,57 @@
     return box;
   }
 
-  var LAYOUTS = { flips: layoutFlips, deck: layoutDeck, pick: layoutPick, match: layoutMatch, write: layoutWrite };
+  var LAYOUTS = { flips: layoutFlips, pick: layoutPick, match: layoutMatch, write: layoutWrite };
 
   /* ---------- Scenario section ---------- */
 
-  function debrief(sc) {
-    var p = h('p', 'sc-debrief');
-    if (/PLACEHOLDER/.test(sc.debrief.en)) p.classList.add('is-placeholder');
-    var label = h('strong');
-    var rest = h('span');
-    p.appendChild(label);
-    p.appendChild(rest);
-    paint(function () {
-      var m = tr(sc.debrief).match(/^([^:：]+[:：])\s*([\s\S]*)$/);
-      label.textContent = m ? m[1] + ' ' : '';
-      rest.textContent = m ? m[2] : tr(sc.debrief);
+  /* The Debrief box, the same under every conversation (staff
+     request, 2026-10-28): the committee's note, then the three
+     group questions as a deck, one card at a time with back and
+     forward. The deck design is the one Paul picked from the old
+     layout B. */
+  function debriefBox(sc) {
+    var box = h('div', 'debrief');
+    box.appendChild(text(h('h3', 'debrief-head'), UI.debrief));
+    var note = text(h('p', 'debrief-note'), sc.debrief);
+    if (/PLACEHOLDER/.test(sc.debrief.en)) note.classList.add('is-placeholder');
+    box.appendChild(note);
+
+    var qs = sc.questions || [];
+    if (!qs.length) return box;
+    var cards = qs.map(function (q) {
+      var c = h('div', 'q-card');
+      if (/PLACEHOLDER/.test(q.en)) c.classList.add('is-placeholder');
+      return text(c, q);
     });
-    return p;
+    var deck = h('div', 'deck', { 'aria-live': 'polite' });
+    var nav = h('div', 'deck-nav');
+    var prev = h('button', 'btn-step', { type: 'button' });
+    prev.innerHTML = '<span aria-hidden="true">\u2039</span>';
+    var count = h('span', 'count');
+    var next = h('button', 'btn-step', { type: 'button' });
+    next.innerHTML = '<span aria-hidden="true">\u203a</span>';
+    nav.appendChild(prev); nav.appendChild(count); nav.appendChild(next);
+    var at = 0;
+    function go(i) {
+      at = i;
+      deck.innerHTML = '';
+      deck.appendChild(cards[at]);
+      prev.disabled = at === 0;
+      next.disabled = at === cards.length - 1;
+      count.textContent = (at + 1) + ' ' + tr(UI.of) + ' ' + cards.length;
+    }
+    paint(function () {
+      prev.setAttribute('aria-label', tr(UI.prevQ));
+      next.setAttribute('aria-label', tr(UI.nextQ));
+      count.textContent = (at + 1) + ' ' + tr(UI.of) + ' ' + cards.length;
+    });
+    prev.addEventListener('click', function () { if (at > 0) go(at - 1); });
+    next.addEventListener('click', function () { if (at < cards.length - 1) go(at + 1); });
+    go(0);
+    box.appendChild(deck);
+    box.appendChild(nav);
+    return box;
   }
 
   function section(sc) {
@@ -519,8 +517,8 @@
     s.appendChild(text(h('p', 'sc-context'), sc.context));
     if (sc.note) s.appendChild(text(h('p', 'sc-note'), sc.note));
     s.appendChild(buildPlayer(sc));
+    s.appendChild(debriefBox(sc));
     if (sc.piece && LAYOUTS[sc.piece.type]) s.appendChild(LAYOUTS[sc.piece.type](sc));
-    s.appendChild(debrief(sc));
     return s;
   }
 

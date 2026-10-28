@@ -10,12 +10,13 @@ Paul's edits to the committee's original (2026-10-21):
 - Scenario 9: one line's speaker corrected from STUDENT #1 to STUDENT #2 ("That he got embarrassed.").
 - Scenario 5: "I just stopped being hungry." is kept as written.
 - Scenario 3: the committee wrote no debrief. A placeholder debrief marks the space until the team writes one.
+- Every scenario: three group questions follow the debrief (staff request, 2026-10-28). None are written yet; each is a PLACEHOLDER for Paul to replace. Keep them numbered 1 to 3 under "Group questions:".
 
 How the page displays this file (Paul, 2026-10-21; details in `plans.md`):
 
 - **One title per scenario: the real title only.** The page shows "Unkind Nickname", not "Scenario 1: PYP - Unkind Nickname". No scenario numbers, group names or extra headings above or below it.
 - The "Context :" label is not shown; the sentence after it is.
-- A harm note loses its leading "*"; a debrief loses its outer brackets. The words stay.
+- A harm note loses its leading "*". The debrief and the group questions show together in a box headed "Debrief" under the conversation, so the debrief loses its outer brackets and its own "Debrief note:" or "Debrief:" label, and the questions lose their numbers (the box counts them). The words stay.
 - Conversations show as a phone chat. Spoken words go in message bubbles without their outer quote marks (the bubble already says it is speech), with the speaker label as written on the first message of a run. A long turn may be split into several messages at sentence breaks; the words and their order never change. Bracketed stage directions show as written, as small centred notes between messages.
 - Everything else appears word for word. `test/verbatim.test.mjs` checks this.
 - PYP tab: scenarios 1 to 4. MS/HS tab: scenarios 5 to 9.
@@ -53,6 +54,11 @@ STUDENT #2: “I’m sorry”
 
 (Debrief note: the "when they ask you to stop, you stop" line is the whole lesson here.)  
 
+Group questions:
+1. PLACEHOLDER: group question 1, to be written.
+2. PLACEHOLDER: group question 2, to be written.
+3. PLACEHOLDER: group question 3, to be written.
+
 ## Scenario 2: PYP - Excluded at Recess  
 
 Context : A student comes in upset—a group of friends wouldn't let them play. The group says it's "not their fault." 
@@ -78,6 +84,11 @@ TEACHER: (to student #1, individually) "You seem really upset. What happened? An
 
 (Debrief note: watch how the mediator refuses to chase "whose fault" and keeps pulling back to impact.) 
 
+Group questions:
+1. PLACEHOLDER: group question 1, to be written.
+2. PLACEHOLDER: group question 2, to be written.
+3. PLACEHOLDER: group question 3, to be written.
+
 ## Scenario 3: PYP - "Don't Go Play With [Name]" 
 
 Context : A student overheard a peer telling others not to play with them. 
@@ -102,6 +113,11 @@ TEACHER: (to student #1, individually) "I saw your face. What did you hear? And 
 
 (Debrief: PLACEHOLDER, to be added by the team.)
 
+Group questions:
+1. PLACEHOLDER: group question 1, to be written.
+2. PLACEHOLDER: group question 2, to be written.
+3. PLACEHOLDER: group question 3, to be written.
+
 ## Scenario 4: PYP  - "A Boy Should Lead"  
 
 Context : While picking a team leader, some students argue a boy should lead because "boys are better leaders."  
@@ -119,6 +135,11 @@ TEACHER: "Let's pause the vote for a second. I want to pick up on something. A f
  TEACHER: "That's a much stronger way to choose, and it's fair to everyone. Let's run it that way. Nominate someone and give a reason based on the qualities on the board." 
 
 (Debrief: This scenario is a discussion to guide, not necessarily a conflict to mediate. Notice the mediator holds a firm boundary 'gender isn't a qualification' while letting students do the reasoning.) 
+
+Group questions:
+1. PLACEHOLDER: group question 1, to be written.
+2. PLACEHOLDER: group question 2, to be written.
+3. PLACEHOLDER: group question 3, to be written.
  
 
 ## Scenario 5: MS/HS - "You're Such a Glutton, You're So Fat" 
@@ -148,6 +169,11 @@ TEACHER: (to the group in the moment) "Hang on. Commenting on someone's body or 
 
 (Debrief note: the student stopped eating. The mediator honors the low readiness score and names why this kind of comment carries weight.) 
 
+Group questions:
+1. PLACEHOLDER: group question 1, to be written.
+2. PLACEHOLDER: group question 2, to be written.
+3. PLACEHOLDER: group question 3, to be written.
+
 
 ## Scenario 6: MS/HS - Hitler Salute ("I don't know what it means") 
 
@@ -165,6 +191,11 @@ TEACHER: "I hear that there was no hateful intent. And the salute still causes h
  TEACHER: "Exactly. I'm also going to make sure you learn a bit more about where this comes from, because this one matters." 
 
 (Debrief: This scenario is about education + boundary, not reconciliation. Notice the mediator accepts "I didn't know" without letting it excuse the harm, and carries the teaching themselves.)  
+
+Group questions:
+1. PLACEHOLDER: group question 1, to be written.
+2. PLACEHOLDER: group question 2, to be written.
+3. PLACEHOLDER: group question 3, to be written.
  
 
 ## Scenario 7: MS/HS - RACIST REMARKS 
@@ -181,6 +212,11 @@ STUDENT: "I mean, there's no Japanese kids here, so who cares?"
 
 (Debrief: How do you address harm when there's no victim in the room to advocate for? Notice the mediator makes the absent group the point, and folds it into the academic task rather than turning it into pure discipline.) 
 
+Group questions:
+1. PLACEHOLDER: group question 1, to be written.
+2. PLACEHOLDER: group question 2, to be written.
+3. PLACEHOLDER: group question 3, to be written.
+
 
 ## Scenario 8: MS/HS - Truth or Dare — "Would You Kiss [Student Name]?" 
 
@@ -196,6 +232,11 @@ TEACHER: "I believe you weren't trying to. But think about it impacting them. If
  G: "Deal." 
 
 (Debrief: This one "looks like fun," so the instinct is to walk past it, but that can still do harm. Notice the mediator preserves the game and gives a clean, usable rule: "keep it about the people playing.") 
+
+Group questions:
+1. PLACEHOLDER: group question 1, to be written.
+2. PLACEHOLDER: group question 2, to be written.
+3. PLACEHOLDER: group question 3, to be written.
 
 
 ## Scenario 9: MS/HS - "You're So Gay" (as an insult) 
@@ -222,6 +263,11 @@ TEACHER: (to the class, in the moment) "Let's pause. Using 'gay' as an insult is
  STUDENT #2: "That wasn't fair to you. I'll cut it out." 
 
 (Debrief : the harm reaches beyond the two students. The mediator addresses the room and repairs with the target.)
+
+Group questions:
+1. PLACEHOLDER: group question 1, to be written.
+2. PLACEHOLDER: group question 2, to be written.
+3. PLACEHOLDER: group question 3, to be written.
 
 
  
