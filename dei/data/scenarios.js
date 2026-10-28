@@ -101,12 +101,11 @@
       lines: [
         { who: 't', label: t("TEACHER"), parts: [
             { dir: t("(to student #1, individually)") },
-            { say: t("You seem really upset, tell me what zone you're in right now?") }
-          ] },
-          { say: t("We can wait until you're ready to talk about it.") }
+            { say: t("You seem really upset, tell me what zone you're in right now?") },
+            { say: t("We can wait until you're ready to talk about it.") }
           ] },
         { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("I'm in the blue zone, I can talk about it.") }] },
-          { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("They said they didn't want to play with me.") }] },
+        { who: 's1', label: t("STUDENT #1"), parts: [{ say: t("They said they didn't want to play with me.") }] },
         { who: 't', label: t("TEACHER"), parts: [
             { dir: t("(brings student #1 and one or two of the group, not a crowd. To student #1)") },
             { say: t("Tell them how that felt.") }
