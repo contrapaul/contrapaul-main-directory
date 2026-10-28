@@ -41,7 +41,7 @@
   window.dei.scenarios = [
     {
       id: 'sc1', tab: 'pyp',
-      title: t("Unkind Nickname"),
+      title: t("Nickname"),
       context: t("Peers keep calling a student a nickname they've asked them to stop using."),
       piece: { type: 'pick', layout: 'C',
         prompt: t("The teacher asks \"What did you hear?\" Which say-back shows the student really heard?"),
@@ -92,8 +92,8 @@
     },
     {
       id: 'sc2', tab: 'pyp',
-      title: t("Excluded at Recess"),
-      context: t("A student comes in upset—a group of friends wouldn't let them play. The group says it's \"not their fault.\""),
+      title: t("Excluded"),
+      context: t("A student comes in upset because a group of friends wouldn't let them play. The group says it's \"not their fault.\""),
       piece: { type: 'flips', layout: 'A',
         cards: [
           { q: t("A student starts to blame the group. What do you say?"),
@@ -143,7 +143,7 @@
     },
     {
       id: 'sc3', tab: 'pyp',
-      title: t("\"Don't Go Play With [Name]\""),
+      title: t("\"Don't Play With Them\""),
       context: t("A student overheard a peer telling others not to play with them."),
       debrief: t("Debrief: PLACEHOLDER, to be added by the team."),
       lines: [
@@ -182,7 +182,7 @@
     },
     {
       id: 'sc4', tab: 'pyp',
-      title: t("\"A Boy Should Lead\""),
+      title: t("\"Boys should lead\""),
       context: t("While picking a team leader, some students argue a boy should lead because \"boys are better leaders.\""),
       piece: { type: 'deck', layout: 'B',
         cards: [
@@ -230,7 +230,7 @@
     },
     {
       id: 'sc5', tab: 'mshs',
-      title: t("\"You're Such a Glutton, You're So Fat\""),
+      title: t("\"You're So Fat\""),
       context: t("A student made a comment on another student’s body in the cafeteria."),
       note: t("Name the harm first: This is a body-shaming comment that made the student stop eating."),
       piece: { type: 'match', layout: 'D',
@@ -285,8 +285,8 @@
     },
     {
       id: 'sc6', tab: 'mshs',
-      title: t("Hitler Salute (\"I don't know what it means\")"),
-      context: t("Student does the hitler salute in class."),
+      title: t("The Salute"),
+      context: t("Student does a 'heil hitler' salute in class."),
       note: t("This is not a two-sided conflict. Name the harm first, then teach. There is no \"Student B\" to mediate with. The target here is a whole community."),
       debrief: t("Debrief: This scenario is about education + boundary, not reconciliation. Notice the mediator accepts \"I didn't know\" without letting it excuse the harm, and carries the teaching themselves."),
       lines: [
@@ -323,7 +323,7 @@
     },
     {
       id: 'sc7', tab: 'mshs',
-      title: t("RACIST REMARKS"),
+      title: t("Racism"),
       context: t("A student assigned Japan for a research task makes a sweeping negative sterotype about the nation and its people. No Japanese students are present."),
       debrief: t("Debrief: How do you address harm when there's no victim in the room to advocate for? Notice the mediator makes the absent group the point, and folds it into the academic task rather than turning it into pure discipline."),
       lines: [
@@ -353,7 +353,7 @@
     },
     {
       id: 'sc8', tab: 'mshs',
-      title: t("Truth or Dare — \"Would You Kiss [Student Name]?\""),
+      title: t("Truth or Dare"),
       context: t("A group is playing truth or dare. One student is asked \"would you kiss [names another student]?\" You intervene before they answer. The named student may or may not be present."),
       debrief: t("Debrief: This one \"looks like fun,\" so the instinct is to walk past it, but that can still do harm. Notice the mediator preserves the game and gives a clean, usable rule: \"keep it about the people playing.\""),
       lines: [
@@ -386,7 +386,7 @@
     },
     {
       id: 'sc9', tab: 'mshs',
-      title: t("\"You're So Gay\" (as an insult)"),
+      title: t("\"You're So Gay\""),
       context: t("One student calls another student “gay” meant as an insult in front of the class."),
       note: t("Name the harm before mediating. This uses an identity as an insult, which harms both the target and every LGBTQ+ student in earshot."),
       piece: { type: 'write', layout: 'E',
