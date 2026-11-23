@@ -47,7 +47,7 @@ test('at least 60% of arm points within 0.6 rad of armAngle', () => {
     // bulge points have r < ~330 mostly but arms start at 100; classify arms by |y| <= 16 is weak.
     // Use size/brightness: arms size 1.5-3, bulge size 1.5-3 too. Instead count all and accept.
     armPoints++;
-    const arm = i % 2;
+    const arm = i % GALAXY.arms;
     let d = Math.abs(theta - armAngle(r, arm)) % (2 * Math.PI);
     if (d > Math.PI) d = 2 * Math.PI - d;
     if (d < 0.6) close++;

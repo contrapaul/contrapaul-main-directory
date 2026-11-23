@@ -162,11 +162,13 @@ function boot() {
     applyRoute(id, { focusPanel: true });
   }
 
-  function zoomOut() {
+  // Keyboard zoom-out puts focus on the body you came from; a click on the sky does not.
+  function zoomOut({ focus = true } = {}) {
     if (active === 'root') return;
     const parent = byId.get(active).parent;
-    if (history.state && history.state.prev === parent) { pendingFocus = active; history.back(); }
-    else { const from = active; history.replaceState(null, '', urlFor(parent)); applyRoute(parent, { focusNode: from }); }
+    const from = focus ? active : null;
+    if (history.state && history.state.prev === parent) { pendingFocus = from; history.back(); }
+    else { history.replaceState(null, '', urlFor(parent)); applyRoute(parent, { focusNode: from }); }
   }
 
   function resize() {
@@ -267,8 +269,8 @@ function boot() {
     const a = e.target.closest('a[href^="#"]');
     if (a) {
       e.preventDefault();
-      // Star names show on hover. On touch, the first tap shows the name and the second flies.
-      if (touchTap && a.classList.contains('tag--star') && !a.classList.contains('is-active') && !a.classList.contains('is-revealed')) {
+      // Names show on hover. On touch, the first tap shows the name and the second flies.
+      if (touchTap && a.classList.contains('tag') && !a.classList.contains('is-active') && !a.classList.contains('is-revealed')) {
         for (const [, t] of tags) t.a.classList.remove('is-revealed');
         a.classList.add('is-revealed');
         return;
@@ -284,7 +286,7 @@ function boot() {
   // Drag on the sky to look around without leaving the current view.
   canvas.addEventListener('pointerdown', (e) => {
     if (e.button !== 0) return;
-    drag = { x: e.clientX, y: e.clientY, azim, elev: userElev };
+    drag = { x: e.clientX, y: e.clientY, azim, elev: userElev, moved: false };
     canvas.setPointerCapture(e.pointerId);
     canvas.classList.add('is-dragging');
   });
@@ -293,10 +295,17 @@ function boot() {
     const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
     azim = drag.azim - dx * 0.006;
     userElev = Math.max(-1.3, Math.min(1.3, drag.elev + dy * 0.005));
-    if (Math.abs(dx) + Math.abs(dy) > 3) userTurned = true;
+    if (Math.abs(dx) + Math.abs(dy) > 4) { userTurned = true; drag.moved = true; }
   });
   const endDrag = () => { drag = null; canvas.classList.remove('is-dragging'); };
-  canvas.addEventListener('pointerup', endDrag);
+  // A click on empty sky (no drag) zooms out one level.
+  canvas.addEventListener('pointerup', () => {
+    const tap = drag && !drag.moved;
+    endDrag();
+    if (!tap) return;
+    for (const [, t] of tags) t.a.classList.remove('is-revealed');
+    zoomOut({ focus: false });
+  });
   canvas.addEventListener('pointercancel', endDrag);
 
   document.querySelector('[data-close-panel]').addEventListener('click', () => {

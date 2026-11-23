@@ -15,10 +15,11 @@ test('every node is a body of the right kind, and it is deterministic', () => {
   assert.deepEqual([...buildCosmos(NODES, index.children)], [...bodies]);
 });
 
-test('stars sit inside the disk and apart from each other', () => {
+test('About is the central star; the others sit inside the disk, apart from each other', () => {
   const p = positionsAt(bodies, 0);
+  assert.deepEqual(p.get('about'), [0, 0, 0]);
   const stars = [...bodies.values()].filter((b) => b.kind === 'star');
-  for (const s of stars) assert.ok(s.home.r < GALAXY.radius * 0.95 && s.home.r > 100, s.id);
+  for (const s of stars) if (s.id !== 'about') assert.ok(s.home.r < GALAXY.radius * 0.95 && s.home.r > 100, s.id);
   for (let i = 0; i < stars.length; i++) for (let j = i + 1; j < stars.length; j++) {
     assert.ok(d(p.get(stars[i].id), p.get(stars[j].id)) > 50, `${stars[i].id} ${stars[j].id}`);
   }

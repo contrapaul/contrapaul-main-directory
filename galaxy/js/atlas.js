@@ -31,6 +31,7 @@ export function relation(id, active, { byId }) {
 // Labels shown as links. Every star system stays reachable (its name shows on hover),
 // so you can fly from one system straight to another.
 export function showsLabel(rel, id, active, index) {
+  if (id === 'root') return false; // the centre is the About star; the core itself has no label
   if (rel === 'active' || rel === 'child') return true;
   if (index.byId.get(id).parent === 'root') return true;
   if (rel === 'path') return id !== 'root' || active === 'root';

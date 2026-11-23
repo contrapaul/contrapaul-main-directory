@@ -51,4 +51,6 @@ test('relations and labels', () => {
   assert.ok(!showsLabel('moon', 'edu/tools/macropad', 'edu', index), 'moons wait until you reach their planet');
   assert.ok(showsLabel('sibling', 'edu/ai', 'edu/tools', index));
   assert.ok(!showsLabel('path', 'root', 'edu', index));
+  assert.ok(!showsLabel('active', 'root', 'root', index));
+  assert.ok(showsLabel('child', 'about', 'root', index));
 });

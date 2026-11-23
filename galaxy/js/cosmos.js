@@ -5,7 +5,7 @@ import { rng } from './random.js';
 
 export const GALAXY = {
   radius: 1000,
-  arms: 2,
+  arms: 3,
   r0: 100,         // the arms start at this radius
   b: 0.4,          // log spiral: r = r0 * exp(b * theta)
   turn: 1800,      // seconds for one turn of the whole disk
@@ -32,7 +32,7 @@ export function buildCosmos(nodes, children) {
 
   const stars = nodes.filter((n) => n.parent === 'root');
   const sites = stars.filter((n) => n.kind === 'site');
-  const specials = stars.filter((n) => n.kind !== 'site');
+  const specials = stars.filter((n) => n.kind !== 'site' && n.id !== 'about');
 
   sites.forEach((n, i) => {
     const t = sites.length > 1 ? i / (sites.length - 1) : 0;
@@ -41,6 +41,9 @@ export function buildCosmos(nodes, children) {
     const theta = armAngle(r, arm) + (rand() - 0.5) * 0.12;
     addStar(n, r, theta, (rand() - 0.5) * 14);
   });
+  // About is the star at the heart of the galaxy.
+  const about = stars.find((n) => n.id === 'about');
+  if (about) addStar(about, 0, 0, 0);
   specials.forEach((n, i) => {
     const r = 130 + i * 40;
     addStar(n, r, 0.6 + i * 2.9, (rand() - 0.5) * 6);
@@ -51,8 +54,8 @@ export function buildCosmos(nodes, children) {
     const star = {
       id: n.id, kind: 'star', parent: 'root',
       home: { r, theta, y },
-      radius: n.kind === 'site' ? (kids.length ? 1 : 0.8) : 0.6,
-      color: SPECTRAL[Math.floor(rand() * SPECTRAL.length)],
+      radius: n.id === 'about' ? 1.6 : n.kind === 'site' ? (kids.length ? 1 : 0.8) : 0.6,
+      color: n.id === 'about' ? '#fff1df' : SPECTRAL[Math.floor(rand() * SPECTRAL.length)],
       seed: Math.floor(rand() * 1e9),
     };
     bodies.set(n.id, star);

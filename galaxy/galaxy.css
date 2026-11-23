@@ -107,9 +107,9 @@ body {
 #sky { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: grab; }
 #sky.is-dragging { cursor: grabbing; }
 
-/* Star names stay hidden until you hover, focus or (on touch) tap once. */
-.labels .tag--star:not(.is-active) .tag-text { opacity: 0; transition: opacity 200ms ease; }
-.labels .tag--star:hover .tag-text, .labels .tag--star:focus-visible .tag-text, .labels .tag--star.is-revealed .tag-text { opacity: 1; }
+/* Names stay hidden until you hover, focus or (on touch) tap once. */
+.labels .tag:not(:hover):not(:focus-visible):not(.is-revealed) .tag-text { opacity: 0; }
+.labels .tag .tag-text { transition: opacity 200ms ease; }
 .tag--star.is-far .tag-dot, .tag--star.is-sibling .tag-dot { width: 36px; }
 
 /* ---------- labels over the canvas ---------- */

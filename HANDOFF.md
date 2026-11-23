@@ -1,5 +1,34 @@
 # HANDOFF.md
 
+## 2026-11-23 (evening): Paul's second review
+
+### Asked
+
+Three spiral arms; planet and star names only while hovering; no constant "contrapaul" at the centre; a click without dragging should zoom out again; the centre star is the About tab; softer arm edges at full zoom-out; a much denser, more colourful starfield with faint nebulae. Paul is still deciding whether the page should start on About.
+
+### Changed (lead, directly)
+
+- **Three arms:** `GALAXY.arms = 3`; sites alternate over the three arms.
+- **About at the centre:** the `about` node is a star at r 0 (radius 1.6, warm white). The core glow fades as the camera nears the centre, so flying in does not white out. The core itself no longer has a label (`showsLabel` returns false for root).
+- **Names on hover only:** every label's text is hidden unless hovered, keyboard focused or (on touch) tapped once; the second tap flies.
+- **Click the sky to zoom out:** a click or tap on the canvas with under 4 px of movement zooms out one level; a drag still only turns the view. Escape and the panel link still zoom out and focus the body you came from; a sky click does not, so no name pops up.
+- **Soft edges:** arm points jitter in radius, half of them form a wide dim halo around each arm, and brightness fades from r 800 to 1400 instead of stopping at the rim. Glow clouds follow the same rule.
+- **Sky:** 30000 stars (14000 on phones) in nine colours from blue to red, plus a nebula shell: patchy fbm noise in blue, magenta and orange at low brightness, one draw call.
+- **Favicon 404:** the demo asked for a missing `/favicon.ico`; an empty inline icon stops the request.
+- Hint text now says "Click the sky to zoom out." Cache keys bumped to `?v=3`.
+
+### Starting on About
+
+Not made the default. `/galaxy/#about` already opens there; a click on the sky then zooms out to the whole galaxy. Making it the default is a one-line change in `main.js` (the boot route).
+
+### Verified
+
+`npm test` 32 pass. Headless Chromium at 1280x800 and 375x812: 60 fps, 48 draw calls, only localhost requested, no console errors. Click on sky at #edu goes to root; a drag at #edu stays at #edu; #about shows the central star inside the bulge with no white-out.
+
+### Not verified
+
+Real phone. The phone hint says "Click" where "Tap" would read better.
+
 ## 2026-11-23 (later): Paul's first review of the demo
 
 ### Asked
