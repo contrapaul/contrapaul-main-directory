@@ -45,7 +45,7 @@ export function createGalaxy({ quality = 'high' } = {}) {
       // arms
       r = 100 + 900 * Math.sqrt(rand());
       const arm = i % 2;
-      theta = armAngle(r, arm) + N() * (0.18 + 0.25 * r / 1000);
+      theta = armAngle(r, arm) + N() * (0.12 + 0.12 * r / 1000); // lead: thinner, so arms read
       y = N() * (6 + 10 * (1 - r / 1000));
       lo = armLo; hi = armHi; bright = 0.35 + rand() * 0.45; s = 1.5 + rand() * 1.5;
     } else {
@@ -108,7 +108,7 @@ export function createGalaxy({ quality = 'high' } = {}) {
         float r = length(gl_PointCoord - 0.5) * 2.0;
         float a = exp(-r * r * 4.0) * (1.0 - smoothstep(0.7, 1.0, r));
         gl_FragColor = vec4(vColor * a * vAlpha, 1.0);
-        #include <colorspace_fragment>
+        // Additive: no sRGB conversion, it would lift the faint tails into a flat haze.
       }
     `,
   });
@@ -138,7 +138,7 @@ export function createGalaxy({ quality = 'high' } = {}) {
           intensity *= 1.0 - smoothstep(0.85, 1.0, r);
           intensity = min(intensity, 0.8);
           gl_FragColor = vec4(uColor * intensity, 1.0);
-          #include <colorspace_fragment>
+          // Additive: no sRGB conversion (see the disk shader).
         }
       `,
     }),
@@ -190,7 +190,7 @@ export function createGalaxy({ quality = 'high' } = {}) {
         float r = length(gl_PointCoord - 0.5) * 2.0;
         float a = exp(-r * r * 4.0) * (1.0 - smoothstep(0.7, 1.0, r));
         gl_FragColor = vec4(vColor * a, 1.0);
-        #include <colorspace_fragment>
+        // Additive: no sRGB conversion (see the disk shader).
       }
     `,
   });

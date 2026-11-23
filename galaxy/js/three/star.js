@@ -76,7 +76,7 @@ export function createStar({ color, radius, seed, quality }) {
         float spikes = 0.18 * (exp(-abs(q.x) * 160.0) + exp(-abs(q.y) * 160.0)) * (1.0 - r);
         float i = (halo + spikes) * (1.0 - smoothstep(0.8, 1.0, r));
         gl_FragColor = vec4(uColor * i, 1.0);
-        #include <colorspace_fragment>
+        // Additive: no sRGB conversion, it would turn the faint halo into a flat grey disc.
       }
     `,
   });
