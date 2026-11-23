@@ -4,9 +4,9 @@ import * as THREE from 'three';
 import { createStar, glowSize } from '../../galaxy/js/three/star.js';
 
 test('glowSize rule', () => {
-  assert.equal(glowSize(1, 2600), 78); // 2600*0.03 = 78 vs radius*10 = 10
-  assert.equal(glowSize(5, 10), 50);
-  assert.equal(glowSize(1, 100), 10);
+  assert.ok(Math.abs(glowSize(1, 2600) - 117) < 1e-9); // 2600*0.045 vs radius*12 = 12
+  assert.equal(glowSize(5, 10), 60);
+  assert.equal(glowSize(1, 100), 12);
 });
 
 test('group has two meshes', () => {

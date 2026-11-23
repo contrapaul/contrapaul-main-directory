@@ -1,5 +1,38 @@
 # HANDOFF.md
 
+## 2026-11-23 (later): Paul's first review of the demo
+
+### Asked
+
+Panel only after the flight lands; spiral should turn counter-clockwise; much more glow; a starfield; star system names on hover only; multi-column site map; a classy serif instead of JetBrains Mono; remove the bottom "Site map as a list" tab and rename the header "List" to "Site map"; an x to hide each panel; drag to look around without zooming out; fly between solar systems.
+
+### Changed (lead, directly)
+
+- **Panel timing:** content is set on navigation, but the panel slides out only when the flight lands, then takes focus. The view offset follows the panel.
+- **Close:** an x hides the panel (`data-close-panel`); the view recentres. Clicking the active star or planet brings it back.
+- **Rotation:** disk, stars and orbits now turn counter-clockwise seen from above, so the arms trail as in a real spiral (`cosmos.js`, `galaxy.js`).
+- **Glow:** 1400 soft glow clouds along the arms and bulge (700 on phones; they fade when the camera is inside them), a brighter, wider core, stronger star halos, glow points visible from farther away.
+- **Starfield:** 7000 sky stars (3500 on phones) with power-law brightness, white, blue and warm.
+- **Names on hover:** star system names show on hover or keyboard focus. On touch, the first tap shows the name and the second flies. Planet and moon names still show inside a system.
+- **Between systems:** every star stays a link from any view, so you can fly straight from one system to another. System views now sit lower (elevation 0.24), so the galactic band with other systems is on screen. Dragging up or down shows more.
+- **Drag to look:** dragging the sky turns and tilts the camera; it no longer zooms out (a background click used to). The auto turn to a planet's lit side stops once you drag, until the next flight.
+- **Site map:** header button "Site map"; the bottom tab is gone; the sheet is up to 74rem wide with up to 4 columns.
+- **Font:** EB Garamond (OFL, copied from the flashstone repo into `galaxy/fonts/`, with its licence). JetBrains Mono is no longer loaded by the demo.
+- **Bug fixed:** on every route change the label class reset dropped `is-shown`, so labels that stayed visible (the active star's own name) became invisible and unclickable.
+
+### Verified
+
+- `npm test`: 32 pass.
+- Headless Chromium, 1280x800: the name is hidden, then shown on hover; the panel is closed mid-flight and open after landing, with focus on its title; the x hides it; dragging leaves the hash unchanged; clicking the active star reopens the panel; a flight from `edu` straight to `trivia`; the site map in 4 columns in EB Garamond; no page errors.
+- 375x812 with touch: the first tap shows "time" and stays at the root; the second tap flies. 60 fps, 47 draw calls.
+
+### Still open
+
+- Not yet on the preview URL (needs a push), not on a real phone.
+- From a system's default view only a few other systems are on screen; the rest need a drag. Paul to judge.
+- Leaf stars seen up close (e.g. trivia) look blotchy, with long spikes. Tune by eye.
+- No wheel or pinch zoom (not asked for).
+
 ## 2026-11-23: 3D galaxy demo at /galaxy/ (branch `galaxy-demo`, local, not pushed)
 
 ### Asked

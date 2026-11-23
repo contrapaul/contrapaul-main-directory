@@ -12,7 +12,7 @@ float fbm(vec3 p, int oct) { float a = 0.5, s = 0.0; for (int i = 0; i < 6; i++)
 `;
 
 export function glowSize(radius, depth) {
-  return Math.max(radius * 10, depth * 0.03);
+  return Math.max(radius * 12, depth * 0.045);
 }
 
 export function createStar({ color, radius, seed, quality }) {
@@ -72,7 +72,7 @@ export function createStar({ color, radius, seed, quality }) {
       void main() {
         vec2 q = vUv - 0.5;
         float r = length(q) * 2.0;
-        float halo = 0.9 * exp(-r * 7.0) + 0.25 * exp(-r * 2.5);
+        float halo = 1.1 * exp(-r * 6.0) + 0.35 * exp(-r * 2.2); // lead: more glow
         float spikes = 0.18 * (exp(-abs(q.x) * 160.0) + exp(-abs(q.y) * 160.0)) * (1.0 - r);
         float i = (halo + spikes) * (1.0 - smoothstep(0.8, 1.0, r));
         gl_FragColor = vec4(uColor * i, 1.0);

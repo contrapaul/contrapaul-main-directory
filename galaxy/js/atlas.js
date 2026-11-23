@@ -28,9 +28,11 @@ export function relation(id, active, { byId }) {
   return 'far';
 }
 
-// Labels shown as links. Other stars are hidden once you are inside a system.
+// Labels shown as links. Every star system stays reachable (its name shows on hover),
+// so you can fly from one system straight to another.
 export function showsLabel(rel, id, active, index) {
   if (rel === 'active' || rel === 'child') return true;
+  if (index.byId.get(id).parent === 'root') return true;
   if (rel === 'path') return id !== 'root' || active === 'root';
   if (rel === 'sibling') return index.byId.get(active).parent !== 'root';
   return false;

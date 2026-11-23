@@ -7,15 +7,15 @@
 <meta name="robots" content="noindex">
 <meta name="color-scheme" content="dark">
 <title>contrapaul</title>
-<link rel="stylesheet" href="/WEB/css/jetbrains-mono.css">
-<link rel="stylesheet" href="galaxy.css?v=1">
+<link rel="preload" href="fonts/eb-garamond-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="galaxy.css?v=2">
 <script type="importmap">{ "imports": { "three": "./vendor/three-0.186.1/three.module.min.js" } }</script>
 </head>
 <body class="map-page at-root">
 <header class="map-header">
 <a href="/" class="wordmark">contrapaul<span class="wordmark-tail"> | paul kwiatkowski</span></a>
 <nav class="map-nav" aria-label="Main navigation">
-<button type="button" class="map-only" data-open-atlas>List</button>
+<button type="button" class="map-only" data-open-atlas>Site map</button>
 <a href="/about.html">About</a>
 </nav>
 </header>
@@ -27,10 +27,10 @@
 <section id="intro" class="intro">
 <h1>Paul Kwiatkowski</h1>
 <p>Design Technology educator, maker, and creator based in Shenzhen, China.</p>
-<p class="hint">Pick a star to fly to it.</p>
+<p class="hint">Pick a star to fly to it. Drag to look around.</p>
 </section>
-<button type="button" class="atlas-grip map-only" data-open-atlas><span aria-hidden="true"></span>Site map as a list</button>
 <aside id="panel" class="panel" aria-label="Details" inert>
+<button type="button" class="panel-close" data-close-panel aria-label="Hide details">&times;</button>
 <div class="panel-body"></div>
 </aside>
 <dialog id="atlas" class="atlas" aria-labelledby="atlas-title">
@@ -64,6 +64,6 @@
 </ul>
 </nav>
 </main>
-<script type="module" src="js/main.js?v=1"></script>
+<script type="module" src="js/main.js?v=2"></script>
 </body>
 </html>

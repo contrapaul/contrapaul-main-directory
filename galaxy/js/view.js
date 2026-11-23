@@ -2,7 +2,7 @@
 // (dist, elev, azim). A flight eases from the current view to a node's live position.
 export const FOV = 45; // vertical, degrees
 
-const ELEV = { core: 0.95, star: 0.42, planet: 0.32, moon: 0.28 };
+const ELEV = { core: 0.95, star: 0.24, planet: 0.2, moon: 0.18 }; // low enough that the galactic band, with other systems, is in view
 
 // Distance that fits a sphere of radius `extent` on screen for this aspect.
 // `area` is the free part of the screen as fractions {w, h} (the panel covers the rest).

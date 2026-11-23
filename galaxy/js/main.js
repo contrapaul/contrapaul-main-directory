@@ -84,6 +84,8 @@ function boot() {
   let active = 'root', rel = new Map();
   let clock = 0, calm = 1, calmTarget = 1, azim = 0.6, last = 0, pendingFocus = null;
   let flight = null, cam = null;
+  let landed = true, dismissed = false, focusOnLand = false;
+  let userElev = 0, userTurned = false, drag = null, touchTap = false;
   const offset = { x: 0, y: 0 };
   const pointer = { x: 0, y: 0 }, pointerTarget = { x: 0, y: 0 };
   let pos = positionsAt(bodies, 0);
@@ -92,9 +94,9 @@ function boot() {
   const urlFor = (id) => (id === 'root' ? location.pathname + location.search : hashFor(id));
 
   // The free part of the screen next to the panel, as fractions, and the view offset in px.
-  function freeArea() {
+  function freeArea(withPanel = active !== 'root') {
     const W = innerWidth, H = innerHeight;
-    if (active === 'root') return W < 760 ? { w: 1, h: 0.62, ox: 0, oy: H * 0.1 } : { w: 1, h: 0.9, ox: 0, oy: 0 };
+    if (!withPanel) return W < 760 ? { w: 1, h: 0.62, ox: 0, oy: H * 0.1 } : { w: 1, h: 0.9, ox: 0, oy: 0 };
     if (W < 760) { const sheet = H * 0.56; return { w: 1, h: (H - sheet - 70) / H, ox: 0, oy: sheet / 2 - 20 }; }
     const side = Math.min(400, W * 0.45) + 16;
     return { w: (W - side) / W * 0.94, h: 0.86, ox: side / 2, oy: 0 };
@@ -108,8 +110,10 @@ function boot() {
       const r = rel.get(nid);
       t.want = showsLabel(r, nid, active, index);
       t.a.className = `tag tag--${bodies.get(nid).kind} is-${r}`;
+      t.shown = false; // the class reset dropped is-shown; placeLabels sets it again
       if (r === 'active') t.a.setAttribute('aria-current', 'page'); else t.a.removeAttribute('aria-current');
     }
+    for (const [nid, t] of tags) t.a.classList.remove('is-revealed');
     for (const [bid, line] of orbits) {
       const p = bodies.get(bid).parent;
       line.visible = p === active || rel.get(p) === 'path';
@@ -117,22 +121,43 @@ function boot() {
 
     const atRoot = id === 'root';
     document.body.classList.toggle('at-root', atRoot);
-    panel.inert = atRoot;
-    panel.classList.toggle('is-open', !atRoot);
     if (!atRoot) { panelBody.innerHTML = panelHTML(id, index); panelBody.scrollTop = 0; }
     document.title = atRoot ? 'contrapaul' : `${byId.get(id).label} | contrapaul`;
 
     const view = viewFor(bodies.get(id), innerWidth / innerHeight, freeArea());
     const live = pos.get(id);
     if (snap || !cam) cam = { focus: [...live], dist: view.dist, elev: view.elev };
+    // Start the flight from what is on screen, including any dragged tilt.
+    cam = { ...cam, elev: cam.elev + userElev };
+    userElev = 0;
+    userTurned = false;
     flight = startFlight(cam, view, live, snap || reduce.matches);
-    if (focusPanel && !atRoot) panel.querySelector('.panel-title').focus({ preventScroll: true });
+    // The panel waits until the flight lands.
+    landed = false;
+    dismissed = false;
+    focusOnLand = focusPanel;
+    showPanel();
     if (focusNode && tags.has(focusNode)) tags.get(focusNode).a.focus({ preventScroll: true });
+  }
+
+  function panelShown() {
+    return active !== 'root' && landed && !dismissed;
+  }
+
+  function showPanel() {
+    const open = panelShown();
+    panel.inert = !open;
+    panel.classList.toggle('is-open', open);
+    document.body.classList.toggle('panel-hidden', active !== 'root' && landed && dismissed);
   }
 
   function navigate(id) {
     if (!byId.has(id)) return;
-    if (id === active) { if (id !== 'root') panel.querySelector('.panel-title').focus({ preventScroll: true }); return; }
+    if (id === active) {
+      // Clicking what you are looking at brings its panel back.
+      if (id !== 'root' && landed) { dismissed = false; showPanel(); panel.querySelector('.panel-title').focus({ preventScroll: true }); }
+      return;
+    }
     history.pushState({ prev: active }, '', urlFor(id));
     applyRoute(id, { focusPanel: true });
   }
@@ -169,19 +194,25 @@ function boot() {
 
     // At a planet or moon, swing round to its lit side; elsewhere drift slowly.
     const ab = bodies.get(active);
-    if (ab.kind === 'planet' || ab.kind === 'moon') {
+    if ((ab.kind === 'planet' || ab.kind === 'moon') && !userTurned) {
       const star = pos.get(ab.kind === 'moon' ? bodies.get(ab.parent).parent : ab.parent);
       azim = turnToward(azim, litAzimuth(pos.get(active), star), motion ? k(1.5) : 1);
-    } else if (motion) azim += dt * 0.012 * calm;
+    } else if (motion && !drag) azim += dt * 0.012 * calm;
 
     // Camera: fly, then keep following the live target.
     flight.t += dt;
     const s = flight.dur ? Math.min(1, flight.t / flight.dur) : 1;
     cam = flightAt(flight, s, pos.get(active));
-    const a = freeArea();
+    if (s >= 1 && !landed) {
+      landed = true;
+      showPanel();
+      if (focusOnLand && active !== 'root') panel.querySelector('.panel-title').focus({ preventScroll: true });
+    }
+    const a = freeArea(panelShown());
     offset.x += (a.ox - offset.x) * (motion ? k(4) : 1);
     offset.y += (a.oy - offset.y) * (motion ? k(4) : 1);
-    const p = cameraPosition({ ...cam, elev: cam.elev - pointer.y * 0.05 }, azim + pointer.x * 0.1);
+    const elev = Math.max(-1.35, Math.min(1.45, cam.elev + userElev - pointer.y * 0.05));
+    const p = cameraPosition({ ...cam, elev }, azim + pointer.x * 0.1);
     camera.position.set(...p);
     camera.up.set(0, 1, 0);
     camera.lookAt(...cam.focus);
@@ -236,12 +267,42 @@ function boot() {
     const a = e.target.closest('a[href^="#"]');
     if (a) {
       e.preventDefault();
+      // Star names show on hover. On touch, the first tap shows the name and the second flies.
+      if (touchTap && a.classList.contains('tag--star') && !a.classList.contains('is-active') && !a.classList.contains('is-revealed')) {
+        for (const [, t] of tags) t.a.classList.remove('is-revealed');
+        a.classList.add('is-revealed');
+        return;
+      }
       if (atlas.open) atlas.close();
       if (a.hasAttribute('data-zoom-out')) zoomOut();
       else navigate(idFromHash(a.getAttribute('href')));
       return;
     }
-    if (e.target === canvas) zoomOut();
+  });
+  layer.addEventListener('pointerdown', (e) => { touchTap = e.pointerType !== 'mouse'; });
+
+  // Drag on the sky to look around without leaving the current view.
+  canvas.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0) return;
+    drag = { x: e.clientX, y: e.clientY, azim, elev: userElev };
+    canvas.setPointerCapture(e.pointerId);
+    canvas.classList.add('is-dragging');
+  });
+  canvas.addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    azim = drag.azim - dx * 0.006;
+    userElev = Math.max(-1.3, Math.min(1.3, drag.elev + dy * 0.005));
+    if (Math.abs(dx) + Math.abs(dy) > 3) userTurned = true;
+  });
+  const endDrag = () => { drag = null; canvas.classList.remove('is-dragging'); };
+  canvas.addEventListener('pointerup', endDrag);
+  canvas.addEventListener('pointercancel', endDrag);
+
+  document.querySelector('[data-close-panel]').addEventListener('click', () => {
+    dismissed = true;
+    showPanel();
+    tags.get(active).a.focus({ preventScroll: true });
   });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !atlas.open) zoomOut(); });
   addEventListener('popstate', () => { applyRoute(idFromHash(location.hash), { focusNode: pendingFocus }); pendingFocus = null; });

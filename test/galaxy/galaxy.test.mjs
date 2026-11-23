@@ -74,7 +74,7 @@ test('update turns the disk, core faces camera, sky follows camera', () => {
   cam.quaternion.setFromEuler(new THREE.Euler(0.1, 0.2, 0.3));
   cam.updateMatrixWorld();
   g.update(10, cam);
-  assert.ok(Math.abs(disk.rotation.y - (-2 * Math.PI * 10 / GALAXY.turn)) < 1e-9);
+  assert.ok(Math.abs(disk.rotation.y - (2 * Math.PI * 10 / GALAXY.turn)) < 1e-9);
   assert.deepEqual([core.quaternion.x, core.quaternion.y, core.quaternion.z, core.quaternion.w], [cam.quaternion.x, cam.quaternion.y, cam.quaternion.z, cam.quaternion.w]);
   assert.deepEqual([sky.position.x, sky.position.y, sky.position.z], [1, 2, 3]);
   assert.equal(sky.rotation.x, 0);

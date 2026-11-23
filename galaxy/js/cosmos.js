@@ -103,7 +103,7 @@ export function orbitPoint(o, phi) {
 }
 
 export function orbitAngle(o, t) {
-  return o.phase + (TAU * t) / o.period;
+  return o.phase - (TAU * t) / o.period; // counter-clockwise from above, like the disk
 }
 
 // Where every body is at time t (seconds). Returns Map id -> [x, y, z].
@@ -116,7 +116,7 @@ export function positionsAt(bodies, t) {
     let p;
     if (b.kind === 'core') p = [0, 0, 0];
     else if (b.kind === 'star') {
-      const a = b.home.theta + g;
+      const a = b.home.theta - g; // counter-clockwise from above, so the arms trail
       p = [b.home.r * Math.cos(a), b.home.y, b.home.r * Math.sin(a)];
     } else {
       const c = place(b.parent);

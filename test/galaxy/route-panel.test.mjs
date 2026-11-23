@@ -46,7 +46,9 @@ test('relations and labels', () => {
   assert.equal(relation('edu', 'edu/tools', index), 'path');
   assert.equal(relation('edu/ai', 'edu/tools', index), 'sibling');
   assert.equal(relation('make', 'edu', index), 'sibling');
-  assert.ok(!showsLabel('sibling', 'make', 'edu', index), 'other stars hide inside a system');
+  assert.ok(showsLabel('sibling', 'make', 'edu', index), 'other systems stay reachable');
+  assert.ok(showsLabel('far', 'make', 'edu/tools', index), 'even from a planet');
+  assert.ok(!showsLabel('moon', 'edu/tools/macropad', 'edu', index), 'moons wait until you reach their planet');
   assert.ok(showsLabel('sibling', 'edu/ai', 'edu/tools', index));
   assert.ok(!showsLabel('path', 'root', 'edu', index));
 });

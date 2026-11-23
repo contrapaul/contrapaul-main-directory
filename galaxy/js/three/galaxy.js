@@ -134,24 +134,25 @@ export function createGalaxy({ quality = 'high' } = {}) {
         void main() {
           vec2 q = vUv - 0.5;
           float r = length(q) * 2.0;
-          float intensity = 0.55 * exp(-r * r * 30.0) + 0.22 * exp(-r * r * 6.0);
+          // lead: a brighter, wider bulge glow (Paul asked for much more glow).
+          float intensity = 0.7 * exp(-r * r * 60.0) + 0.32 * exp(-r * r * 12.0) + 0.12 * exp(-r * r * 3.0);
           intensity *= 1.0 - smoothstep(0.85, 1.0, r);
-          intensity = min(intensity, 0.8);
+          intensity = min(intensity, 1.0);
           gl_FragColor = vec4(uColor * intensity, 1.0);
           // Additive: no sRGB conversion (see the disk shader).
         }
       `,
     }),
   );
-  core.scale.setScalar(700);
+  core.scale.setScalar(1150);
 
   // Sky points on a sphere.
-  const skyCount = low ? 1500 : 3000;
+  const skyCount = low ? 3500 : 7000;
   const skyRand = rng(GALAXY.seed + 2);
   const skyPos = new Float32Array(skyCount * 3);
   const skyCol = new Float32Array(skyCount * 3);
   const skySize = new Float32Array(skyCount);
-  const skyWhite = new THREE.Color('#ffffff'), skyBlue = new THREE.Color('#c9d8ff');
+  const skyWhite = new THREE.Color('#ffffff'), skyBlue = new THREE.Color('#c9d8ff'), skyWarm = new THREE.Color('#ffe2c0');
   for (let i = 0; i < skyCount; i++) {
     const y = 2 * skyRand() - 1;
     const a = skyRand() * TAU;
@@ -159,10 +160,12 @@ export function createGalaxy({ quality = 'high' } = {}) {
     skyPos[i * 3] = r * Math.cos(a) * 3500;
     skyPos[i * 3 + 1] = y * 3500;
     skyPos[i * 3 + 2] = r * Math.sin(a) * 3500;
-    const bright = 0.15 + skyRand() * 0.45;
-    tmp.copy(skyWhite).lerp(skyBlue, skyRand());
+    // lead: power law, many faint and a few bright, white, blue or warm.
+    const u = skyRand();
+    const bright = 0.12 + 0.85 * u ** 5;
+    tmp.copy(skyWhite).lerp(skyRand() < 0.7 ? skyBlue : skyWarm, skyRand());
     skyCol[i * 3] = tmp.r * bright; skyCol[i * 3 + 1] = tmp.g * bright; skyCol[i * 3 + 2] = tmp.b * bright;
-    skySize[i] = 1 + skyRand();
+    skySize[i] = 1.2 + 2.6 * u ** 6 + skyRand() * 0.6;
   }
   const skyGeo = new THREE.BufferGeometry();
   skyGeo.setAttribute('position', new THREE.BufferAttribute(skyPos, 3));
@@ -197,11 +200,68 @@ export function createGalaxy({ quality = 'high' } = {}) {
   const sky = new THREE.Points(skyGeo, skyMat);
   sky.frustumCulled = false;
 
+  // lead: soft glow clouds along the arms and bulge, so the galaxy glows like a photograph.
+  const hazeCount = low ? 700 : 1400;
+  const hRand = rng(GALAXY.seed + 3);
+  const hPos = new Float32Array(hazeCount * 3), hCol = new Float32Array(hazeCount * 3), hSize = new Float32Array(hazeCount);
+  const hazeArm = new THREE.Color('#a8b8ff'), hazePink = new THREE.Color('#ff6fa8'), hazeWarm = new THREE.Color('#ffcf8a');
+  const hN = () => Math.sqrt(-2 * Math.log(1 - hRand())) * Math.cos(TAU * hRand());
+  for (let i = 0; i < hazeCount; i++) {
+    let r, th, c, b, sz;
+    if (i % 5 === 0) { r = Math.abs(hN()) * 170; th = hRand() * TAU; c = hazeWarm; b = 0.06; sz = 70 + hRand() * 60; }
+    else {
+      r = 120 + 880 * Math.sqrt(hRand());
+      th = armAngle(r, i % 2) + hN() * (0.08 + 0.1 * r / 1000);
+      const pink = hRand() < 0.12;
+      c = pink ? hazePink : hazeArm; b = pink ? 0.05 : 0.028 + 0.024 * (1 - r / 1000); sz = pink ? 25 + hRand() * 25 : 45 + hRand() * 50;
+    }
+    hPos.set([r * Math.cos(th), hN() * 8, r * Math.sin(th)], i * 3);
+    hCol.set([c.r * b, c.g * b, c.b * b], i * 3);
+    hSize[i] = sz;
+  }
+  const hGeo = new THREE.BufferGeometry();
+  hGeo.setAttribute('position', new THREE.BufferAttribute(hPos, 3));
+  hGeo.setAttribute('color', new THREE.BufferAttribute(hCol, 3));
+  hGeo.setAttribute('size', new THREE.BufferAttribute(hSize, 1));
+  const hazeMat = new THREE.ShaderMaterial({
+    vertexColors: true,
+    uniforms: { uScale: { value: 2200 } },
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    vertexShader: `
+      attribute float size;
+      uniform float uScale;
+      varying vec3 vColor;
+      varying float vAlpha;
+      void main() {
+        vec4 mv = modelViewMatrix * vec4(position, 1.0);
+        float d = -mv.z;
+        gl_PointSize = clamp(size * uScale / d, 2.0, 320.0);
+        vAlpha = smoothstep(80.0, 400.0, d); // fade out when the camera is inside the cloud
+        vColor = color;
+        gl_Position = projectionMatrix * mv;
+      }
+    `,
+    fragmentShader: `
+      varying vec3 vColor;
+      varying float vAlpha;
+      void main() {
+        float r = length(gl_PointCoord - 0.5) * 2.0;
+        float a = exp(-r * r * 3.0) * (1.0 - smoothstep(0.6, 1.0, r));
+        gl_FragColor = vec4(vColor * a * vAlpha, 1.0);
+      }
+    `,
+  });
+  const haze = new THREE.Points(hGeo, hazeMat);
+  haze.frustumCulled = false;
+  disk.add(haze);
+
   const group = new THREE.Group();
   group.add(disk, core, sky);
 
   const update = (t, camera) => {
-    disk.rotation.y = -TAU * t / GALAXY.turn;
+    disk.rotation.y = TAU * t / GALAXY.turn; // counter-clockwise from above, arms trailing
     core.quaternion.copy(camera.quaternion);
     sky.position.copy(camera.position);
     const pr = Math.min(typeof devicePixelRatio !== 'undefined' ? devicePixelRatio : 1, 2);
