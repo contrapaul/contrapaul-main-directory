@@ -11,7 +11,7 @@ Paul: demo first in its own folder, real 3D with three.js, try an Inkling swarm 
 - `galaxy/`: `index.html` (canvas, label layer, panel, site map `<dialog>`, no-JS list), `galaxy.css`, `vendor/three-0.186.1/` (minified from the npm package, with its licence, loaded through an import map).
 - Lead (Claude): `js/cosmos.js` (stars on log-spiral arms, planets and moons on inclined Kepler orbits, `positionsAt(t)`), `js/view.js` (camera fit, flights, lit-side azimuth), `js/atlas.js` (site map tree, label relations), `js/main.js` (renderer, flights, labels, routing, panel, site map). Kept from draft 1: `sites.js`, `network.js`, `route.js`, `panel.js`, `random.js`.
 - Swarm (Inkling 2 Mini on the Spark, `low` thinking, own worktrees): `js/three/galaxy.js` (50k disk points, core glow, sky), `js/three/star.js` (granulated, limb-darkened body and halo), `js/three/planet.js` (six surface types, lit from the star, atmosphere rim, ringed gas giants). Each finished its card in 2 to 5 minutes with one commit and tests; the briefs gave exact formulas. Runner and briefs: `tools/swarm/`; rules: `AGENTS.md`.
-- 33 Node tests (`npm test`; `three` is a dev dependency so Node can import it).
+- 32 Node tests (`npm test`; `three` is a dev dependency so Node can import it).
 
 ### Decided (lead)
 
@@ -22,7 +22,7 @@ Paul: demo first in its own folder, real 3D with three.js, try an Inkling swarm 
 
 ### Verified
 
-- `npm test`: 33 pass.
+- `npm test`: 32 pass.
 - Headless Chromium (playwright, GPU) at 1280x800 and 375x812: galaxy, system, hub, moon views; Escape, Back, a far jump through the site map; the site map sheet. 60 fps at the cap, at most 46 draw calls, 50k points desktop and 20k phone. Only `localhost` requested; the only console error is a missing favicon (404).
 
 ### Still open
