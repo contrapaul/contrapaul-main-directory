@@ -4,6 +4,21 @@ Asked 2026-11-17: replace the card grid with an interactive star map of the grow
 
 Revised 2026-11-23 after review. Items marked **[confirm]** are suggested defaults Paul has not yet signed off.
 
+## Direction change 2026-11-23: a dynamic galaxy
+
+Paul: `make/map` is a great start but feels like "things locked in place"; the landing page should feel like a "dynamic galaxy of links". Draft 1 was written fresh (without the make repo) and replaces these parts of the plan below:
+
+- **Orbits, not fixed positions.** Every node with children carries a ring; its children ride it, and each ring turns as a whole at its own speed, alternating direction by depth. Children are staggered in and out of the ring and breathe slightly. Rings that carry the active node ease to a stop, so the thing you are looking at holds still while its own moons keep turning.
+- **Calm under the pointer.** Hovering or keyboard-focusing a node slows the whole galaxy almost to a stop, so moving targets stay easy to click.
+- **One layout for every screen.** Orbits are circles, so there are no separate landscape and portrait worlds; the camera fits the view to the screen shape.
+- **Camera follows, no fixed tween.** The camera glides after the active node's live position (centre linear, zoom in log space) instead of an 800 ms `fitRect`/`mixBox`/`easeInOut` animation. `camera.js` has `viewFor`, `approach` and `settled`.
+- **Screen-capped node size.** Zooming in spreads nodes apart instead of inflating them; each kind has a maximum on-screen radius.
+- **Parallax on stars only.** Three seeded star layers move with the pointer and drift and scale with the camera, so zooming feels like travel. Links stay attached to their nodes; moving them separately broke the picture.
+- **Separate stylesheet.** Map and sites page styles live in a new `map.css` (short cache), so the `immutable` cache on `style.css` cannot serve stale map styles. `style.css` is now used by `about.html` only.
+- **Site nodes derived from `SITES`.** `network.js` builds the site nodes from `js/sites.js`, so a new subdomain is one entry there (plus the two static lists, which tests check).
+
+See `HANDOFF.md` for what draft 1 contains and what is still open.
+
 ## Assumptions
 
 - The node inventory is a curated copy of `plan.contrapaul.com/plan.json`, read on 2026-11-10. The file is a reference, not a node list.

@@ -1,4 +1,4 @@
-# Cloudflare Pages — HTTP headers
+# Cloudflare Pages - HTTP headers
 # https://developers.cloudflare.com/pages/configuration/headers/
 /*
  X-Frame-Options: DENY
@@ -8,5 +8,9 @@
  X-XSS-Protection: 1; mode=block
 /style.css
  Cache-Control: public, max-age=31536000, immutable
+/map.css
+ Cache-Control: public, max-age=3600
+/js/*
+ Cache-Control: public, max-age=3600
 /assets/*
- Cache-Control: public, max-age=3153600
+ Cache-Control: public, max-age=31536000

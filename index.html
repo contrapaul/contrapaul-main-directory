@@ -4,130 +4,55 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="paul kwiatkowski // designer / educator / maker">
+<meta name="color-scheme" content="dark">
 <title>contrapaul</title>
 <link rel="stylesheet" href="WEB/css/jetbrains-mono.css">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="map.css?v=1">
 </head>
-<body>
-<header class="site-header">
-<div class="header-inner">
+<body class="map-page at-root">
+<header class="map-header">
 <a href="/" class="wordmark">contrapaul<span class="wordmark-tail"> | paul kwiatkowski</span></a>
-<nav class="nav">
+<nav class="map-nav" aria-label="Main navigation">
+<a href="sites.html">Sites</a>
 <a href="about.html">About</a>
-<a href="https://edu.contrapaul.com" class="nav-tag">Edu</a>
-<a href="https://make.contrapaul.com" class="nav-tag">Make</a>
-<a href="https://blog.contrapaul.com" class="nav-tag">Blog</a>
 </nav>
-</div>
 </header>
 <main>
-<section class="hero">
+<div class="stage">
+<svg id="stars" class="stars" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+<svg id="map" class="map" role="group" tabindex="-1" aria-label="Map of contrapaul sites"><g class="world"></g></svg>
+</div>
+<section id="intro" class="intro">
 <h1>Paul Kwiatkowski</h1>
 <p>Design Technology educator, maker, and creator based in Shenzhen, China.</p>
+<p class="hint">Pick a star to explore, or see <a href="sites.html">every site</a> as a list.</p>
 </section>
-    <div class="grid">
-<div class="card card-gamer">
-<div class="card-interior">
-<div class="card-head">
-<a href="https://make.contrapaul.com" class="no-underline">
-<div class="gamer-badge">make.contrapaul.com</div></a>
-<a href="https://make.contrapaul.com" class="no-underline"><h2>/make</h2></a>
-</div>
-<p class="card-description">
-A collection of projects mostly falling outside the realm of school.
-</p>
-<div class="nested-section">
-<h3>Showcase</h3>
-<p>Behold, a selection of things I've made!</p>
-</div>
-<a href="https://make.contrapaul.com/bloodbowl/" class="no-underline">
-<div class="nested-section">
-<h3>"Fantasy Football Chess"</h3>
-<p>A project that seriously speeds up and streamlines the tabletop game "Blood Bowl"</p>
-</div>
-</a>
-<ul class="feature-list">
-<li><a href="https://makerworld.com/en/@Contrapaul/upload" class="no-underline">My 3D models on Makerworld</a></li>
-<li><a href="https://www.instagram.com/contrapaul" class="no-underline">Instagram (students say I'm famous)</a></li>
-<li><a href="https://www.youtube.com/@PaulKwiatkowski" class="no-underline">Videos on Youtube</a></li>
+<aside id="panel" class="panel" aria-label="Details" inert>
+<div class="panel-body"></div>
+</aside>
+<nav class="fallback" aria-label="All sites">
+<h2>Sites</h2>
+<ul class="site-list">
+<li><a href="https://contrapaul.com/">contrapaul.com</a><span>Main landing page and personal hub.</span></li>
+<li><a href="https://blog.contrapaul.com/">blog.contrapaul.com</a><span>Portfolio, about page and blog posts.</span></li>
+<li><a href="https://edu.contrapaul.com/">edu.contrapaul.com</a><span>IB DP Design Technology curriculum, tools and assessment.</span></li>
+<li><a href="https://make.contrapaul.com/">make.contrapaul.com</a><span>Maker and creator portfolio for fans, collaborators and sponsors.</span></li>
+<li><a href="https://build.contrapaul.com/">build.contrapaul.com</a><span>A talk and a guide on building learning websites with AI.</span></li>
+<li><a href="https://bloodbowl.contrapaul.com/">bloodbowl.contrapaul.com</a><span>Rebuilt phone-first Blood Bowl table companion.</span></li>
+<li><a href="https://blurt.contrapaul.com/">blurt.contrapaul.com</a><span>Realtime party game, 2 to 24 players, no sign-up.</span></li>
+<li><a href="https://cloud.contrapaul.com/">cloud.contrapaul.com</a><span>Live collaborative word cloud for a room of phones.</span></li>
+<li><a href="https://games.contrapaul.com/">games.contrapaul.com</a><span>School arcade of browser games, no ads or accounts.</span></li>
+<li><a href="https://time.contrapaul.com/">time.contrapaul.com</a><span>Timetable tool that knows what day it is, with no institution baked in.</span></li>
+<li><a href="https://flashstone.contrapaul.com/">flashstone.contrapaul.com</a><span>Flashcard app grown into a card game.</span></li>
+<li><a href="https://tome.contrapaul.com/">tome.contrapaul.com</a><span>Tome of Secrets, a monster game with contributed art and audio.</span></li>
+<li><a href="https://duoshan.contrapaul.com/">duoshan.contrapaul.com</a><span>DuoShan 躲闪, a browser physics team dodgeball game.</span></li>
+<li><a href="https://output.contrapaul.com/">output.contrapaul.com</a><span>An automation game for students.</span></li>
+<li><a href="https://dart.contrapaul.com/">dart.contrapaul.com</a><span>Browser first-person shooter.</span></li>
+<li><a href="https://trivia.contrapaul.com/">trivia.contrapaul.com</a><span>Live trivia night in the browser.</span></li>
+<li><a href="about.html">About</a><span>About Paul, and how to get in touch.</span></li>
 </ul>
-<div class="card-toggle"></div>
-</div>
-</div>
-<div class="card card-arctic">
-<div class="card-interior">
-<div class="card-head">
-<a href="https://edu.contrapaul.com" class="no-underline">
-<div class="arctic-badge">edu.contrapaul.com</div></a>
-<a href="https://edu.contrapaul.com" class="no-underline"><h2>/edu</h2></a>
-</div>
-<p class="card-description">
-IB Design Technology resources, units, and some pretty cool web tools.
-</p>
-<a href="https://edu.contrapaul.com/curriculum/dp/" class="no-underline">
-<div class="nested-section">
-<h3>DP Design Curriculum</h3>
-<p>A robust companion to the textbook, complete with interactive tools and a growing amount of audio content.</p>
-</div>
-</a>
-<a href="https://edu.contrapaul.com/tools/macropad/" class="no-underline">
-<div class="nested-section">
-<h3>ESP32 Macropad Builder</h3>
-<p>A web tool for creating wiring diagrams, setting functions, and producing working code for ESP32 projects.</p>
-</div>
-</a>
-<ul class="feature-list">
-<li><a href="https://edu.contrapaul.com/tools/DT-IA-Guide/" class="no-underline">DP Design Technology IA guide</a></li>
-<li><a href="https://edu.contrapaul.com/tools/Auditorium" class="no-underline">Auditorium Seating Plan Builder</a></li>
-<li><a href="https://edu.contrapaul.com/tools/central-middlezhong-adventure" class="no-underline">Material Selection Text Adventure</a></li>
-</ul>
-<div class="card-toggle"></div>
-</div>
-</div>
-<div class="card card-glass">
-<div class="card-interior">
-<div class="card-head">
-<a href="https://blog.contrapaul.com" class="no-underline">
-<div class="glass-badge">blog.contrapaul.com</div></a>
-<a href="https://blog.contrapaul.com" class="no-underline"><h2>/blog</h2></a>
-</div>
-<p class="card-description">
-Yearly school portfolio updates, as well as articles and reflections about whatever I'm up to.
-</p>
-<a href="https://blog.contrapaul.com/posts/iste2526" class="no-underline">
-<div class="nested-section">
-<h3>ISTE Standards for 2026</h3>
-<p>A breakdown of how I met technology standards.</p>
-</div>
-</a>
-<div class="nested-section">
-<h3>Reflections on things that didn't work</h3>
-<p>Looking back at units and activities I dropped or heavily revised.</p>
-</div>
-<ul class="feature-list">
-<li>IB Standards</li>
-<li>Backwards Mapping for DP</li>
-<li><a href="https://blog.contrapaul.com/posts/2025-2026-goals" class="no-underline">SMART Goals for 2025-2026</a></li>
-</ul>
-<div class="card-toggle"></div>
-</div>
-</div>
-</div>
+</nav>
 </main>
-<footer class="site-footer">
-<div class="footer-inner">
-<span class="footer-name">contrapaul</span>
-<span class="footer-location">Shenzhen, China</span>
-</div>
-</footer>
-<script>
-document.querySelectorAll('.card').forEach(function (card) {
-  card.addEventListener('click', function (e) {
-    if (!window.matchMedia('(max-width: 768px)').matches) return;
-    if (e.target.closest('a')) return;
-    card.classList.toggle('expanded');
-  });
-});
-</script>
+<script type="module" src="js/main.js?v=1"></script>
 </body>
 </html>
