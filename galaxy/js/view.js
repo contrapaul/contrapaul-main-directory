@@ -15,7 +15,7 @@ export function fitDistance(extent, aspect, area = { w: 1, h: 1 }, fovDeg = FOV)
 
 // The resting view for a body.
 export function viewFor(body, aspect, area) {
-  const extent = body.kind === 'core' ? body.extent * 0.92 : body.extent * 1.1;
+  const extent = body.kind === 'core' ? body.extent * (aspect < 1 ? 1.08 : 0.92) : body.extent * 1.1;
   return { dist: fitDistance(extent, aspect, area), elev: ELEV[body.kind] };
 }
 
@@ -60,4 +60,15 @@ export function flightAt(f, s, live) {
 export function cameraPosition({ focus, dist, elev }, azim) {
   const c = Math.cos(elev);
   return [focus[0] + dist * c * Math.sin(azim), focus[1] + dist * Math.sin(elev), focus[2] + dist * c * Math.cos(azim)];
+}
+
+// Azimuth that puts the camera on the lit side of a body, a little off the line to its star.
+export function litAzimuth(body, star, offset = 0.7) {
+  return Math.atan2(star[0] - body[0], star[2] - body[2]) + offset;
+}
+
+// Turn angle a toward b by fraction t along the shorter way round.
+export function turnToward(a, b, t) {
+  const d = Math.atan2(Math.sin(b - a), Math.cos(b - a));
+  return a + d * t;
 }

@@ -88,3 +88,11 @@ test('a jump between far systems rises, then lands', () => {
   const pos = cameraPosition(flightAt(f, 1, live), 0);
   assert.ok(Math.abs(d(pos, live) - 40) < 1e-6);
 });
+
+test('lit side: the camera sits between the body and its star, turning the short way', async () => {
+  const { litAzimuth, turnToward } = await import('../../galaxy/js/view.js');
+  const body = [10, 0, 0], star = [0, 0, 0];
+  const cam = cameraPosition({ focus: body, dist: 5, elev: 0 }, litAzimuth(body, star, 0));
+  assert.ok(d(cam, star) < d(body, star));
+  assert.ok(Math.abs(turnToward(3.0, -3.0, 1) - (2 * Math.PI - 3.0)) < 1e-9);
+});

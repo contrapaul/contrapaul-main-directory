@@ -2,7 +2,7 @@
 import * as THREE from 'three';
 import { NODES, indexNodes } from './network.js';
 import { buildCosmos, positionsAt, orbitPoint } from './cosmos.js';
-import { FOV, viewFor, startFlight, flightAt, cameraPosition } from './view.js';
+import { FOV, viewFor, startFlight, flightAt, cameraPosition, litAzimuth, turnToward } from './view.js';
 import { panelHTML } from './panel.js';
 import { atlasHTML, relation, showsLabel } from './atlas.js';
 import { idFromHash, hashFor } from './route.js';
@@ -94,7 +94,7 @@ function boot() {
   // The free part of the screen next to the panel, as fractions, and the view offset in px.
   function freeArea() {
     const W = innerWidth, H = innerHeight;
-    if (active === 'root') return { w: 1, h: 0.9, ox: 0, oy: 0 };
+    if (active === 'root') return W < 760 ? { w: 1, h: 0.62, ox: 0, oy: H * 0.1 } : { w: 1, h: 0.9, ox: 0, oy: 0 };
     if (W < 760) { const sheet = H * 0.56; return { w: 1, h: (H - sheet - 70) / H, ox: 0, oy: sheet / 2 - 20 }; }
     const side = Math.min(400, W * 0.45) + 16;
     return { w: (W - side) / W * 0.94, h: 0.86, ox: side / 2, oy: 0 };
@@ -162,11 +162,17 @@ function boot() {
     if (motion) {
       calm += (calmTarget - calm) * k(5);
       clock += dt * calm;
-      azim += dt * 0.012 * calm;
       pointer.x += (pointerTarget.x - pointer.x) * k(3);
       pointer.y += (pointerTarget.y - pointer.y) * k(3);
     }
     pos = positionsAt(bodies, clock);
+
+    // At a planet or moon, swing round to its lit side; elsewhere drift slowly.
+    const ab = bodies.get(active);
+    if (ab.kind === 'planet' || ab.kind === 'moon') {
+      const star = pos.get(ab.kind === 'moon' ? bodies.get(ab.parent).parent : ab.parent);
+      azim = turnToward(azim, litAzimuth(pos.get(active), star), motion ? k(1.5) : 1);
+    } else if (motion) azim += dt * 0.012 * calm;
 
     // Camera: fly, then keep following the live target.
     flight.t += dt;
