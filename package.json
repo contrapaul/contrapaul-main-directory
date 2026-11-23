@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/galaxy/*.test.mjs"
+  },
+  "devDependencies": {
+    "three": "0.186.1"
+  }
+}

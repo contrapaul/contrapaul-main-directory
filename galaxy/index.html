@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="paul kwiatkowski // designer / educator / maker">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="dark">
+<title>contrapaul</title>
+<link rel="stylesheet" href="/WEB/css/jetbrains-mono.css">
+<link rel="stylesheet" href="galaxy.css?v=1">
+<script type="importmap">{ "imports": { "three": "./vendor/three-0.186.1/three.module.min.js" } }</script>
+</head>
+<body class="map-page at-root">
+<header class="map-header">
+<a href="/" class="wordmark">contrapaul<span class="wordmark-tail"> | paul kwiatkowski</span></a>
+<nav class="map-nav" aria-label="Main navigation">
+<button type="button" class="map-only" data-open-atlas>List</button>
+<a href="/about.html">About</a>
+</nav>
+</header>
+<main>
+<div class="stage">
+<canvas id="sky" aria-hidden="true"></canvas>
+<div id="labels" class="labels" role="group" aria-label="Map of contrapaul sites"></div>
+</div>
+<section id="intro" class="intro">
+<h1>Paul Kwiatkowski</h1>
+<p>Design Technology educator, maker, and creator based in Shenzhen, China.</p>
+<p class="hint">Pick a star to fly to it.</p>
+</section>
+<button type="button" class="atlas-grip map-only" data-open-atlas><span aria-hidden="true"></span>Prefer a list? Open the site map</button>
+<aside id="panel" class="panel" aria-label="Details" inert>
+<div class="panel-body"></div>
+</aside>
+<dialog id="atlas" class="atlas" aria-labelledby="atlas-title">
+<div class="atlas-head">
+<h2 id="atlas-title">Site map</h2>
+<button type="button" class="atlas-close" data-close-atlas>Close</button>
+</div>
+<p class="atlas-lede">Every site and page. Pick a name to fly there, or <em>open</em> to go straight to the page.</p>
+<div class="atlas-body"></div>
+</dialog>
+<nav class="fallback" aria-label="All sites">
+<h2>Sites</h2>
+<ul class="site-list">
+<li><a href="https://contrapaul.com/">contrapaul.com</a><span>Main landing page and personal hub.</span></li>
+<li><a href="https://blog.contrapaul.com/">blog.contrapaul.com</a><span>Portfolio, about page and blog posts.</span></li>
+<li><a href="https://edu.contrapaul.com/">edu.contrapaul.com</a><span>IB DP Design Technology curriculum, tools and assessment.</span></li>
+<li><a href="https://make.contrapaul.com/">make.contrapaul.com</a><span>Maker and creator portfolio for fans, collaborators and sponsors.</span></li>
+<li><a href="https://build.contrapaul.com/">build.contrapaul.com</a><span>A talk and a guide on building learning websites with AI.</span></li>
+<li><a href="https://bloodbowl.contrapaul.com/">bloodbowl.contrapaul.com</a><span>Rebuilt phone-first Blood Bowl table companion.</span></li>
+<li><a href="https://blurt.contrapaul.com/">blurt.contrapaul.com</a><span>Realtime party game, 2 to 24 players, no sign-up.</span></li>
+<li><a href="https://cloud.contrapaul.com/">cloud.contrapaul.com</a><span>Live collaborative word cloud for a room of phones.</span></li>
+<li><a href="https://games.contrapaul.com/">games.contrapaul.com</a><span>School arcade of browser games, no ads or accounts.</span></li>
+<li><a href="https://time.contrapaul.com/">time.contrapaul.com</a><span>Timetable tool that knows what day it is, with no institution baked in.</span></li>
+<li><a href="https://flashstone.contrapaul.com/">flashstone.contrapaul.com</a><span>Flashcard app grown into a card game.</span></li>
+<li><a href="https://tome.contrapaul.com/">tome.contrapaul.com</a><span>Tome of Secrets, a monster game with contributed art and audio.</span></li>
+<li><a href="https://duoshan.contrapaul.com/">duoshan.contrapaul.com</a><span>DuoShan 躲闪, a browser physics team dodgeball game.</span></li>
+<li><a href="https://output.contrapaul.com/">output.contrapaul.com</a><span>An automation game for students.</span></li>
+<li><a href="https://dart.contrapaul.com/">dart.contrapaul.com</a><span>Browser first-person shooter.</span></li>
+<li><a href="https://trivia.contrapaul.com/">trivia.contrapaul.com</a><span>Live trivia night in the browser.</span></li>
+<li><a href="/about.html">About</a><span>About Paul, and how to get in touch.</span></li>
+</ul>
+</nav>
+</main>
+<script type="module" src="js/main.js?v=1"></script>
+</body>
+</html>
