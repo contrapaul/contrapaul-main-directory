@@ -28,10 +28,6 @@ export function panelHTML(id, { byId, children, ancestors }) {
     if (n.url) body += `<p><a class="panel-go" href="${esc(n.url)}"${linkAttrs(n.url)}>Visit ${esc(hostLabel(n))}</a></p>`;
   } else {
     body += media(n);
-    if (n.links) {
-      body += '<ul class="panel-links">' + n.links.map((l) =>
-        `<li><a href="${esc(l.url)}"${linkAttrs(l.url)}>${esc(l.label)}</a></li>`).join('') + '</ul>';
-    }
     body += `<p><a class="panel-go" href="${esc(n.url)}"${linkAttrs(n.url)}>Open page</a></p>`;
   }
 
@@ -43,7 +39,8 @@ export function panelHTML(id, { byId, children, ancestors }) {
 }
 
 function hostLabel(n) {
-  return n.kind === 'site' ? new URL(n.url).host : 'the hub page';
+  if (n.kind === 'site') return new URL(n.url).host;
+  return n.kind === 'special' ? `the ${n.label} page` : 'the hub page';
 }
 
 function media(n) {

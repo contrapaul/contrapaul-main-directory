@@ -25,11 +25,11 @@ test('every site has a description, url and node', () => {
   }
 });
 
-test('hubs have children; about has none', () => {
+test('hubs have children; about is orbited by its social links', () => {
   for (const n of NODES) if (n.kind === 'hub') assert.ok(children.get(n.id).length, n.id);
-  assert.equal(children.get('about').length, 0);
   assert.equal(byId.get('about').parent, 'root');
-  for (const l of byId.get('about').links) assert.match(l.url, /^https:\/\//);
+  assert.deepEqual(children.get('about'), ['about/makerworld', 'about/instagram', 'about/youtube']);
+  for (const k of children.get('about')) assert.match(byId.get(k).url, /^https:\/\//);
 });
 
 test('exclusions stay out', () => {

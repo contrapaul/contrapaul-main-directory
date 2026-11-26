@@ -207,14 +207,9 @@ body {
 
 /* ---------- intro (root view only) ---------- */
 .intro { padding: 96px clamp(16px, 3vw, 32px) 32px; max-width: 40rem; }
-.map-ready .intro {
-  position: fixed;
-  left: clamp(16px, 3vw, 32px);
-  bottom: clamp(16px, 4vh, 40px);
-  padding: 0;
-  z-index: 10;
-  max-width: min(30rem, calc(100vw - 32px));
-  transition: opacity 400ms ease, transform 400ms ease;
+.map-ready .intro { /* the map speaks for itself; kept for screen readers and the no-WebGL page */
+  position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
 }
 .intro h1 { font-size: clamp(1.6rem, 4vw, 2.6rem); line-height: 1.1; margin-bottom: 0.5rem; }
 .intro p { color: var(--ink-dim); font-size: 0.9rem; }
@@ -222,7 +217,6 @@ body {
 .map-ready .intro .hint { display: block; }
 .intro .hint { margin-top: 0.75rem; font-size: 0.8rem; color: var(--ink-faint); }
 .intro .hint a { color: var(--ink-dim); }
-.map-ready body:not(.at-root) .intro { opacity: 0; transform: translateY(12px); pointer-events: none; }
 
 /* ---------- panel ---------- */
 .panel { display: none; }
@@ -291,9 +285,6 @@ body {
 .panel-list .count { display: inline; font-weight: 400; margin-left: 0.3rem; }
 .panel-list .count::before { content: '('; } .panel-list .count::after { content: ')'; }
 
-.panel-links { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.5rem 0 1rem; }
-.panel-links a { font-size: 0.78rem; padding: 0.25rem 0.6rem; border: 1px solid var(--chrome-line); border-radius: 999px; text-decoration: none; }
-.panel-links a:hover { border-color: var(--chrome-accent); color: var(--chrome-accent); }
 
 .panel-go {
   display: inline-block;

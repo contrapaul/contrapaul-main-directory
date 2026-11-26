@@ -8,12 +8,13 @@ const root = SITES.find((s) => s.id === 'root');
 
 const EXTRA = [
   { id: 'about', parent: 'root', kind: 'special', label: 'About', url: '/about.html',
-    description: 'Paul Kwiatkowski: Design Technology educator, maker and creator based in Shenzhen, China.',
-    links: [
-      { label: 'MakerWorld', url: 'https://makerworld.com/en/@Contrapaul/upload' },
-      { label: 'Instagram', url: 'https://www.instagram.com/contrapaul' },
-      { label: 'YouTube', url: 'https://www.youtube.com/@PaulKwiatkowski' },
-    ] },
+    description: 'Paul Kwiatkowski: Design Technology educator, maker and creator based in Shenzhen, China.' },
+  { id: 'about/makerworld', parent: 'about', kind: 'page', label: 'MakerWorld',
+    url: 'https://makerworld.com/en/@Contrapaul/upload', description: '[Paul] MakerWorld description.' },
+  { id: 'about/instagram', parent: 'about', kind: 'page', label: 'Instagram',
+    url: 'https://www.instagram.com/contrapaul', description: '[Paul] Instagram description.' },
+  { id: 'about/youtube', parent: 'about', kind: 'page', label: 'YouTube',
+    url: 'https://www.youtube.com/@PaulKwiatkowski', description: '[Paul] YouTube description.' },
   { id: 'dei', parent: 'root', kind: 'special', label: 'DEI training', url: '/dei/',
     description: 'Staff training on intra-student conflict: scenarios to play through and discuss.' },
 

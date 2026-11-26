@@ -1,5 +1,25 @@
 # HANDOFF.md
 
+## 2026-11-26: intro overlay off, About gets planets
+
+### Asked
+
+Remove the "Paul Kwiatkowski" title and description in the bottom left of the zoomed-out view. Add planets to the centre (About) star that link to Instagram, MakerWorld and so on.
+
+### Changed
+
+- **Intro overlay:** hidden on the map (visually hidden, so screen readers and the no-WebGL page still get the name, description and hint). The "Pick a star..." hint goes with it.
+- **About planets:** MakerWorld, Instagram and YouTube are now planets orbiting the About star (`about/makerworld`, `about/instagram`, `about/youtube`), using the three links About already had. Descriptions are `[Paul]` placeholders. The old link chips in the About panel are gone; the panel now lists the planets and a "Visit the About page" button.
+- Cache keys bumped to `?v=4`.
+
+### Verified
+
+`npm test` 32 pass (the About test now checks the three planets). Headless Chromium at 1280x800 and 375x812: no overlay at the root, About shows three orbiting planets, the Instagram planet opens its panel with "Open page". 60 fps, only localhost requested, no console errors.
+
+### Open
+
+Any other social links Paul wants (only these three were in the data). Real phone check.
+
 ## 2026-11-23 (evening): Paul's second review
 
 ### Asked
